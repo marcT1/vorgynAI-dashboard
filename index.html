@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorgyn AI — Project Command Center v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:        #0B1E32;
+  --navy-card:   #0F2740;
+  --navy-mid:    #152D47;
+  --navy-light:  #1A3A5C;
+  --orange:      #FF6B2B;
+  --orange-dim:  rgba(255,107,43,0.12);
+  --gold:        #C9A546;
+  --gold-dim:    rgba(201,165,70,0.15);
+  --green:       #22C55E;
+  --green-dim:   rgba(34,197,94,0.12);
+  --yellow:      #EAB308;
+  --yellow-dim:  rgba(234,179,8,0.12);
+  --red:         #EF4444;
+  --red-dim:     rgba(239,68,68,0.12);
+  --blue:        #3B82F6;
+  --blue-dim:    rgba(59,130,246,0.12);
+  --purple:      #A855F7;
+  --purple-dim:  rgba(168,85,247,0.12);
+  --text:        #D4E4F0;
+  --text-dim:    #7A9BB5;
+  --border:      rgba(255,255,255,0.07);
+  --border-glow: rgba(255,107,43,0.25);
+  --new-glow:    rgba(168,85,247,0.35);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--navy);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,43,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,43,0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+@keyframes scanline {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(255,107,43,0.2); }
+  50%       { box-shadow: 0 0 28px rgba(255,107,43,0.45); }
+}
+@keyframes new-glow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(168,85,247,0.4), 0 0 20px rgba(168,85,247,0.15); }
+  50%       { box-shadow: 0 0 0 1px rgba(168,85,247,0.7), 0 0 35px rgba(168,85,247,0.3); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.scanline {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255,107,43,0.15), transparent);
+  animation: scanline 6s linear infinite;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ── LAYOUT ── */
+.container { max-width: 1420px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+header {
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  background: rgba(11,30,50,0.96);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.logo { display: flex; align-items: center; gap: 0.75rem; }
+.logo-hex {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--orange), #FF8C5A);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex; align-items: center; justify-content: center;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+.logo-hex span { font-family: 'Bebas Neue', sans-serif; font-size: 0.9rem; color: white; }
+.logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em; }
+.logo-text em { color: var(--orange); font-style: normal; }
+.header-meta { display: flex; align-items: center; gap: 1.5rem; }
+.live-badge {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--green); text-transform: uppercase; letter-spacing: 0.1em;
+  background: var(--green-dim); border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 4px; padding: 0.3rem 0.7rem;
+}
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse-dot 2s ease-in-out infinite; }
+.last-updated { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text-dim); }
+
+/* ── VERSION BADGE ── */
+.version-banner {
+  background: linear-gradient(90deg, rgba(168,85,247,0.12), rgba(168,85,247,0.06), rgba(168,85,247,0.12));
+  border-bottom: 1px solid rgba(168,85,247,0.2);
+  padding: 0.6rem 0;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--purple);
+  letter-spacing: 0.08em;
+}
+.version-banner strong { color: #C084FC; }
+
+/* ── TICKER ── */
+.ticker-wrap {
+  background: rgba(255,107,43,0.06);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0.5rem 0;
+}
+.ticker-track { display: inline-flex; gap: 0; animation: ticker 40s linear infinite; }
+.ticker-item {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--text-dim); padding: 0 2.5rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.ticker-item .t-label { color: var(--orange); }
+.ticker-item .t-new { color: var(--purple); font-weight: 600; }
+.t-status-live  { color: var(--green); }
+.t-status-build { color: var(--yellow); }
+.t-status-plan  { color: var(--blue); }
+.t-status-new   { color: var(--purple); }
+.ticker-sep { color: var(--border); }
+
+/* ── STATS BAR ── */
+.stats-bar { padding: 2rem 0; animation: fadeUp 0.6s ease both; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.stat-cell {
+  background: var(--navy-card);
+  padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.stat-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); }
+.stat-value { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 1; color: var(--text); }
+.stat-value.orange { color: var(--orange); }
+.stat-value.green  { color: var(--green); }
+.stat-value.gold   { color: var(--gold); }
+.stat-value.blue   { color: var(--blue); }
+.stat-value.purple { color: var(--purple); }
+.stat-sub { font-size: 0.7rem; color: var(--text-dim); }
+
+/* ── SECTION HEADERS ── */
+.section-header {
+  display: flex; align-items: baseline; gap: 1rem;
+  margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.section-tag {
+  font-family: 'DM Mono', monospace; font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--orange); background: var(--orange-dim);
+  border: 1px solid rgba(255,107,43,0.2);
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+}
+.section-tag.new-tag {
+  color: var(--purple); background: var(--purple-dim);
+  border-color: rgba(168,85,247,0.3);
+}
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; }
+.section-count { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--text-dim); margin-left: auto; }
+
+/* ── PROJECT GRID ── */
+.projects-section { padding: 1rem 0 2rem; }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+/* ── PROJECT CARD ── */
+.project-card {
+  background: var(--navy-card);
+  padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 1rem;
+  transition: background 0.2s;
+  animation: fadeUp 0.5s ease both;
+  position: relative;
+}
+.project-card:hover { background: var(--navy-mid); }
+
+/* NEW PROJECT HIGHLIGHT */
+.project-card.is-new {
+  background: rgba(15, 39, 64, 1);
+  animation: new-glow 3s ease-in-out infinite, fadeUp 0.5s ease both;
+  border: 1px solid rgba(168,85,247,0.3);
+}
+.project-card.is-new:hover { background: rgba(21, 45, 71, 1); }
+
+.new-badge {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #fff;
+  background: linear-gradient(135deg, #7C3AED, #A855F7);
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  background-size: 200% auto;
+  animation: shimmer 2.5s linear infinite;
+}
+
+.card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.card-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem; flex-shrink: 0;
+}
+
+/* STATUS PILLS */
+.status-pill {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.25rem 0.6rem; border-radius: 20px;
+  display: flex; align-items: center; gap: 0.4rem; white-space: nowrap;
+}
+.status-pill .dot { width: 5px; height: 5px; border-radius: 50%; animation: pulse-dot 2s ease-in-out infinite; }
+.s-live   { background: var(--green-dim);  color: var(--green);  border: 1px solid rgba(34,197,94,0.25); }
+.s-live .dot { background: var(--green); }
+.s-build  { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(234,179,8,0.25); }
+.s-build .dot { background: var(--yellow); animation: none; }
+.s-done   { background: var(--gold-dim);   color: var(--gold);   border: 1px solid rgba(201,165,70,0.25); }
+.s-done .dot { background: var(--gold); animation: none; }
+.s-new    { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(168,85,247,0.35); }
+.s-new .dot { background: var(--purple); }
+
+.card-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em; line-height: 1.1; }
+.card-type { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+/* PROGRESS */
+.progress-wrap { display: flex; flex-direction: column; gap: 0.35rem; }
+.progress-labels { display: flex; justify-content: space-between; align-items: baseline; }
+.progress-title { font-size: 0.68rem; color: var(--text-dim); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; }
+.progress-pct { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--text); }
+.progress-bar { height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 2px; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+.pf-green  { background: linear-gradient(90deg, #16a34a, var(--green)); }
+.pf-orange { background: linear-gradient(90deg, #c2410c, var(--orange)); }
+.pf-yellow { background: linear-gradient(90deg, #b45309, var(--yellow)); }
+.pf-blue   { background: linear-gradient(90deg, #1d4ed8, var(--blue)); }
+.pf-gold   { background: linear-gradient(90deg, #92400e, var(--gold)); }
+.pf-purple { background: linear-gradient(90deg, #6d28d9, var(--purple)); }
+
+/* MILESTONES */
+.milestones { display: flex; flex-direction: column; gap: 0.4rem; }
+.milestone { display: flex; align-items: center; gap: 0.6rem; font-size: 0.72rem; color: var(--text-dim); line-height: 1.3; }
+.milestone.done   { color: var(--text); }
+.milestone.done .ms-icon   { color: var(--green); }
+.milestone.active .ms-icon { color: var(--yellow); }
+.milestone.pending .ms-icon { color: rgba(255,255,255,0.15); }
+.milestone.new-ms { color: #C084FC; }
+.milestone.new-ms .ms-icon { color: var(--purple); }
+.ms-icon { font-size: 0.7rem; flex-shrink: 0; }
+
+/* TAGS */
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+.tag {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-dim); background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border); padding: 0.15rem 0.45rem; border-radius: 3px;
+}
+.tag.new-tag-item { color: var(--purple); border-color: rgba(168,85,247,0.3); background: var(--purple-dim); }
+
+/* CARD FOOTER */
+.card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 0.75rem; border-top: 1px solid var(--border); margin-top: auto;
+}
+.card-link {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--orange);
+  text-decoration: none; display: flex; align-items: center; gap: 0.3rem; transition: opacity 0.2s;
+}
+.card-link:hover { opacity: 0.7; }
+.card-revenue { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--gold); }
+
+/* ── NEW PROJECTS CALLOUT ── */
+.new-projects-banner {
+  background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(168,85,247,0.04));
+  border: 1px solid rgba(168,85,247,0.25);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.npb-icon { font-size: 1.5rem; flex-shrink: 0; }
+.npb-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: #C084FC;
+  margin-bottom: 0.4rem;
+}
+.npb-body { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+.npb-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+.npb-item {
+  font-family: 'DM Mono', monospace; font-size: 0.62rem;
+  color: #C084FC; background: var(--purple-dim);
+  border: 1px solid rgba(168,85,247,0.3);
+  padding: 0.2rem 0.6rem; border-radius: 3px;
+}
+
+/* ── TIMELINE ── */
+.timeline-section { padding: 2rem 0; }
+.timeline { position: relative; padding-left: 1.5rem; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--orange), transparent);
+}
+.timeline-entry { position: relative; padding: 0 0 1.5rem 1.75rem; animation: fadeUp 0.5s ease both; }
+.timeline-entry.new-entry::before {
+  content: '✦ NEW';
+  position: absolute;
+  left: 1.75rem; top: -0.1rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  color: var(--purple);
+  background: var(--purple-dim);
+  border: 1px solid rgba(168,85,247,0.3);
+  padding: 0.1rem 0.4rem;
+  border-radius: 3px;
+  transform: translateY(-100%);
+  margin-bottom: 0.3rem;
+}
+.timeline-dot {
+  position: absolute; left: -5px; top: 4px;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--orange); background: var(--navy);
+}
+.timeline-dot.new-dot { border-color: var(--purple); }
+.timeline-date { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.35rem; }
+.timeline-date.new-date { color: var(--purple); }
+.timeline-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.timeline-body { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
+.timeline-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+.tpill {
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  color: var(--text-dim); background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border); padding: 0.15rem 0.5rem; border-radius: 3px;
+}
+.tpill.new-pill { color: var(--purple); border-color: rgba(168,85,247,0.3); background: var(--purple-dim); }
+
+/* ── UPDATE SECTION ── */
+.update-section { padding: 2rem 0 3rem; }
+.update-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+}
+.update-panel { background: var(--navy-card); padding: 1.75rem; }
+.update-panel-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem;
+  letter-spacing: 0.08em; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.update-panel-title .ico { color: var(--orange); }
+.update-steps { display: flex; flex-direction: column; gap: 0.85rem; }
+.update-step { display: flex; gap: 1rem; align-items: flex-start; }
+.step-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--orange); line-height: 1; min-width: 24px; }
+.step-title { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 0.25rem; }
+.step-body { font-size: 0.73rem; color: var(--text-dim); line-height: 1.5; }
+.prompt-box {
+  background: rgba(0,0,0,0.45); border: 1px solid var(--border-glow);
+  border-radius: 6px; padding: 1.25rem; margin-top: 1rem;
+}
+.prompt-label { font-family: 'DM Mono', monospace; font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--orange); margin-bottom: 0.6rem; }
+.prompt-text { font-size: 0.76rem; color: var(--text-dim); line-height: 1.6; font-style: italic; }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(--border); padding: 1.5rem 0; margin-top: 2rem; }
+.footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: var(--text-dim); }
+.footer-logo em { color: var(--orange); font-style: normal; }
+.footer-right { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--text-dim); text-align: right; }
+.footer-right a { color: var(--orange); text-decoration: none; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) { .projects-grid { grid-template-columns: repeat(2,1fr); } .stats-grid { grid-template-columns: repeat(3,1fr); } }
+@media (max-width: 768px) { .projects-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(2,1fr); } .update-grid { grid-template-columns: 1fr; } .header-meta { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="scanline"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-hex"><span>VA</span></div>
+        <div class="logo-text"><em>Vorgyn</em> AI · Project Command Center</div>
+      </div>
+      <div class="header-meta">
+        <div class="live-badge"><div class="live-dot"></div> Operational</div>
+        <div class="last-updated" id="last-updated">Updated: —</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- VERSION BANNER -->
+<div class="version-banner">
+  ✦ <strong>Dashboard v2 — Updated March 27, 2026</strong> &nbsp;|&nbsp; 4 new projects added &nbsp;|&nbsp; Brand updated: NexaForge AI → <strong>Vorgyn AI</strong> &nbsp;|&nbsp; Portfolio expanded from 9 → 13 projects
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ticker">
+    <span class="ticker-item"><span class="t-label">Options Trading Platform</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">System Viability Monitor</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">NVIDIA DGX SPARK Report</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI Dashboard Freelance Service</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Gridiron & Hardwood</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI Trading Platform</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Fresh Start Credit Mastery</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Credit Repair Notion Template</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Slippage Tracker</span><span class="t-status-live">● COMPLETE</span><span class="ticker-sep">|</span></span>
+    <!-- duplicate -->
+    <span class="ticker-item"><span class="t-label">Options Trading Platform</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">System Viability Monitor</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">NVIDIA DGX SPARK Report</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI Dashboard Freelance Service</span><span class="t-status-new t-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Gridiron & Hardwood</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AI Trading Platform</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Fresh Start Credit Mastery</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Credit Repair Notion Template</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Slippage Tracker</span><span class="t-status-live">● COMPLETE</span><span class="ticker-sep">|</span></span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-grid">
+    <div class="stat-cell">
+      <div class="stat-label">Total Projects</div>
+      <div class="stat-value orange">13</div>
+      <div class="stat-sub">↑ from 9 last version</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Live / Deployed</div>
+      <div class="stat-value green">6</div>
+      <div class="stat-sub">Generating revenue</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">In Active Build</div>
+      <div class="stat-value" style="color:var(--yellow)">3</div>
+      <div class="stat-sub">Dev in progress</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">✦ New This Update</div>
+      <div class="stat-value purple">4</div>
+      <div class="stat-sub">Added since v1</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">Revenue Streams</div>
+      <div class="stat-value gold">4</div>
+      <div class="stat-sub">+Freelance added</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">GitHub Repos</div>
+      <div class="stat-value blue">4</div>
+      <div class="stat-sub">github.com/marcT1</div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PROJECTS CALLOUT BANNER -->
+<div class="new-projects-banner">
+  <div class="npb-icon">✦</div>
+  <div>
+    <div class="npb-title">4 New Projects Added in This Update</div>
+    <div class="npb-body">Based on a full review of all chat sessions since the v1 dashboard. The following projects were built but not previously tracked — they are highlighted with purple borders throughout the dashboard below.</div>
+    <div class="npb-list">
+      <span class="npb-item">Options Trading Platform + Greeks Engine</span>
+      <span class="npb-item">System Viability Monitor Dashboard</span>
+      <span class="npb-item">NVIDIA DGX SPARK Evaluation Report</span>
+      <span class="npb-item">AI Dashboard Freelance Service (Vorgyn AI)</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="projects-section">
+  <div class="section-header">
+    <span class="section-tag">Portfolio</span>
+    <span class="section-title">Vorgyn AI — All Projects</span>
+    <span class="section-count">13 total · <span style="color:var(--purple)">4 new ✦</span> · Synced <span id="sync-time">—</span></span>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- ── EXISTING PROJECTS ── -->
+
+    <!-- 1. AI NEWS DASHBOARD -->
+    <div class="project-card" style="animation-delay:0.05s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">AI News Intelligence Dashboard</div>
+          <div class="card-type">Automated Pipeline · GitHub Pages</div>
+        </div>
+        <div class="status-pill s-live"><div class="dot"></div>Live</div>
+      </div>
+      <div class="card-icon" style="background:var(--green-dim)">📡</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> Pipeline built &amp; GitHub Actions automated</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Daily 7AM Eastern digest firing</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Caching bug fixed (raw CDN bypass)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Email digest confirmed sending</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Monetization paths mapped</div>
+      </div>
+      <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">Claude API</span><span class="tag">Email Digest</span><span class="tag">Gumroad-ready</span></div>
+      <div class="card-footer">
+        <a href="https://github.com/marcT1/ai-news-dashboard" class="card-link" target="_blank">↗ github.com/marcT1</a>
+        <span class="card-revenue">Monetizable</span>
+      </div>
+    </div>
+
+    <!-- 2. FINTRACK PRO -->
+    <div class="project-card" style="animation-delay:0.08s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">FinTrack Pro</div>
+          <div class="card-type">Digital Product · Gumroad / GitHub</div>
+        </div>
+        <div class="status-pill s-live"><div class="dot"></div>Live</div>
+      </div>
+      <div class="card-icon" style="background:var(--blue-dim)">💹</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> 9-tab HTML dashboard built</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Desktop-first launch decision made</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> GitHub Releases delivery configured</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Gumroad sales page live at $19</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Personal variant with debt + what-if analyzer</div>
+      </div>
+      <div class="card-tags"><span class="tag">HTML/CSS/JS</span><span class="tag">Gumroad</span><span class="tag">$19</span><span class="tag">Desktop-first</span></div>
+      <div class="card-footer">
+        <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad Store</a>
+        <span class="card-revenue">$19 / sale</span>
+      </div>
+    </div>
+
+    <!-- 3. VORGYN AI WEBSITE -->
+    <div class="project-card" style="animation-delay:0.11s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">Vorgyn AI Website</div>
+          <div class="card-type">Company Site · Netlify / GitHub Pages</div>
+        </div>
+        <div class="status-pill s-live"><div class="dot"></div>Live</div>
+      </div>
+      <div class="card-icon" style="background:var(--orange-dim)">🏗️</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">98%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-orange" style="width:98%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> Brand: navy/orange/gold · Bebas Neue · Barlow</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Full 6-section site deployed</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Renamed NexaForge → Vorgyn AI (26 instances)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> vorgyn.com purchased via Porkbun</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> DNS connection &amp; LLC/DBA filing</div>
+      </div>
+      <div class="card-tags"><span class="tag">Vorgyn AI</span><span class="tag">Netlify</span><span class="tag">vorgyn.com</span><span class="tag">Deployed</span></div>
+      <div class="card-footer">
+        <a href="https://vorgyn.com" class="card-link" target="_blank">↗ vorgyn.com</a>
+        <span class="card-revenue">Brand asset</span>
+      </div>
+    </div>
+
+    <!-- 4. CREDITFORGE AI BOT -->
+    <div class="project-card" style="animation-delay:0.14s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">CreditForge AI Bot</div>
+          <div class="card-type">SaaS · Claude API · Subscription</div>
+        </div>
+        <div class="status-pill s-build"><div class="dot"></div>In Build</div>
+      </div>
+      <div class="card-icon" style="background:var(--gold-dim)">🤖</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">50%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-yellow" style="width:50%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> Concept validated vs $149/mo competitors</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Featured on Vorgyn AI website</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> HTML/JS chatbot prototype coded</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Netlify serverless function architecture</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> Gumroad license key access gating</div>
+        <div class="milestone pending"><span class="ms-icon">○</span> Stripe subscription ($19–$49/mo)</div>
+      </div>
+      <div class="card-tags"><span class="tag">Claude API</span><span class="tag">$19–49/mo</span><span class="tag">Credit Repair</span><span class="tag">Netlify</span></div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In development</span>
+        <span class="card-revenue">$19–49 / mo</span>
+      </div>
+    </div>
+
+    <!-- 5. GRIDIRON & HARDWOOD -->
+    <div class="project-card" style="animation-delay:0.17s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">Gridiron &amp; Hardwood</div>
+          <div class="card-type">Sports Trivia App · YouTube Channel</div>
+        </div>
+        <div class="status-pill s-build"><div class="dot"></div>In Build</div>
+      </div>
+      <div class="card-icon" style="background:var(--blue-dim)">🏈</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">70%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-blue" style="width:70%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> App: NBA, NFL, MLB · 1960–present · 3 tiers</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Claude API live AI explanations integrated</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Tester version deployed (B64 API key)</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> YouTube channel launch &amp; affiliate setup</div>
+      </div>
+      <div class="card-tags"><span class="tag">Claude API</span><span class="tag">YouTube</span><span class="tag">Affiliate</span><span class="tag">HTML App</span></div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Testing phase</span>
+        <span class="card-revenue">Affiliate + Ad rev</span>
+      </div>
+    </div>
+
+    <!-- 6. STOCK TRADING PLATFORM -->
+    <div class="project-card" style="animation-delay:0.20s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">AI Stock Trading Platform</div>
+          <div class="card-type">Algo Trading · Simulation · Paper</div>
+        </div>
+        <div class="status-pill s-build"><div class="dot"></div>In Build</div>
+      </div>
+      <div class="card-icon" style="background:var(--green-dim)">📊</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">65%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-green" style="width:65%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> Dashboard: 8 symbols, RSI/MACD/EMA/BB</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Claude API signal generation (65%+ threshold)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Simulated day: 80% win rate, +$108.90 P&amp;L</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Slippage Tracker app built</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> GitHub Pages deployment guide built</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> Alpaca live API integration</div>
+      </div>
+      <div class="card-tags"><span class="tag">Claude API</span><span class="tag">Alpaca</span><span class="tag">AAPL NVDA TSLA</span><span class="tag">Paper</span></div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Paper trading</span>
+        <span class="card-revenue">Simulation phase</span>
+      </div>
+    </div>
+
+    <!-- 7. FRESH START CREDIT MASTERY -->
+    <div class="project-card" style="animation-delay:0.23s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">Fresh Start Credit Mastery</div>
+          <div class="card-type">Digital Product · Book / Gumroad</div>
+        </div>
+        <div class="status-pill s-done"><div class="dot"></div>Live</div>
+      </div>
+      <div class="card-icon" style="background:var(--gold-dim)">💳</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-gold" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> ~50,000-word guide live on Gumroad</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Active buyer base established</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Credit Repair Tracker cross-sell built</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Feeder into CreditForge AI Bot</div>
+      </div>
+      <div class="card-tags"><span class="tag">Gumroad</span><span class="tag">Credit Repair</span><span class="tag">$27–97</span><span class="tag">Existing Buyers</span></div>
+      <div class="card-footer">
+        <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a>
+        <span class="card-revenue">$27–97 / sale</span>
+      </div>
+    </div>
+
+    <!-- 8. NOTION CREDIT TRACKER -->
+    <div class="project-card" style="animation-delay:0.26s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">Credit Repair Notion Tracker</div>
+          <div class="card-type">Notion Template · Gumroad</div>
+        </div>
+        <div class="status-pill s-done"><div class="dot"></div>Live</div>
+      </div>
+      <div class="card-icon" style="background:var(--orange-dim)">📋</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-orange" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> 4-database Notion system (Score/Accounts/Disputes/Plan)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> 4 CSV import files + 5 formulas delivered</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Full click-by-click build guide (Word)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Life Reset Bundle at $67 structured</div>
+      </div>
+      <div class="card-tags"><span class="tag">Notion</span><span class="tag">CSV Import</span><span class="tag">Bundle: $67</span></div>
+      <div class="card-footer">
+        <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a>
+        <span class="card-revenue">$17 / Bundle $67</span>
+      </div>
+    </div>
+
+    <!-- 9. SLIPPAGE TRACKER -->
+    <div class="project-card" style="animation-delay:0.29s">
+      <div class="card-top">
+        <div>
+          <div class="card-name">AI Slippage Tracker</div>
+          <div class="card-type">Trading Tool · Internal App</div>
+        </div>
+        <div class="status-pill s-done"><div class="dot"></div>Complete</div>
+      </div>
+      <div class="card-icon" style="background:var(--blue-dim)">📉</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone done"><span class="ms-icon">✓</span> Trade log form + live preview calculator</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Time-series &amp; time-of-day charts</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> Per-symbol breakdown cards</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> AI recommendations engine (live)</div>
+        <div class="milestone done"><span class="ms-icon">✓</span> CSV export + 18 pre-seeded sim trades</div>
+      </div>
+      <div class="card-tags"><span class="tag">HTML App</span><span class="tag">Claude API</span><span class="tag">Trading</span></div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--gold)">✓ Internal tool</span>
+        <span class="card-revenue">Internal use</span>
+      </div>
+    </div>
+
+    <!-- ── NEW PROJECTS (highlighted) ── -->
+
+    <!-- 10. OPTIONS TRADING PLATFORM ✦ NEW -->
+    <div class="project-card is-new" style="animation-delay:0.32s">
+      <div class="new-badge">✦ NEW</div>
+      <div class="card-top">
+        <div>
+          <div class="card-name">Options Trading Platform</div>
+          <div class="card-type">Black-Scholes Engine · Greeks · Multi-Strategy</div>
+        </div>
+        <div class="status-pill s-new"><div class="dot"></div>New</div>
+      </div>
+      <div class="card-icon" style="background:var(--purple-dim)">⚡</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">75%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-purple" style="width:75%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Full Black-Scholes engine — all 5 Greeks live</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Options chain: bid/ask, IV%, Greeks per strike</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> 12-strategy library (Condor, Straddle, Spreads…)</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Payoff diagram + IV Rank gauge + position builder</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Broker modals: Tastytrade, TD, IBKR, Robinhood</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Companion prompt guide: 50/21 exit rules, Vanna/Charm</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> Live broker API integration</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag new-tag-item">✦ New</span>
+        <span class="tag">Black-Scholes</span><span class="tag">Greeks</span><span class="tag">12 Strategies</span><span class="tag">Tastytrade</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span>
+        <span class="card-revenue">Extension of Trading Platform</span>
+      </div>
+    </div>
+
+    <!-- 11. SYSTEM VIABILITY MONITOR ✦ NEW -->
+    <div class="project-card is-new" style="animation-delay:0.35s">
+      <div class="new-badge">✦ NEW</div>
+      <div class="card-top">
+        <div>
+          <div class="card-name">System Viability Monitor</div>
+          <div class="card-type">Enterprise Dashboard · Change Request Analytics</div>
+        </div>
+        <div class="status-pill s-new"><div class="dot"></div>New</div>
+      </div>
+      <div class="card-icon" style="background:var(--purple-dim)">🛡️</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> CR growth rate metric + risk scoring engine</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Formal review thresholds + escalation triggers</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> 6-tab dashboard: Overview, Systems, Analytics, Escalation</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> CSV import for live change request data files</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Escalation report generator for leadership</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Comprehensive user guide + improvement roadmap</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag new-tag-item">✦ New</span>
+        <span class="tag">Enterprise</span><span class="tag">CSV Import</span><span class="tag">Risk Scoring</span><span class="tag">IT Analytics</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span>
+        <span class="card-revenue">Enterprise / IT audience</span>
+      </div>
+    </div>
+
+    <!-- 12. NVIDIA DGX SPARK REPORT ✦ NEW -->
+    <div class="project-card is-new" style="animation-delay:0.38s">
+      <div class="new-badge">✦ NEW</div>
+      <div class="card-top">
+        <div>
+          <div class="card-name">NVIDIA DGX SPARK Report</div>
+          <div class="card-type">Technical Evaluation · HTML + Word</div>
+        </div>
+        <div class="status-pill s-new"><div class="dot"></div>New</div>
+      </div>
+      <div class="card-icon" style="background:var(--purple-dim)">📝</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Full AI/LLM server evaluation via web research</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Scored: Performance 9.2, Value 7.0, Ecosystem 8.1</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Bar charts, competitive comparison matrix</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> BUY/CONSIDER/SKIP verdict by use-case</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Delivered as styled HTML + Word (.docx)</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag new-tag-item">✦ New</span>
+        <span class="tag">NVIDIA</span><span class="tag">AI Hardware</span><span class="tag">Evaluation</span><span class="tag">Word + HTML</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span>
+        <span class="card-revenue">Proof-of-work / Freelance sample</span>
+      </div>
+    </div>
+
+    <!-- 13. AI DASHBOARD FREELANCE SERVICE ✦ NEW -->
+    <div class="project-card is-new" style="animation-delay:0.41s">
+      <div class="new-badge">✦ NEW</div>
+      <div class="card-top">
+        <div>
+          <div class="card-name">AI Dashboard Freelance Service</div>
+          <div class="card-type">Custom Dev Service · Vorgyn AI</div>
+        </div>
+        <div class="status-pill s-new"><div class="dot"></div>New</div>
+      </div>
+      <div class="card-icon" style="background:var(--purple-dim)">🚀</div>
+      <div class="progress-wrap">
+        <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">60%</span></div>
+        <div class="progress-bar"><div class="progress-fill pf-purple" style="width:60%"></div></div>
+      </div>
+      <div class="milestones">
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Feasibility confirmed — portfolio is proof-of-work</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> 3-tier pricing: $500–$1.5K / $1.5K–$3K / $3K–$8K</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Target buyers: SMBs, financial advisors, IT depts</div>
+        <div class="milestone new-ms"><span class="ms-icon">✦</span> Channels: Upwork, Gumroad buyers, LinkedIn</div>
+        <div class="milestone active"><span class="ms-icon">◐</span> Portfolio page on vorgyn.com</div>
+        <div class="milestone pending"><span class="ms-icon">○</span> First 3 client projects (testimonials)</div>
+      </div>
+      <div class="card-tags">
+        <span class="tag new-tag-item">✦ New</span>
+        <span class="tag">Freelance</span><span class="tag">$500–$8K/project</span><span class="tag">Upwork</span><span class="tag">Custom Dev</span>
+      </div>
+      <div class="card-footer">
+        <span class="card-link" style="cursor:default;color:var(--purple)">✦ Strategy built, launching</span>
+        <span class="card-revenue">$500–$8K / project</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-section">
+  <div class="section-header">
+    <span class="section-tag new-tag">✦ Updated</span>
+    <span class="section-title">Full Build Timeline</span>
+  </div>
+  <div class="timeline">
+
+    <!-- NEW ENTRIES -->
+    <div class="timeline-entry new-entry" style="animation-delay:0.05s; padding-top:1.5rem;">
+      <div class="timeline-dot new-dot"></div>
+      <div class="timeline-date new-date">Mar 27, 2026 — ✦ New</div>
+      <div class="timeline-title">Options Platform + Freelance Service Strategy + DGX SPARK Report</div>
+      <div class="timeline-body">Full Black-Scholes options trading platform built with 5 Greeks, 12-strategy library, IV Rank gauge, and broker connection modals for Tastytrade/TD/IBKR/Robinhood. Companion prompt guide delivered with 50/21 exit rules and second-order Greeks. AI Dashboard Freelance Service strategy fully validated — 3-tier pricing ($500–$8K), target buyers, Upwork positioning, and income projections ($4K–$8K/mo realistic). NVIDIA DGX SPARK evaluation report built as HTML + Word with benchmark scoring and BUY/CONSIDER/SKIP verdicts.</div>
+      <div class="timeline-pills">
+        <span class="tpill new-pill">Options Platform</span>
+        <span class="tpill new-pill">Black-Scholes Greeks</span>
+        <span class="tpill new-pill">Freelance Strategy</span>
+        <span class="tpill new-pill">DGX SPARK Report</span>
+      </div>
+    </div>
+
+    <div class="timeline-entry new-entry" style="animation-delay:0.08s; padding-top:1.5rem;">
+      <div class="timeline-dot new-dot"></div>
+      <div class="timeline-date new-date">Mar 27, 2026 — ✦ New</div>
+      <div class="timeline-title">System Viability Monitor Dashboard Built</div>
+      <div class="timeline-body">Enterprise-grade system viability monitoring tool built from a complex multi-part specification. Includes CR growth rate metric, risk scoring engine with weighted multipliers, 6-tab dashboard UI, CSV data import, formal escalation report generator for leadership, configurable thresholds, and a full 10-section user guide with recommended improvement roadmap. Targets IT program managers and government/enterprise clients.</div>
+      <div class="timeline-pills">
+        <span class="tpill new-pill">System Viability Monitor</span>
+        <span class="tpill new-pill">Enterprise IT</span>
+        <span class="tpill new-pill">CSV Import</span>
+        <span class="tpill new-pill">Escalation Reports</span>
+      </div>
+    </div>
+
+    <!-- EXISTING ENTRIES -->
+    <div class="timeline-entry" style="animation-delay:0.11s">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Mar 26, 2026</div>
+      <div class="timeline-title">Vorgyn AI Brand Finalized + Product Universe Audit</div>
+      <div class="timeline-body">Company officially rebranded from NexaForge AI to Vorgyn AI across all 26 instances of the website. vorgyn.com domain purchased via Porkbun. Full product universe map produced across 3 pillars. CreditForge AI Bot chatbot prototype coded with Netlify serverless functions and Gumroad license key gating. Done-For-You AI Setup service concept built out. Dispute Letter Generator and AI Credit Coach Chatbot identified as highest-priority product gaps.</div>
+      <div class="timeline-pills">
+        <span class="tpill">Vorgyn AI Rebrand</span><span class="tpill">vorgyn.com</span><span class="tpill">CreditForge Bot Prototype</span><span class="tpill">Product Audit</span>
+      </div>
+    </div>
+
+    <div class="timeline-entry" style="animation-delay:0.14s">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Mar 2026 (early)</div>
+      <div class="timeline-title">Trading Platform + Slippage Tracker + AI News Dashboard Operational</div>
+      <div class="timeline-body">AI Stock Trading Platform shipped with 8-symbol dashboard and simulated 80% win rate. Slippage Tracker completed. AI News Intelligence Dashboard caching bug fixed via raw CDN data fetch — confirmed daily 7AM digest sending. Business plan, investor deck, and 90-day playbook completed as Word docs with embedded charts.</div>
+      <div class="timeline-pills">
+        <span class="tpill">Trading Platform</span><span class="tpill">Slippage Tracker</span><span class="tpill">AI News Dashboard</span><span class="tpill">Business Plan</span>
+      </div>
+    </div>
+
+    <div class="timeline-entry" style="animation-delay:0.17s">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Feb 2026</div>
+      <div class="timeline-title">FinTrack Pro Launched · Gridiron & Hardwood Built · Notion Tracker Live</div>
+      <div class="timeline-body">FinTrack Pro shipped on Gumroad at $19 with GitHub Releases delivery. Personal variant with debt/what-if analyzer created. Gridiron & Hardwood sports trivia app built with Claude API explanations and 3 difficulty tiers. Credit Repair Notion Tracker published with 4 databases and CSV imports.</div>
+      <div class="timeline-pills">
+        <span class="tpill">FinTrack Pro</span><span class="tpill">Gridiron & Hardwood</span><span class="tpill">Notion Tracker</span>
+      </div>
+    </div>
+
+    <div class="timeline-entry" style="animation-delay:0.20s">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">Feb 2026 (early)</div>
+      <div class="timeline-title">Fresh Start Credit Mastery — Existing Flagship Product</div>
+      <div class="timeline-body">Long-standing flagship digital product on Gumroad with active buyer base. Serves as top-of-funnel for CreditForge AI Bot. US immigration strategy guide (K-1/CR-1 pathways) also built as Word doc.</div>
+      <div class="timeline-pills">
+        <span class="tpill">Gumroad</span><span class="tpill">Credit Repair</span><span class="tpill">Buyer Base</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- UPDATE INSTRUCTIONS -->
+<div class="update-section">
+  <div class="section-header">
+    <span class="section-tag">Maintenance</span>
+    <span class="section-title">How to Update This Dashboard</span>
+  </div>
+  <div class="update-grid">
+    <div class="update-panel">
+      <div class="update-panel-title"><span class="ico">✏️</span> Manual Update via GitHub</div>
+      <div class="update-steps">
+        <div class="update-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Open your GitHub repo</div>
+            <div class="step-body">Go to <strong>github.com/marcT1/[repo-name]</strong>, find <code>index.html</code>, and click the pencil ✏️ icon to edit in-browser.</div>
+          </div>
+        </div>
+        <div class="update-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Find the card to update</div>
+            <div class="step-body">Use <kbd>Ctrl+F</kbd> to find the project name. Change milestone classes (<code>done</code> / <code>active</code> / <code>pending</code>), icons (✓ ◐ ○), and progress percentages.</div>
+          </div>
+        </div>
+        <div class="update-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Commit and go live</div>
+            <div class="step-body">Scroll down, write a commit message (e.g., "Update Options Platform to 90%"), click <strong>Commit changes</strong>. GitHub Pages redeploys in ~60 seconds.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="update-panel">
+      <div class="update-panel-title"><span class="ico">🤖</span> AI-Assisted Update via Claude</div>
+      <div class="update-steps">
+        <div class="update-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">Start a new Claude chat</div>
+            <div class="step-body">Paste the master prompt below. Claude will generate exact HTML edits — no guesswork needed.</div>
+          </div>
+        </div>
+        <div class="update-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">Or say "Review all chats and update"</div>
+            <div class="step-body">Claude will scan all chat history, identify new work, and produce an updated dashboard file automatically — exactly as was done to produce this v2.</div>
+          </div>
+        </div>
+        <div class="update-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">Upload to GitHub and commit</div>
+            <div class="step-body">Drop the new file into your repo as <code>index.html</code> and commit. New projects will appear with the purple ✦ NEW highlight automatically.</div>
+          </div>
+        </div>
+      </div>
+      <div class="prompt-box">
+        <div class="prompt-label">📋 Master Update Prompt</div>
+        <div class="prompt-text">"Review all my chat sessions with you and update my Vorgyn AI Project Command Center dashboard. Identify any new projects, completed milestones, or changed statuses since the last version. Highlight anything new with the purple ✦ NEW styling. Output the complete updated index.html file ready to upload to GitHub."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GITHUB SETUP -->
+  <div style="margin-top:1px; background:var(--navy-mid); border:1px solid var(--border); border-radius:0 0 8px 8px; padding:1.75rem;">
+    <div class="update-panel-title" style="margin-bottom:1rem;"><span class="ico">🚀</span> GitHub Pages Setup (one-time)</div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1rem;">
+      <div>
+        <div class="step-title" style="font-size:0.8rem; margin-bottom:0.35rem;">① Create Repo</div>
+        <div class="step-body" style="font-size:0.72rem;">New repo: <code>vorgyn-dashboard</code>. Set Public. No README needed.</div>
+      </div>
+      <div>
+        <div class="step-title" style="font-size:0.8rem; margin-bottom:0.35rem;">② Upload File</div>
+        <div class="step-body" style="font-size:0.72rem;">Upload as <strong>index.html</strong> exactly. "Add file → Upload files."</div>
+      </div>
+      <div>
+        <div class="step-title" style="font-size:0.8rem; margin-bottom:0.35rem;">③ Enable Pages</div>
+        <div class="step-body" style="font-size:0.72rem;">Settings → Pages → Branch: main → Folder: / (root) → Save.</div>
+      </div>
+      <div>
+        <div class="step-title" style="font-size:0.8rem; margin-bottom:0.35rem;">④ Live URL</div>
+        <div class="step-body" style="font-size:0.72rem;"><code>https://marct1.github.io/vorgyn-dashboard/</code><br>Live in ~60 seconds.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo"><em>Vorgyn</em> AI · Project Command Center · v2</div>
+      <div class="footer-right">
+        Marc T · <a href="https://github.com/marcT1" target="_blank">github.com/marcT1</a> · <a href="https://vorgyn.com" target="_blank">vorgyn.com</a><br>
+        Built with Claude Sonnet · Hosted on GitHub Pages · Updated Mar 27, 2026
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setTimestamps() {
+  const now = new Date();
+  const opts = { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+  const formatted = now.toLocaleDateString('en-US', opts);
+  document.getElementById('last-updated').textContent = 'Updated: ' + formatted;
+  document.getElementById('sync-time').textContent = formatted;
+}
+setTimestamps();
+
+// Animate progress bars from 0 → target on load
+document.addEventListener('DOMContentLoaded', () => {
+  const fills = document.querySelectorAll('.progress-fill');
+  fills.forEach(f => {
+    const target = f.style.width;
+    f.style.width = '0%';
+    setTimeout(() => { f.style.width = target; }, 400);
+  });
+});
+</script>
+</body>
+</html>
