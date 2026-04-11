@@ -3,49 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vorgyn AI — Project Command Center v4</title>
+<title>Vorgyn AI — Project Command Center v5</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:        #0B1E32;
-  --navy-card:   #0F2740;
-  --navy-mid:    #152D47;
-  --navy-light:  #1A3A5C;
-  --orange:      #FF6B2B;
-  --orange-dim:  rgba(255,107,43,0.12);
-  --gold:        #C9A546;
-  --gold-dim:    rgba(201,165,70,0.15);
-  --green:       #22C55E;
-  --green-dim:   rgba(34,197,94,0.12);
-  --yellow:      #EAB308;
-  --yellow-dim:  rgba(234,179,8,0.12);
-  --red:         #EF4444;
-  --red-dim:     rgba(239,68,68,0.12);
-  --blue:        #3B82F6;
-  --blue-dim:    rgba(59,130,246,0.12);
-  --purple:      #A855F7;
-  --purple-dim:  rgba(168,85,247,0.12);
-  --text:        #D4E4F0;
-  --text-dim:    #7A9BB5;
-  --border:      rgba(255,255,255,0.07);
-  --border-glow: rgba(255,107,43,0.25);
-}
+:root{--navy:#0B1E32;--navy-card:#0F2740;--navy-mid:#152D47;--navy-light:#1A3A5C;--orange:#FF6B2B;--orange-dim:rgba(255,107,43,0.12);--gold:#C9A546;--gold-dim:rgba(201,165,70,0.15);--green:#22C55E;--green-dim:rgba(34,197,94,0.12);--yellow:#EAB308;--yellow-dim:rgba(234,179,8,0.12);--red:#EF4444;--red-dim:rgba(239,68,68,0.12);--blue:#3B82F6;--blue-dim:rgba(59,130,246,0.12);--purple:#A855F7;--purple-dim:rgba(168,85,247,0.12);--text:#D4E4F0;--text-dim:#7A9BB5;--border:rgba(255,255,255,0.07);--border-glow:rgba(255,107,43,0.25);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,107,43,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,43,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
-
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
 @keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
 @keyframes scanline{0%{transform:translateY(-100%);}100%{transform:translateY(100vh);}}
 @keyframes ticker{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 @keyframes glow-pulse{0%,100%{box-shadow:0 0 12px rgba(255,107,43,.2);}50%{box-shadow:0 0 28px rgba(255,107,43,.45);}}
 @keyframes new-glow{0%,100%{box-shadow:0 0 0 1px rgba(168,85,247,.4),0 0 20px rgba(168,85,247,.15);}50%{box-shadow:0 0 0 1px rgba(168,85,247,.7),0 0 35px rgba(168,85,247,.3);}}
-
 .scanline{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,107,43,.15),transparent);animation:scanline 6s linear infinite;pointer-events:none;z-index:999;}
 .container{max-width:1420px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
-
 /* HEADER */
 header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;top:0;background:rgba(11,30,50,.96);backdrop-filter:blur(12px);z-index:100;}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
@@ -58,49 +32,33 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .live-badge{display:flex;align-items:center;gap:.5rem;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--green);text-transform:uppercase;letter-spacing:.1em;background:var(--green-dim);border:1px solid rgba(34,197,94,.2);border-radius:4px;padding:.3rem .7rem;}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease-in-out infinite;}
 .last-updated{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text-dim);}
-
 /* VERSION BANNER */
 .version-banner{background:linear-gradient(90deg,rgba(168,85,247,.12),rgba(168,85,247,.06),rgba(168,85,247,.12));border-bottom:1px solid rgba(168,85,247,.2);padding:.6rem 0;text-align:center;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--purple);letter-spacing:.08em;}
 .version-banner strong{color:#C084FC;}
-
-/* NAV TABS */
+/* TAB NAV */
 .tab-nav{background:rgba(11,30,50,.98);border-bottom:1px solid var(--border);padding:0;position:sticky;top:69px;z-index:99;}
 .tab-nav-inner{display:flex;gap:0;overflow-x:auto;}
 .tab-btn{font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);background:none;border:none;border-bottom:2px solid transparent;padding:.85rem 1.5rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .tab-btn:hover{color:var(--text);}
 .tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
-.tab-btn.revenue-tab{color:var(--green);}
 .tab-btn.revenue-tab.active{color:var(--green);border-bottom-color:var(--green);}
-
 /* TAB PANELS */
-.tab-panel{display:none;}
-.tab-panel.active{display:block;}
-
+.tab-panel{display:none;}.tab-panel.active{display:block;}
 /* TICKER */
 .ticker-wrap{background:rgba(255,107,43,.06);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;padding:.5rem 0;}
-.ticker-track{display:inline-flex;gap:0;animation:ticker 50s linear infinite;}
+.ticker-track{display:inline-flex;gap:0;animation:ticker 60s linear infinite;}
 .ticker-item{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text-dim);padding:0 2.5rem;display:flex;align-items:center;gap:.6rem;}
 .ticker-item .t-label{color:var(--orange);}
-.t-status-live{color:var(--green);}
-.t-status-build{color:var(--yellow);}
-.t-status-new{color:var(--purple);font-weight:600;}
+.t-status-live{color:var(--green);}.t-status-build{color:var(--yellow);}.t-status-new{color:var(--purple);font-weight:600;}
 .ticker-sep{color:var(--border);}
-
 /* STATS */
 .stats-bar{padding:2rem 0;animation:fadeUp .6s ease both;}
 .stats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
 .stat-cell{background:var(--navy-card);padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.25rem;}
 .stat-label{font-family:'DM Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);}
 .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;line-height:1;color:var(--text);}
-.stat-value.orange{color:var(--orange);}
-.stat-value.green{color:var(--green);}
-.stat-value.gold{color:var(--gold);}
-.stat-value.blue{color:var(--blue);}
-.stat-value.purple{color:var(--purple);}
-.stat-value.red{color:var(--red);}
-.stat-sub{font-size:.7rem;color:var(--text-dim);}
-.stat-sub.unverified{color:var(--yellow);font-style:italic;}
-
+.stat-value.orange{color:var(--orange);}.stat-value.green{color:var(--green);}.stat-value.gold{color:var(--gold);}.stat-value.blue{color:var(--blue);}.stat-value.purple{color:var(--purple);}.stat-value.red{color:var(--red);}
+.stat-sub{font-size:.7rem;color:var(--text-dim);}.stat-sub.unverified{color:var(--yellow);font-style:italic;}
 /* SECTION HEADERS */
 .section-header{display:flex;align-items:baseline;gap:1rem;margin-bottom:1.25rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
 .section-tag{font-family:'DM Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;color:var(--orange);background:var(--orange-dim);border:1px solid rgba(255,107,43,.2);padding:.2rem .6rem;border-radius:3px;}
@@ -108,33 +66,25 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .section-tag.purple-tag{color:var(--purple);background:var(--purple-dim);border-color:rgba(168,85,247,.3);}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em;}
 .section-count{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text-dim);margin-left:auto;}
-
 /* PROJECT GRID */
 .projects-section{padding:1rem 0 2rem;}
 .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:8px;overflow:hidden;border:1px solid var(--border);}
-
 /* PROJECT CARD */
 .project-card{background:var(--navy-card);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;transition:background .2s;animation:fadeUp .5s ease both;position:relative;}
 .project-card:hover{background:var(--navy-mid);}
 .project-card.is-new{background:rgba(15,39,64,1);animation:new-glow 3s ease-in-out infinite,fadeUp .5s ease both;border:1px solid rgba(168,85,247,.3);}
 .project-card.is-new:hover{background:rgba(21,45,71,1);}
 .new-badge{position:absolute;top:1rem;right:1rem;font-family:'DM Mono',monospace;font-size:.55rem;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:linear-gradient(135deg,#7C3AED,#A855F7);padding:.2rem .55rem;border-radius:20px;}
-
 .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;}
 .card-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0;}
 .status-pill{font-family:'DM Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;padding:.25rem .6rem;border-radius:20px;display:flex;align-items:center;gap:.4rem;white-space:nowrap;}
 .status-pill .dot{width:5px;height:5px;border-radius:50%;animation:pulse-dot 2s ease-in-out infinite;}
-.s-live{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}
-.s-live .dot{background:var(--green);}
-.s-build{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(234,179,8,.25);}
-.s-build .dot{background:var(--yellow);animation:none;}
-.s-done{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,165,70,.25);}
-.s-done .dot{background:var(--gold);animation:none;}
-.s-new{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(168,85,247,.35);}
-.s-new .dot{background:var(--purple);}
+.s-live{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25);}.s-live .dot{background:var(--green);}
+.s-build{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(234,179,8,.25);}.s-build .dot{background:var(--yellow);animation:none;}
+.s-done{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,165,70,.25);}.s-done .dot{background:var(--gold);animation:none;}
+.s-new{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(168,85,247,.35);}.s-new .dot{background:var(--purple);}
 .card-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;line-height:1.1;}
 .card-type{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
-
 /* PROGRESS */
 .progress-wrap{display:flex;flex-direction:column;gap:.35rem;}
 .progress-labels{display:flex;justify-content:space-between;align-items:baseline;}
@@ -142,74 +92,60 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .progress-pct{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text);}
 .progress-bar{height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
-.pf-green{background:linear-gradient(90deg,#16a34a,var(--green));}
-.pf-orange{background:linear-gradient(90deg,#c2410c,var(--orange));}
-.pf-yellow{background:linear-gradient(90deg,#b45309,var(--yellow));}
-.pf-blue{background:linear-gradient(90deg,#1d4ed8,var(--blue));}
-.pf-gold{background:linear-gradient(90deg,#92400e,var(--gold));}
-.pf-purple{background:linear-gradient(90deg,#6d28d9,var(--purple));}
-
+.pf-green{background:linear-gradient(90deg,#16a34a,var(--green));}.pf-orange{background:linear-gradient(90deg,#c2410c,var(--orange));}.pf-yellow{background:linear-gradient(90deg,#b45309,var(--yellow));}.pf-blue{background:linear-gradient(90deg,#1d4ed8,var(--blue));}.pf-gold{background:linear-gradient(90deg,#92400e,var(--gold));}.pf-purple{background:linear-gradient(90deg,#6d28d9,var(--purple));}
 /* MILESTONES */
 .milestones{display:flex;flex-direction:column;gap:.4rem;}
 .milestone{display:flex;align-items:flex-start;gap:.6rem;font-size:.72rem;color:var(--text-dim);line-height:1.35;}
-.milestone.done{color:var(--text);}
-.milestone.done .ms-icon{color:var(--green);}
+.milestone.done{color:var(--text);}.milestone.done .ms-icon{color:var(--green);}
 .milestone.active .ms-icon{color:var(--yellow);}
 .milestone.pending .ms-icon{color:rgba(255,255,255,.15);}
-.milestone.new-ms{color:#C084FC;}
-.milestone.new-ms .ms-icon{color:var(--purple);}
+.milestone.new-ms{color:#C084FC;}.milestone.new-ms .ms-icon{color:var(--purple);}
 .ms-icon{font-size:.7rem;flex-shrink:0;margin-top:.1rem;}
-
 /* TAGS */
 .card-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:auto;}
 .tag{font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.15rem .45rem;border-radius:3px;}
 .tag.new-tag{color:var(--purple);border-color:rgba(168,85,247,.3);background:var(--purple-dim);}
-
-/* CARD FOOTER — v4: price label only, no revenue claims */
+/* CARD FOOTER */
 .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border);margin-top:auto;}
 .card-link{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--orange);text-decoration:none;display:flex;align-items:center;gap:.3rem;transition:opacity .2s;}
 .card-link:hover{opacity:.7;}
-.card-price{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-dim);} /* dimmed — price only, not revenue */
+.card-price{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-dim);}
 .card-price em{color:var(--gold);font-style:normal;}
-
-/* ═══════════════════════════════════════════
-   REVENUE TRACKER SECTION
-═══════════════════════════════════════════ */
-
-/* REVENUE STATS BAR */
+/* BANNERS */
+.new-projects-banner{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(168,85,247,.04));border:1px solid rgba(168,85,247,.25);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:1rem;}
+.npb-icon{font-size:1.5rem;flex-shrink:0;}
+.npb-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;color:#C084FC;margin-bottom:.4rem;}
+.npb-body{font-size:.78rem;color:var(--text-dim);line-height:1.5;}
+.npb-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;}
+.npb-item{font-family:'DM Mono',monospace;font-size:.62rem;color:#C084FC;background:var(--purple-dim);border:1px solid rgba(168,85,247,.3);padding:.2rem .6rem;border-radius:3px;}
+.upgrade-banner{background:linear-gradient(135deg,rgba(234,179,8,.08),rgba(234,179,8,.04));border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:1rem 1.5rem;margin-bottom:1.5rem;}
+.ub-title{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--yellow);margin-bottom:.3rem;}
+.ub-body{font-size:.75rem;color:var(--text-dim);line-height:1.5;}
+/* REVENUE TRACKER */
 .rev-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
 .rev-stat{background:var(--navy-card);padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.3rem;}
 .rev-stat-label{font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text-dim);}
 .rev-stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;}
-.rev-stat-value.green{color:var(--green);}
-.rev-stat-value.red{color:var(--red);}
-.rev-stat-value.gold{color:var(--gold);}
-.rev-stat-value.blue{color:var(--blue);}
+.rev-stat-value.green{color:var(--green);}.rev-stat-value.red{color:var(--red);}.rev-stat-value.gold{color:var(--gold);}.rev-stat-value.blue{color:var(--blue);}
 .rev-stat-note{font-size:.65rem;color:var(--text-dim);font-style:italic;}
-
-/* LOG FORM */
 .log-form-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;margin-bottom:2rem;}
 .log-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--text);margin-bottom:1.25rem;display:flex;align-items:center;gap:.6rem;}
 .log-form-title .ico{color:var(--green);}
 .form-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr auto;gap:.75rem;align-items:end;}
 .form-field{display:flex;flex-direction:column;gap:.35rem;}
 .form-label{font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);}
-.form-input, .form-select{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:5px;padding:.55rem .75rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--text);outline:none;transition:border-color .2s;width:100%;}
-.form-input:focus, .form-select:focus{border-color:rgba(34,197,94,.4);}
+.form-input,.form-select{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:5px;padding:.55rem .75rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--text);outline:none;transition:border-color .2s;width:100%;}
+.form-input:focus,.form-select:focus{border-color:rgba(34,197,94,.4);}
 .form-select option{background:#0F2740;}
 .btn-log{background:linear-gradient(135deg,#16a34a,var(--green));border:none;border-radius:5px;padding:.58rem 1.25rem;font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:#000;font-weight:600;cursor:pointer;white-space:nowrap;transition:opacity .2s;}
 .btn-log:hover{opacity:.85;}
 .btn-secondary{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:5px;padding:.55rem 1rem;font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);cursor:pointer;transition:all .2s;}
 .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
 .form-row-2{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:.75rem;align-items:end;margin-top:.75rem;}
-
-/* COST FORM SECTION */
 .cost-toggle{font-family:'DM Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:.4rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
 .cost-toggle:hover{color:var(--orange);}
 .cost-form-wrap{margin-top:.85rem;display:none;}
 .cost-form-wrap.open{display:block;}
-
-/* ENTRIES TABLE */
 .entries-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
 .entries-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);}
 .entries-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;}
@@ -219,21 +155,16 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .entries-table td{font-family:'DM Mono',monospace;font-size:.72rem;color:var(--text);padding:.7rem 1rem;border-bottom:1px solid rgba(255,255,255,.03);}
 .entries-table tr:last-child td{border-bottom:none;}
 .entries-table tr:hover td{background:rgba(255,255,255,.02);}
-.td-revenue{color:var(--green);}
-.td-cost{color:var(--red);}
-.td-profit.pos{color:var(--green);}
-.td-profit.neg{color:var(--red);}
+.td-revenue{color:var(--green);}.td-cost{color:var(--red);}
+.td-profit.pos{color:var(--green);}.td-profit.neg{color:var(--red);}
 .td-type{padding:.15rem .4rem;border-radius:3px;font-size:.6rem;}
 .td-type.sale{background:var(--green-dim);color:var(--green);}
 .td-type.refund{background:var(--red-dim);color:var(--red);}
 .td-type.cost{background:var(--red-dim);color:var(--red);}
-.td-type.expense{background:var(--yellow-dim);color:var(--yellow);}
 .td-del{background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:.8rem;padding:.2rem .4rem;border-radius:3px;transition:all .2s;}
 .td-del:hover{color:var(--red);background:var(--red-dim);}
 .empty-state{text-align:center;padding:3rem;color:var(--text-dim);font-family:'DM Mono',monospace;font-size:.75rem;}
 .empty-state .empty-icon{font-size:2rem;margin-bottom:.75rem;}
-
-/* PER-PROJECT PROFITABILITY TABLE */
 .profit-table-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
 .profit-table{width:100%;border-collapse:collapse;}
 .profit-table th{font-family:'DM Mono',monospace;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);padding:.65rem 1rem;text-align:left;border-bottom:1px solid var(--border);background:rgba(0,0,0,.15);}
@@ -242,27 +173,10 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .profit-table tr:hover td{background:rgba(255,255,255,.02);}
 .pbar-wrap{width:80px;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:.5rem;}
 .pbar-fill{height:100%;border-radius:2px;}
-.pbar-fill.pos{background:var(--green);}
-.pbar-fill.neg{background:var(--red);}
+.pbar-fill.pos{background:var(--green);}.pbar-fill.neg{background:var(--red);}
 .no-data-row td{color:var(--text-dim);font-style:italic;text-align:center;padding:1.5rem;}
-
-/* DATA NOTE */
 .data-note{background:rgba(234,179,8,.06);border:1px solid rgba(234,179,8,.2);border-radius:6px;padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.74rem;color:var(--yellow);display:flex;align-items:flex-start;gap:.6rem;line-height:1.5;}
 .data-note .dn-icon{flex-shrink:0;margin-top:.05rem;}
-
-/* NEW PROJECTS BANNER */
-.new-projects-banner{background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(168,85,247,.04));border:1px solid rgba(168,85,247,.25);border-radius:8px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:1rem;}
-.npb-icon{font-size:1.5rem;flex-shrink:0;}
-.npb-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;color:#C084FC;margin-bottom:.4rem;}
-.npb-body{font-size:.78rem;color:var(--text-dim);line-height:1.5;}
-.npb-list{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem;}
-.npb-item{font-family:'DM Mono',monospace;font-size:.62rem;color:#C084FC;background:var(--purple-dim);border:1px solid rgba(168,85,247,.3);padding:.2rem .6rem;border-radius:3px;}
-
-/* UPGRADE BANNER */
-.upgrade-banner{background:linear-gradient(135deg,rgba(234,179,8,.08),rgba(234,179,8,.04));border:1px solid rgba(234,179,8,.2);border-radius:8px;padding:1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:1rem;}
-.ub-title{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--yellow);margin-bottom:.3rem;}
-.ub-body{font-size:.75rem;color:var(--text-dim);line-height:1.5;}
-
 /* TIMELINE */
 .timeline-section{padding:2rem 0;}
 .timeline{position:relative;padding-left:1.5rem;}
@@ -278,7 +192,6 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .timeline-pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.5rem;}
 .tpill{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--text-dim);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.15rem .5rem;border-radius:3px;}
 .tpill.new-pill{color:var(--purple);border-color:rgba(168,85,247,.3);background:var(--purple-dim);}
-
 /* UPDATE SECTION */
 .update-section{padding:2rem 0 3rem;}
 .update-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:8px;overflow:hidden;border:1px solid var(--border);}
@@ -293,7 +206,6 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .prompt-box{background:rgba(0,0,0,.45);border:1px solid var(--border-glow);border-radius:6px;padding:1.25rem;margin-top:1rem;}
 .prompt-label{font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);margin-bottom:.6rem;}
 .prompt-text{font-size:.76rem;color:var(--text-dim);line-height:1.6;font-style:italic;}
-
 /* FOOTER */
 footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
@@ -301,7 +213,6 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 .footer-logo em{color:var(--orange);font-style:normal;}
 .footer-right{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-dim);text-align:right;}
 .footer-right a{color:var(--orange);text-decoration:none;}
-
 @media(max-width:1100px){.projects-grid{grid-template-columns:repeat(2,1fr);}.stats-grid{grid-template-columns:repeat(3,1fr);}.rev-stats{grid-template-columns:repeat(3,1fr);}.form-grid{grid-template-columns:1fr 1fr;}.form-row-2{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){.projects-grid{grid-template-columns:1fr;}.stats-grid{grid-template-columns:repeat(2,1fr);}.rev-stats{grid-template-columns:repeat(2,1fr);}.update-grid{grid-template-columns:1fr;}.header-meta{display:none;}.form-grid{grid-template-columns:1fr;}.form-row-2{grid-template-columns:1fr;}}
 </style>
@@ -309,7 +220,6 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 <body>
 <div class="scanline"></div>
 
-<!-- HEADER -->
 <header>
   <div class="container">
     <div class="header-inner">
@@ -325,12 +235,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
   </div>
 </header>
 
-<!-- VERSION BANNER -->
 <div class="version-banner">
-  ✦ <strong>Dashboard v4 — Mar 29, 2026</strong> &nbsp;|&nbsp; Revenue Tracker added &nbsp;|&nbsp; Honest KPIs &nbsp;|&nbsp; Price labels only — no unverified revenue claims
+  ✦ <strong>Dashboard v5 — Apr 10, 2026</strong> &nbsp;|&nbsp; 6 new projects added &nbsp;|&nbsp; 4 milestones upgraded &nbsp;|&nbsp; Portfolio now <strong>22 total projects</strong>
 </div>
 
-<!-- TAB NAV -->
 <div class="tab-nav">
   <div class="container">
     <div class="tab-nav-inner">
@@ -342,47 +250,46 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
   </div>
 </div>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <span class="ticker-item"><span class="t-label">SAE EIA-649C CM Guide</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">US Immigration Strategy</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Marriage & Visa Strategy</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">System Viability Monitor</span><span class="t-status-new">✦ UPGRADED</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Trading Platform v3 — Auto-Engine</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CR Data Alignment Tool</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">FinTrack Pro Marketing Plan</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Video Ad Storyboard</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CAICMP Textbook Ch. 1</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge CROA Compliance</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Revenue Tracker</span><span class="t-status-new">✦ NEW IN v4</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CAICMP Textbook</span><span class="t-status-build">◐ IN PROGRESS</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">Fresh Start Credit Mastery</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
-    <!-- duplicate for loop -->
-    <span class="ticker-item"><span class="t-label">SAE EIA-649C CM Guide</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">US Immigration Strategy</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Marriage & Visa Strategy</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">System Viability Monitor</span><span class="t-status-new">✦ UPGRADED</span><span class="ticker-sep">|</span></span>
+    <!-- duplicate -->
+    <span class="ticker-item"><span class="t-label">Trading Platform v3 — Auto-Engine</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CR Data Alignment Tool</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">FinTrack Pro Marketing Plan</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Video Ad Storyboard</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CAICMP Textbook Ch. 1</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge CROA Compliance</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ IN BUILD</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Revenue Tracker</span><span class="t-status-new">✦ NEW IN v4</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CAICMP Textbook</span><span class="t-status-build">◐ IN PROGRESS</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">Fresh Start Credit Mastery</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
   </div>
 </div>
 
 <div class="container">
 
-<!-- ════════════════════════════════════
-     TAB 1 — PROJECTS
-════════════════════════════════════ -->
+<!-- ══ TAB: PROJECTS ══ -->
 <div class="tab-panel active" id="tab-projects">
-
-  <!-- STATS — v4: "Published & available" replaces "Generating revenue" -->
   <div class="stats-bar">
     <div class="stats-grid">
       <div class="stat-cell">
         <div class="stat-label">Total Projects</div>
-        <div class="stat-value orange">16</div>
-        <div class="stat-sub">↑ from 13 in v2</div>
+        <div class="stat-value orange">22</div>
+        <div class="stat-sub">↑ from 16 in v4</div>
       </div>
       <div class="stat-cell">
         <div class="stat-label">Published & Available</div>
@@ -391,7 +298,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
       <div class="stat-cell">
         <div class="stat-label">In Active Build</div>
-        <div class="stat-value" style="color:var(--yellow)">5</div>
+        <div class="stat-value" style="color:var(--yellow)">7</div>
         <div class="stat-sub">Dev in progress</div>
       </div>
       <div class="stat-cell">
@@ -412,193 +319,118 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
     </div>
   </div>
 
-  <!-- BANNERS -->
   <div class="new-projects-banner">
     <div class="npb-icon">✦</div>
     <div>
-      <div class="npb-title">3 New Projects + 1 Major Upgrade — v3 (Mar 29, 2026)</div>
-      <div class="npb-body">Purple-bordered cards below are new or upgraded since v2.</div>
+      <div class="npb-title">6 New Projects Added — v5 Update (Apr 10, 2026)</div>
+      <div class="npb-body">Full review of all chat sessions since v4. New items highlighted with purple borders and ✦ NEW badges. Milestone updates also applied to 4 existing cards.</div>
       <div class="npb-list">
-        <span class="npb-item">✦ SAE EIA-649C Configuration Management Guide</span>
-        <span class="npb-item">✦ US Immigration Strategy — Two-Track</span>
-        <span class="npb-item">✦ Marriage &amp; Visa Cost Strategy</span>
-        <span class="npb-item">⬆ System Viability Monitor — Real Data, 16 Systems</span>
+        <span class="npb-item">✦ AI Trading Platform v3 — Auto-Engine + Strategy Builder</span>
+        <span class="npb-item">✦ CR Data Alignment Tool</span>
+        <span class="npb-item">✦ FinTrack Pro 30-Day Marketing Plan</span>
+        <span class="npb-item">✦ Fresh Start Video Ad Storyboard + Ad Guide</span>
+        <span class="npb-item">✦ CAICMP Textbook — Chapter 1 + One-Pager</span>
+        <span class="npb-item">✦ CreditForge CROA/FTC Compliance + Launch Plan</span>
       </div>
     </div>
   </div>
 
   <div class="upgrade-banner">
     <div>
-      <div class="ub-title">⬆ v4 — Revenue Tracker added. KPIs now show verified data only.</div>
-      <div class="ub-body">The "Generating revenue" claim has been removed. "Published &amp; available" is factually accurate. All revenue, cost, and profit figures are now driven exclusively by what you manually log in the Revenue Tracker tab. Nothing is assumed.</div>
+      <div class="ub-title">⬆ Milestone Upgrades in v5</div>
+      <div class="ub-body">Singapore Marriage Plan refined to CR-1/IR-1 only (K-1 removed), 47-task Word doc + flight/hotel research complete. SAE EIA-649C guide expanded to full CAICMP certification program with $170K Year 1 projections. FinTrack Pro full three-platform workflow (GitHub + Gumroad + Netlify) completed. CreditForge AI Bot compliance research finished.</div>
     </div>
   </div>
 
-  <!-- PROJECTS GRID -->
   <div class="projects-section">
     <div class="section-header">
       <span class="section-tag">Portfolio</span>
       <span class="section-title">Vorgyn AI — All Projects</span>
-      <span class="section-count">16 total · <span style="color:var(--purple)">3 new ✦</span> · Synced <span id="sync-time">—</span></span>
+      <span class="section-count">22 total · <span style="color:var(--purple)">6 new ✦</span> · Synced <span id="sync-time">—</span></span>
     </div>
     <div class="projects-grid">
 
       <!-- 1. AI NEWS DASHBOARD -->
-      <div class="project-card" style="animation-delay:.04s">
-        <div class="card-top">
-          <div><div class="card-name">AI News Intelligence Dashboard</div><div class="card-type">Automated Pipeline · GitHub Pages</div></div>
-          <div class="status-pill s-live"><div class="dot"></div>Live</div>
-        </div>
+      <div class="project-card" style="animation-delay:.03s">
+        <div class="card-top"><div><div class="card-name">AI News Intelligence Dashboard</div><div class="card-type">Automated Pipeline · GitHub Pages</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--green-dim)">📡</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> Pipeline built &amp; GitHub Actions automated</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Daily 7AM Eastern digest confirmed firing</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Daily 7AM digest confirmed firing</div>
           <div class="milestone done"><span class="ms-icon">✓</span> Caching bug fixed via raw CDN bypass</div>
           <div class="milestone done"><span class="ms-icon">✓</span> Email digest sending confirmed</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Monetization paths mapped</div>
         </div>
         <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">Claude API</span><span class="tag">Email Digest</span></div>
-        <div class="card-footer">
-          <a href="https://github.com/marcT1/ai-news-dashboard" class="card-link" target="_blank">↗ github.com/marcT1</a>
-          <span class="card-price">Price: <em>$39</em></span>
-        </div>
+        <div class="card-footer"><a href="https://github.com/marcT1/ai-news-dashboard" class="card-link" target="_blank">↗ github.com/marcT1</a><span class="card-price">Price: <em>$39</em></span></div>
       </div>
 
       <!-- 2. FINTRACK PRO -->
-      <div class="project-card" style="animation-delay:.07s">
-        <div class="card-top">
-          <div><div class="card-name">FinTrack Pro</div><div class="card-type">Digital Product · Gumroad</div></div>
-          <div class="status-pill s-live"><div class="dot"></div>Live</div>
-        </div>
+      <div class="project-card" style="animation-delay:.05s">
+        <div class="card-top"><div><div class="card-name">FinTrack Pro</div><div class="card-type">Digital Product · Gumroad / Netlify</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">💹</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> 9-tab HTML dashboard built</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Desktop-first launch strategy confirmed</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> GitHub Releases + Gumroad live</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Personal variant: debt + what-if analyzer</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> GitHub Releases + Gumroad live at $19</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Netlify landing page deployed</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Full GitHub/Gumroad/Netlify workflow guide</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 30-day marketing plan built (see card #17)</div>
         </div>
-        <div class="card-tags"><span class="tag">HTML/CSS/JS</span><span class="tag">Gumroad</span><span class="tag">Desktop-first</span></div>
-        <div class="card-footer">
-          <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a>
-          <span class="card-price">Price: <em>$19</em></span>
-        </div>
+        <div class="card-tags"><span class="tag">HTML/CSS/JS</span><span class="tag">Gumroad</span><span class="tag">Netlify</span><span class="tag">$19</span></div>
+        <div class="card-footer"><a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a><span class="card-price">Price: <em>$19</em></span></div>
       </div>
 
       <!-- 3. VORGYN AI WEBSITE -->
-      <div class="project-card" style="animation-delay:.10s">
-        <div class="card-top">
-          <div><div class="card-name">Vorgyn AI Website</div><div class="card-type">Company Site · Netlify · vorgyn.com</div></div>
-          <div class="status-pill s-live"><div class="dot"></div>Live</div>
-        </div>
+      <div class="project-card" style="animation-delay:.07s">
+        <div class="card-top"><div><div class="card-name">Vorgyn AI Website</div><div class="card-type">Company Site · Netlify · vorgyn.com</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--orange-dim)">🏗️</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">98%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-orange" style="width:98%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">98%</span></div><div class="progress-bar"><div class="progress-fill pf-orange" style="width:98%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Brand system: navy/orange/gold · Bebas Neue</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Full 6-section site deployed</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> vorgyn.com purchased &amp; deployed</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> DNS connection &amp; LLC/DBA filing</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Full 6-section site deployed on Netlify</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> vorgyn.com domain active</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Portfolio / custom dev section (pending)</div>
         </div>
         <div class="card-tags"><span class="tag">Netlify</span><span class="tag">vorgyn.com</span><span class="tag">Brand Asset</span></div>
-        <div class="card-footer">
-          <a href="https://vorgyn.com" class="card-link" target="_blank">↗ vorgyn.com</a>
-          <span class="card-price">Brand asset</span>
-        </div>
+        <div class="card-footer"><a href="https://vorgyn.com" class="card-link" target="_blank">↗ vorgyn.com</a><span class="card-price">Brand asset</span></div>
       </div>
 
       <!-- 4. CREDITFORGE AI BOT -->
-      <div class="project-card" style="animation-delay:.13s">
-        <div class="card-top">
-          <div><div class="card-name">CreditForge AI Bot</div><div class="card-type">SaaS · Claude API · Subscription</div></div>
-          <div class="status-pill s-build"><div class="dot"></div>In Build</div>
-        </div>
+      <div class="project-card" style="animation-delay:.09s">
+        <div class="card-top"><div><div class="card-name">CreditForge AI Bot</div><div class="card-type">SaaS · Claude API · Subscription</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--gold-dim)">🤖</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">55%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-yellow" style="width:55%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">65%</span></div><div class="progress-bar"><div class="progress-fill pf-yellow" style="width:65%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> Validated vs $149/mo competitors</div>
           <div class="milestone done"><span class="ms-icon">✓</span> HTML/JS prototype + Netlify serverless</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> Gumroad license key gating</div>
-          <div class="milestone pending"><span class="ms-icon">○</span> Stripe subscription integration</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> CROA/FTC/FCRA full compliance analysis done</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Florida CSO registration + $10K bond requirement identified</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 90-day launch plan + 7 accountability email drafts</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Gumroad license key gating + Stripe integration</div>
         </div>
-        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">Netlify</span><span class="tag">Recurring</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In development</span>
-          <span class="card-price">Target: <em>$19–49/mo</em></span>
-        </div>
+        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">CROA Compliant</span><span class="tag">$19–49/mo</span><span class="tag">Netlify</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In development</span><span class="card-price">Target: <em>$19–49/mo</em></span></div>
       </div>
 
       <!-- 5. GRIDIRON & HARDWOOD -->
-      <div class="project-card" style="animation-delay:.16s">
-        <div class="card-top">
-          <div><div class="card-name">Gridiron &amp; Hardwood</div><div class="card-type">Sports Trivia App · YouTube</div></div>
-          <div class="status-pill s-build"><div class="dot"></div>In Build</div>
-        </div>
+      <div class="project-card" style="animation-delay:.11s">
+        <div class="card-top"><div><div class="card-name">Gridiron &amp; Hardwood</div><div class="card-type">Sports Trivia App · YouTube</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">🏈</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">70%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-blue" style="width:70%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">70%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:70%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> App: NBA/NFL/MLB · 1960–present · 3 tiers</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Claude API AI explanations integrated</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Tester version deployed</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Claude API live AI explanations integrated</div>
           <div class="milestone active"><span class="ms-icon">◐</span> YouTube channel &amp; affiliate setup</div>
         </div>
         <div class="card-tags"><span class="tag">Claude API</span><span class="tag">YouTube</span><span class="tag">Affiliate</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Testing</span>
-          <span class="card-price">Affiliate + ad model</span>
-        </div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Testing phase</span><span class="card-price">Affiliate + ad model</span></div>
       </div>
 
-      <!-- 6. STOCK TRADING PLATFORM -->
-      <div class="project-card" style="animation-delay:.19s">
-        <div class="card-top">
-          <div><div class="card-name">AI Stock Trading Platform</div><div class="card-type">Algo Trading · 8 Symbols · Paper</div></div>
-          <div class="status-pill s-build"><div class="dot"></div>In Build</div>
-        </div>
-        <div class="card-icon" style="background:var(--green-dim)">📊</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">65%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-green" style="width:65%"></div></div>
-        </div>
-        <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> 8-symbol dashboard RSI/MACD/EMA/BB</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Simulated day: 80% win rate +$108.90</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Slippage Tracker + GitHub Pages guide</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> Alpaca live API integration</div>
-        </div>
-        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">Alpaca</span><span class="tag">Paper Trading</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Paper trading</span>
-          <span class="card-price">Simulation phase</span>
-        </div>
-      </div>
-
-      <!-- 7. OPTIONS TRADING PLATFORM -->
-      <div class="project-card" style="animation-delay:.22s">
-        <div class="card-top">
-          <div><div class="card-name">Options Trading Platform</div><div class="card-type">Black-Scholes · 5 Greeks · 12 Strategies</div></div>
-          <div class="status-pill s-build"><div class="dot"></div>In Build</div>
-        </div>
+      <!-- 6. OPTIONS TRADING PLATFORM -->
+      <div class="project-card" style="animation-delay:.13s">
+        <div class="card-top"><div><div class="card-name">Options Trading Platform</div><div class="card-type">Black-Scholes · 5 Greeks · 12 Strategies</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">⚡</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">75%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:75%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">75%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:75%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> Black-Scholes engine: all 5 Greeks live</div>
           <div class="milestone done"><span class="ms-icon">✓</span> 12-strategy library + IV Rank gauge</div>
@@ -606,226 +438,267 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
           <div class="milestone active"><span class="ms-icon">◐</span> Live broker API integration</div>
         </div>
         <div class="card-tags"><span class="tag">Black-Scholes</span><span class="tag">Greeks</span><span class="tag">Tastytrade</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In build</span>
-          <span class="card-price">Extension of Trading Platform</span>
-        </div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In build</span><span class="card-price">Extension of Trading Platform</span></div>
       </div>
 
-      <!-- 8. SYSTEM VIABILITY MONITOR -->
-      <div class="project-card is-new" style="animation-delay:.25s">
-        <div class="new-badge">⬆ UPGRADED</div>
-        <div class="card-top">
-          <div><div class="card-name">System Viability Monitor</div><div class="card-type">Enterprise Dashboard · IT Analytics</div></div>
-          <div class="status-pill s-done"><div class="dot"></div>Complete</div>
-        </div>
+      <!-- 7. SYSTEM VIABILITY MONITOR -->
+      <div class="project-card" style="animation-delay:.15s">
+        <div class="card-top"><div><div class="card-name">System Viability Monitor</div><div class="card-type">Enterprise Dashboard · IT Analytics · 16 Systems</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🛡️</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> 6-tab dashboard + escalation report generator</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Real data: 228,970 rows · 5,373 CRs · 16 systems</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> KPI drill-downs fixed + real field mappings</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 10-section Word guide + Playwright screenshot cover</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Real data: 228,970 rows · 5,373 CRs · 16 gov systems</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> KPI drill-downs fixed + Word user guide</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Gemini-optimized rebuild prompt delivered</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ Upgraded</span><span class="tag">228K Rows</span><span class="tag">16 Systems</span><span class="tag">Enterprise</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--purple)">✦ Major upgrade</span>
-          <span class="card-price">Enterprise / IT market</span>
-        </div>
+        <div class="card-tags"><span class="tag">228K Rows</span><span class="tag">16 Systems</span><span class="tag">Enterprise IT</span><span class="tag">Word Guide</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Enterprise / IT market</span></div>
       </div>
 
-      <!-- 9. FRESH START CREDIT MASTERY -->
-      <div class="project-card" style="animation-delay:.28s">
-        <div class="card-top">
-          <div><div class="card-name">Fresh Start Credit Mastery</div><div class="card-type">Digital Product · Gumroad</div></div>
-          <div class="status-pill s-done"><div class="dot"></div>Live</div>
-        </div>
+      <!-- 8. FRESH START CREDIT MASTERY -->
+      <div class="project-card" style="animation-delay:.17s">
+        <div class="card-top"><div><div class="card-name">Fresh Start Credit Mastery</div><div class="card-type">Book · Gumroad + Amazon KDP</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--gold-dim)">💳</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-gold" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-gold" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> ~50,000-word guide live on Gumroad</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Active buyer base established</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Feeder into CreditForge AI Bot pipeline</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> ~49,000-word guide live on Gumroad</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Video ad storyboard built (see card #19)</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Amazon KDP upload (identified as next priority)</div>
         </div>
-        <div class="card-tags"><span class="tag">Gumroad</span><span class="tag">Credit Repair</span></div>
-        <div class="card-footer">
-          <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a>
-          <span class="card-price">Price: <em>$27–97</em></span>
-        </div>
+        <div class="card-tags"><span class="tag">Gumroad</span><span class="tag">Amazon KDP</span><span class="tag">Credit Repair</span></div>
+        <div class="card-footer"><a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a><span class="card-price">Price: <em>$27–97</em></span></div>
       </div>
 
-      <!-- 10. NOTION CREDIT TRACKER -->
-      <div class="project-card" style="animation-delay:.31s">
-        <div class="card-top">
-          <div><div class="card-name">Credit Repair Notion Tracker</div><div class="card-type">Notion Template · Gumroad</div></div>
-          <div class="status-pill s-done"><div class="dot"></div>Live</div>
-        </div>
+      <!-- 9. NOTION CREDIT TRACKER -->
+      <div class="project-card" style="animation-delay:.19s">
+        <div class="card-top"><div><div class="card-name">Credit Repair Notion Tracker</div><div class="card-type">Notion Template · Gumroad</div></div><div class="status-pill s-done"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--orange-dim)">📋</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-orange" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-orange" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> 4-database Notion system built</div>
           <div class="milestone done"><span class="ms-icon">✓</span> Life Reset Bundle at $67 structured</div>
         </div>
-        <div class="card-tags"><span class="tag">Notion</span><span class="tag">CSV Import</span></div>
-        <div class="card-footer">
-          <a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a>
-          <span class="card-price">Price: <em>$17</em> / Bundle <em>$67</em></span>
-        </div>
+        <div class="card-tags"><span class="tag">Notion</span><span class="tag">CSV Import</span><span class="tag">Bundle $67</span></div>
+        <div class="card-footer"><a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a><span class="card-price">Price: <em>$17</em> / Bundle <em>$67</em></span></div>
       </div>
 
-      <!-- 11. SLIPPAGE TRACKER -->
-      <div class="project-card" style="animation-delay:.34s">
-        <div class="card-top">
-          <div><div class="card-name">AI Slippage Tracker</div><div class="card-type">Trading Tool · Internal</div></div>
-          <div class="status-pill s-done"><div class="dot"></div>Complete</div>
-        </div>
+      <!-- 10. SLIPPAGE TRACKER -->
+      <div class="project-card" style="animation-delay:.21s">
+        <div class="card-top"><div><div class="card-name">AI Slippage Tracker</div><div class="card-type">Trading Tool · Internal</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">📉</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> Trade log + charts + AI recommendations</div>
           <div class="milestone done"><span class="ms-icon">✓</span> 18 pre-seeded simulation trades</div>
         </div>
         <div class="card-tags"><span class="tag">HTML App</span><span class="tag">Claude API</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--gold)">✓ Internal tool</span>
-          <span class="card-price">Internal use</span>
-        </div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Internal tool</span><span class="card-price">Internal use</span></div>
       </div>
 
-      <!-- 12. NVIDIA DGX SPARK REPORT -->
-      <div class="project-card" style="animation-delay:.37s">
-        <div class="card-top">
-          <div><div class="card-name">NVIDIA DGX SPARK Report</div><div class="card-type">Technical Evaluation · HTML + Word</div></div>
-          <div class="status-pill s-done"><div class="dot"></div>Complete</div>
-        </div>
+      <!-- 11. NVIDIA DGX SPARK REPORT -->
+      <div class="project-card" style="animation-delay:.23s">
+        <div class="card-top"><div><div class="card-name">NVIDIA DGX SPARK Report</div><div class="card-type">Technical Evaluation · HTML + Word</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📝</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Full evaluation — 8.1/10 overall score</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Full evaluation — 8.1/10 score</div>
           <div class="milestone done"><span class="ms-icon">✓</span> HTML + Word deliverable complete</div>
         </div>
         <div class="card-tags"><span class="tag">NVIDIA</span><span class="tag">AI Hardware</span><span class="tag">Word + HTML</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span>
-          <span class="card-price">Portfolio proof-of-work</span>
-        </div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Portfolio sample</span></div>
       </div>
 
-      <!-- 13. AI DASHBOARD FREELANCE -->
-      <div class="project-card" style="animation-delay:.40s">
-        <div class="card-top">
-          <div><div class="card-name">AI Dashboard Freelance Service</div><div class="card-type">Custom Dev · 3-Tier Pricing</div></div>
-          <div class="status-pill s-build"><div class="dot"></div>Launching</div>
-        </div>
+      <!-- 12. AI DASHBOARD FREELANCE -->
+      <div class="project-card" style="animation-delay:.25s">
+        <div class="card-top"><div><div class="card-name">AI Dashboard Freelance Service</div><div class="card-type">Custom Dev · 3-Tier Pricing</div></div><div class="status-pill s-build"><div class="dot"></div>Launching</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🚀</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">60%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:60%"></div></div>
-        </div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">60%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:60%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> 3-tier pricing defined: $500 / $1.5K / $3K–$8K</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 3-tier pricing: $500 / $1.5K / $3K–$8K</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Portfolio page on vorgyn.com</div>
           <div class="milestone pending"><span class="ms-icon">○</span> First 3 client projects</div>
         </div>
         <div class="card-tags"><span class="tag">Freelance</span><span class="tag">Upwork</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Launching</span>
-          <span class="card-price">Rate: <em>$500–$8K/project</em></span>
-        </div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Launching</span><span class="card-price">Rate: <em>$500–$8K/project</em></span></div>
       </div>
 
-      <!-- 14. SAE EIA-649C CM GUIDE ✦ NEW -->
+      <!-- 13. SAE EIA-649C CM GUIDE / CAICMP PROGRAM -->
+      <div class="project-card" style="animation-delay:.27s">
+        <div class="card-top"><div><div class="card-name">CAICMP Certification Program</div><div class="card-type">SAE EIA-649C · Ebook · 12-Ch Textbook · Course</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">📐</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">30%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:30%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone done"><span class="ms-icon">✓</span> All 5 CM functions mapped to Agile/CI/CD</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 10-section Word doc: RACI, DoD addendum</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 12-chapter textbook structure + authoring prompt</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> IP strategy: copyright, trademark, trade secret</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Gov market: SAM.gov, GSA MAS SIN 611430 path</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Year 1 revenue proj: ~$170K → $750K–$1.2M Year 3</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Chapter 1 complete (see card #20) · Ch 2–12 pending</div>
+          <div class="milestone pending"><span class="ms-icon">○</span> Copyright registration + USPTO trademark filing</div>
+        </div>
+        <div class="card-tags"><span class="tag">SAE EIA-649C</span><span class="tag">Gov Market</span><span class="tag">Certification</span><span class="tag">$170K Yr1</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In progress</span><span class="card-price">Ebook + Course + Cert</span></div>
+      </div>
+
+      <!-- 14. US IMMIGRATION STRATEGY -->
+      <div class="project-card" style="animation-delay:.29s">
+        <div class="card-top"><div><div class="card-name">Singapore Marriage + CR-1 Plan</div><div class="card-type">Personal Planning · 47-Task Action Plan</div></div><div class="status-pill s-build"><div class="dot"></div>In Progress</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">✈️</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:85%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone done"><span class="ms-icon">✓</span> Strategy refined: CR-1/IR-1 only (K-1 removed)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 47-task Word action plan (6 phases, page-break format)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Flight research: MCO→SIN Jul 2–23, &lt;24hr travel</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Hotel research: budget city-view, central location</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Master task table document (standalone Word)</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Singapore ROM appointment booking (rom.gov.sg)</div>
+          <div class="milestone pending"><span class="ms-icon">○</span> File I-130 + I-130A immediately after return to FL</div>
+        </div>
+        <div class="card-tags"><span class="tag">CR-1/IR-1</span><span class="tag">Singapore ROM</span><span class="tag">July 2026</span><span class="tag">Personal</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">Personal planning</span><span class="card-price">Personal document</span></div>
+      </div>
+
+      <!-- 15. MARRIAGE & VISA COST STRATEGY -->
+      <div class="project-card" style="animation-delay:.31s">
+        <div class="card-top"><div><div class="card-name">Marriage &amp; Visa Cost Strategy</div><div class="card-type">Personal Planning · CR-1 vs K-1 Analysis</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">💍</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone done"><span class="ms-icon">✓</span> Option A: Marry in Singapore → CR-1 (recommended)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Full fee breakdown, Singapore-specific docs</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Self-employment income guidance (Vorgyn AI / AOS)</div>
+        </div>
+        <div class="card-tags"><span class="tag">CR-1/IR-1</span><span class="tag">Singapore</span><span class="tag">Cost Analysis</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Personal document</span></div>
+      </div>
+
+      <!-- ══ NEW IN V5 ══ -->
+
+      <!-- 16. AI TRADING PLATFORM v3 — AUTO-ENGINE ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.33s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">AI Stock Trading Platform v3</div><div class="card-type">Auto-Engine · Strategy Builder · Full-Screen</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🤖</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:85%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Full-screen 100vh/100vw layout, no outer scroll</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Strategy dropdown: category filter + search across all strategies</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Custom strategy builder: define signal rules, risk params, AI hints</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Auto-trading engine with confirmation modal</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Guardrails: $500 daily loss kill switch, 6 trades/hr max, 12s cooldown</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Keyboard shortcuts: S/N/A/Escape</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Live Alpaca broker integration</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Auto-Engine</span><span class="tag">Kill Switch</span><span class="tag">Strategy Builder</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Major upgrade</span><span class="card-price">Paper trading → live</span></div>
+      </div>
+
+      <!-- 17. FINTRACK PRO MARKETING PLAN ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.35s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">FinTrack Pro — 30-Day Marketing Plan</div><div class="card-type">Marketing Strategy · Word Doc · 4 Phases</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">📣</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Phase 1 (Days 1–2): Reddit, Twitter/X, Facebook, Product Hunt — full copy</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Phase 2 (Days 3–14): YouTube SEO, Substack, ConvertKit email sequence</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Phase 3 (Days 15–30): Reddit Ads, Google Ads, YouTube Ads templates</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Phase 4: Gumroad affiliate program at 30% commission</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 22-item day-by-day execution checklist</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Full Word doc with color-coded tables + brand cover page</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Reddit Ads</span><span class="tag">Google Ads</span><span class="tag">ConvertKit</span><span class="tag">Affiliate</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Marketing asset</span></div>
+      </div>
+
+      <!-- 18. CR DATA ALIGNMENT TOOL ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.37s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">CR Data Alignment Tool</div><div class="card-type">Standalone HTML App · CSV → Standardized Export</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🗂️</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> CSV import → drag-and-drop field mapping UI</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 37 standardized ECR fields across 6 groups</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Validation &amp; flagging: missing required fields, malformed values</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Raw vs. aligned data preview before export</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Export: CSV + JSON, filename with timestamp</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Session persistence: mapping remembered on reload</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">HTML App</span><span class="tag">37 Fields</span><span class="tag">CSV → JSON</span><span class="tag">Vorgyn AI</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Enterprise / IT tool</span></div>
+      </div>
+
+      <!-- 19. VIDEO AD STORYBOARD ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.39s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">Video Ad Storyboard — Fresh Start</div><div class="card-type">Animated HTML Preview · 6-Scene Ad · Multi-Platform</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🎬</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 6-scene animated HTML storyboard (timed ad preview)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Direct-response framework: hook → problem → reveal → CTA</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Amazon Sponsored Products + Meta video ad copy</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> A/B test: pain-first vs. result-first hook variants</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> TikTok organic distribution + Amazon Attribution tracking</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Canva/CapCut recreation guide + Fiverr outsource option</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Amazon Ads</span><span class="tag">Meta Ads</span><span class="tag">TikTok</span><span class="tag">Direct Response</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Marketing asset</span></div>
+      </div>
+
+      <!-- 20. CAICMP TEXTBOOK CHAPTER 1 ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.41s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">CAICMP Textbook — Chapter 1</div><div class="card-type">~6,000-Word Word Doc · Glossary · Review Questions</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">📖</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Full Chapter 1 Word doc — ~6,000 words, print-ready</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Learning objectives, 4 major sections, tool comparison table</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> IV&amp;V questions sidebar + Common Failure Modes sidebar</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 16-term glossary table + 15 CAICMP exam-format review questions</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Visual one-pager (HTML widget): plain-English Ch 1 summary</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> SimpleField("PAGE") fix for PageNumber API compatibility</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">CAICMP</span><span class="tag">Word Doc</span><span class="tag">Gov Market</span><span class="tag">Textbook</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Ch 1 of 12</span><span class="card-price">Textbook chapter</span></div>
+      </div>
+
+      <!-- 21. CREDITFORGE CROA COMPLIANCE ✦ NEW -->
       <div class="project-card is-new" style="animation-delay:.43s">
         <div class="new-badge">✦ NEW</div>
-        <div class="card-top">
-          <div><div class="card-name">SAE EIA-649C CM Guide</div><div class="card-type">Technical Guide · Ebook + Course · IP</div></div>
-          <div class="status-pill s-new"><div class="dot"></div>New</div>
-        </div>
-        <div class="card-icon" style="background:var(--purple-dim)">📐</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">70%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:70%"></div></div>
-        </div>
+        <div class="card-top"><div><div class="card-name">CreditForge — CROA/FTC Compliance Plan</div><div class="card-type">Legal Compliance · 90-Day Launch Plan · Gmail Accountability</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">⚖️</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> All 5 CM functions mapped to Agile/CI/CD</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> AI augmentation analysis + 4 SVG diagrams</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 10-section Word doc: RACI, DoD addendum</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 4-part ebook + 6-module gov course outlined</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> IP strategy: copyright, trademark, trade secret</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> Ebook draft + copyright registration</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Full CROA (15 U.S.C. § 1679) compliance breakdown</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> FTC Telemarketing Sales Rule + FCRA analysis</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Florida CSO registration + $10K surety bond requirement</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> No advance fee rule, 3-day cancellation rights, required disclosures</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 90-day launch plan: Phase 1 zero → first revenue</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 7 Gmail accountability draft emails (Days 1/2/3/7/14/21/30)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Vorgyn AI rated 8.4/10 viability · CreditForge moat vs DisputeBee</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">SAE EIA-649C</span><span class="tag">Gov Market</span><span class="tag">Ebook + Course</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--purple)">✦ In development</span>
-          <span class="card-price">Ebook + Course (gov pricing)</span>
-        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">CROA</span><span class="tag">FTC</span><span class="tag">Florida CSO</span><span class="tag">90-Day Plan</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Compliance + launch asset</span></div>
       </div>
 
-      <!-- 15. US IMMIGRATION STRATEGY ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.46s">
-        <div class="new-badge">✦ NEW</div>
-        <div class="card-top">
-          <div><div class="card-name">US Immigration — Two-Track</div><div class="card-type">Personal Planning · K-1 + B-2 Medical</div></div>
-          <div class="status-pill s-new"><div class="dot"></div>New</div>
-        </div>
-        <div class="card-icon" style="background:var(--purple-dim)">✈️</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">80%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:80%"></div></div>
-        </div>
+      <!-- 22. US TWO-TRACK IMMIGRATION (from v4, kept) -->
+      <div class="project-card" style="animation-delay:.45s">
+        <div class="card-top"><div><div class="card-name">US Immigration — Two-Track</div><div class="card-type">Personal · K-1 + B-2 Medical (Mother)</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+        <div class="card-icon" style="background:var(--blue-dim)">🏥</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Track A: K-1 Fiancée Visa full plan</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Track B: B-2 medical visitor visa for mother</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Moffitt Cancer Center (Tampa) identified</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Word doc: parallel timeline + cost tables</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> In-person meeting trip to Singapore (pre-filing req)</div>
-          <div class="milestone pending"><span class="ms-icon">○</span> File I-129F after meeting requirement met</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Track A: K-1 Fiancée Visa full plan</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Track B: B-2 medical visitor visa for mother</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Moffitt Cancer Center (Tampa) identified</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Word doc: parallel timeline + cost tables</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">K-1 Visa</span><span class="tag">B-2 Medical</span><span class="tag">Personal</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--purple)">✦ Personal planning</span>
-          <span class="card-price">Personal document</span>
-        </div>
-      </div>
-
-      <!-- 16. MARRIAGE & VISA COST STRATEGY ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.49s">
-        <div class="new-badge">✦ NEW</div>
-        <div class="card-top">
-          <div><div class="card-name">Marriage &amp; Visa Cost Strategy</div><div class="card-type">Personal Planning · CR-1 vs K-1</div></div>
-          <div class="status-pill s-new"><div class="dot"></div>New</div>
-        </div>
-        <div class="card-icon" style="background:var(--purple-dim)">💍</div>
-        <div class="progress-wrap">
-          <div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div>
-          <div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div>
-        </div>
-        <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Option A: Singapore marriage → CR-1 (recommended)</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Option B: K-1 → marry in US within 90 days</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Fee breakdown, Singapore-specific docs (CONI/ROC)</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Self-employment income guidance (Vorgyn AI / AOS)</div>
-        </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">CR-1/IR-1</span><span class="tag">Singapore</span><span class="tag">Cost Analysis</span></div>
-        <div class="card-footer">
-          <span class="card-link" style="cursor:default;color:var(--purple)">✦ Personal planning</span>
-          <span class="card-price">Personal document</span>
-        </div>
+        <div class="card-tags"><span class="tag">K-1 Visa</span><span class="tag">B-2 Medical</span><span class="tag">Personal</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Personal document</span></div>
       </div>
 
     </div>
@@ -833,56 +706,27 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </div><!-- end tab-projects -->
 
 
-<!-- ════════════════════════════════════
-     TAB 2 — REVENUE TRACKER
-════════════════════════════════════ -->
+<!-- ══ TAB: REVENUE TRACKER ══ -->
 <div class="tab-panel" id="tab-revenue">
   <div style="padding:2rem 0">
-
     <div class="section-header">
       <span class="section-tag green-tag">💰 Live Data Only</span>
       <span class="section-title">Revenue &amp; Cost Tracker</span>
       <span class="section-count">Persisted in browser · Export anytime</span>
     </div>
-
     <div class="data-note">
       <span class="dn-icon">⚠</span>
-      <span>All figures on this dashboard are <strong>verified only</strong> — pulled from what you manually log below. Nothing is assumed, estimated, or projected. The KPI cards on the Projects tab update live as you add entries here.</span>
+      <span>All figures are <strong>verified only</strong> — driven by what you manually log below. Nothing is assumed or estimated. KPI cards on the Projects tab update live as you add entries here.</span>
     </div>
-
-    <!-- REVENUE STATS -->
     <div class="rev-stats">
-      <div class="rev-stat">
-        <div class="rev-stat-label">Total Revenue</div>
-        <div class="rev-stat-value green" id="rs-revenue">$0.00</div>
-        <div class="rev-stat-note">Confirmed sales logged</div>
-      </div>
-      <div class="rev-stat">
-        <div class="rev-stat-label">Total Costs</div>
-        <div class="rev-stat-value red" id="rs-costs">$0.00</div>
-        <div class="rev-stat-note">Confirmed expenses logged</div>
-      </div>
-      <div class="rev-stat">
-        <div class="rev-stat-label">Net Profit</div>
-        <div class="rev-stat-value" id="rs-profit" style="color:var(--text-dim)">$0.00</div>
-        <div class="rev-stat-note">Revenue minus costs</div>
-      </div>
-      <div class="rev-stat">
-        <div class="rev-stat-label">Best Product</div>
-        <div class="rev-stat-value gold" id="rs-best" style="font-size:1rem;padding-top:.4rem">—</div>
-        <div class="rev-stat-note">By confirmed revenue</div>
-      </div>
-      <div class="rev-stat">
-        <div class="rev-stat-label">Total Entries</div>
-        <div class="rev-stat-value blue" id="rs-entries">0</div>
-        <div class="rev-stat-note">Sales + costs logged</div>
-      </div>
+      <div class="rev-stat"><div class="rev-stat-label">Total Revenue</div><div class="rev-stat-value green" id="rs-revenue">$0.00</div><div class="rev-stat-note">Confirmed sales logged</div></div>
+      <div class="rev-stat"><div class="rev-stat-label">Total Costs</div><div class="rev-stat-value red" id="rs-costs">$0.00</div><div class="rev-stat-note">Confirmed expenses logged</div></div>
+      <div class="rev-stat"><div class="rev-stat-label">Net Profit</div><div class="rev-stat-value" id="rs-profit" style="color:var(--text-dim)">$0.00</div><div class="rev-stat-note">Revenue minus costs</div></div>
+      <div class="rev-stat"><div class="rev-stat-label">Best Product</div><div class="rev-stat-value gold" id="rs-best" style="font-size:1rem;padding-top:.4rem">—</div><div class="rev-stat-note">By confirmed revenue</div></div>
+      <div class="rev-stat"><div class="rev-stat-label">Total Entries</div><div class="rev-stat-value blue" id="rs-entries">0</div><div class="rev-stat-note">Sales + costs logged</div></div>
     </div>
-
-    <!-- LOG FORM -->
     <div class="log-form-wrap">
       <div class="log-form-title"><span class="ico">+</span> Log a Sale or Revenue Event</div>
-
       <div class="form-grid">
         <div class="form-field">
           <label class="form-label">Product / Project</label>
@@ -898,10 +742,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
             <option>AI Stock Trading Platform</option>
             <option>Options Trading Platform</option>
             <option>System Viability Monitor</option>
-            <option>SAE EIA-649C CM Guide</option>
+            <option>CAICMP Certification Program</option>
+            <option>CAICMP Textbook</option>
+            <option>CR Data Alignment Tool</option>
             <option>NVIDIA DGX SPARK Report</option>
             <option>Life Reset Bundle</option>
-            <option>Other</option>
+            <option>Other / Consulting</option>
           </select>
         </div>
         <div class="form-field">
@@ -925,8 +771,6 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
           <button class="btn-log" onclick="logEntry('revenue')">+ Log Revenue</button>
         </div>
       </div>
-
-      <!-- COST FORM TOGGLE -->
       <div class="cost-toggle" onclick="toggleCostForm()">
         <span id="cost-toggle-icon">▶</span> Log a Cost / Expense instead
       </div>
@@ -934,7 +778,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
         <div class="form-row-2">
           <div class="form-field">
             <label class="form-label">Cost Description</label>
-            <input class="form-input" type="text" id="f-cost-desc" placeholder="e.g. Gumroad fee, Netlify, domain, API usage...">
+            <input class="form-input" type="text" id="f-cost-desc" placeholder="e.g. Gumroad fee, Netlify, domain, API usage, Florida CSO bond...">
           </div>
           <div class="form-field">
             <label class="form-label">Amount ($)</label>
@@ -950,29 +794,13 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
         </div>
       </div>
     </div>
-
-    <!-- PER-PROJECT PROFITABILITY TABLE -->
     <div class="profit-table-wrap">
-      <div class="entries-header">
-        <div class="entries-title">Per-Project Profitability</div>
-      </div>
+      <div class="entries-header"><div class="entries-title">Per-Project Profitability</div></div>
       <table class="profit-table">
-        <thead>
-          <tr>
-            <th>Project</th>
-            <th>Revenue</th>
-            <th>Costs</th>
-            <th>Net Profit</th>
-            <th>Margin</th>
-          </tr>
-        </thead>
-        <tbody id="profit-table-body">
-          <tr class="no-data-row"><td colspan="5">No data yet — log your first sale above to see per-project profitability.</td></tr>
-        </tbody>
+        <thead><tr><th>Project</th><th>Revenue</th><th>Costs</th><th>Net Profit</th><th>Margin</th></tr></thead>
+        <tbody id="profit-table-body"><tr class="no-data-row"><td colspan="5">No data yet — log your first sale above to see per-project profitability.</td></tr></tbody>
       </table>
     </div>
-
-    <!-- ALL ENTRIES TABLE -->
     <div class="entries-wrap">
       <div class="entries-header">
         <div class="entries-title">All Logged Entries</div>
@@ -982,93 +810,96 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
         </div>
       </div>
       <table class="entries-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Product / Description</th>
-            <th>Type</th>
-            <th>Amount</th>
-            <th>Running Total</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="entries-tbody">
-          <tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>No entries yet. Log your first sale or cost above.</td></tr>
-        </tbody>
+        <thead><tr><th>Date</th><th>Product / Description</th><th>Type</th><th>Amount</th><th>Running Total</th><th></th></tr></thead>
+        <tbody id="entries-tbody"><tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>No entries yet.</td></tr></tbody>
       </table>
     </div>
-
   </div>
 </div><!-- end tab-revenue -->
 
 
-<!-- ════════════════════════════════════
-     TAB 3 — TIMELINE
-════════════════════════════════════ -->
+<!-- ══ TAB: TIMELINE ══ -->
 <div class="tab-panel" id="tab-timeline">
   <div class="timeline-section">
     <div class="section-header">
-      <span class="section-tag purple-tag">✦ v4 Updated</span>
+      <span class="section-tag purple-tag">✦ v5 Updated</span>
       <span class="section-title">Full Build Timeline</span>
     </div>
     <div class="timeline">
 
-      <div class="timeline-entry" style="animation-delay:.04s">
+      <div class="timeline-entry" style="animation-delay:.03s">
         <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">✦ NEW — v4</div>
-        <div class="timeline-date new-date">Mar 29, 2026</div>
-        <div class="timeline-title">Revenue Tracker added — Honest KPIs replacing unverified claims</div>
-        <div class="timeline-body">Full Revenue &amp; Cost Tracker tab built into the dashboard with localStorage persistence. Per-project profitability table, running totals, CSV export, and live KPI sync to the Projects tab header stats. "Generating revenue" label removed from all project cards and replaced with factual price labels only. Confirmed Revenue, Confirmed Costs, and Net Profit KPIs now driven exclusively by manually logged transactions.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">Revenue Tracker</span><span class="tpill new-pill">localStorage</span><span class="tpill new-pill">Honest KPIs</span><span class="tpill new-pill">CSV Export</span></div>
+        <div class="new-entry-label">✦ NEW — v5</div>
+        <div class="timeline-date new-date">Apr 2026</div>
+        <div class="timeline-title">Trading Platform v3 Auto-Engine + CR Data Tool + Ad Storyboard</div>
+        <div class="timeline-body">Trading Platform upgraded to v3: full-screen layout, strategy dropdown with custom builder, automated trading engine with $500 daily loss kill switch, 6 trades/hr max, 12s cooldown. CR Data Alignment Tool built (37 standardized ECR fields, CSV → JSON export). Fresh Start Credit Mastery video ad storyboard produced as 6-scene animated HTML preview with Amazon, Meta, TikTok implementation guide.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">Trading v3 Auto-Engine</span><span class="tpill new-pill">CR Data Tool</span><span class="tpill new-pill">Video Ad Storyboard</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.07s">
+      <div class="timeline-entry" style="animation-delay:.06s">
         <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">✦ NEW — v3</div>
-        <div class="timeline-date new-date">Mar 29, 2026</div>
-        <div class="timeline-title">SAE EIA-649C CM Guide + US Immigration Strategies</div>
-        <div class="timeline-body">Full Configuration Management guide mapping all 5 EIA-649C functions to Agile/CI/CD, 10-section Word doc, ebook + government course outlined, IP protection strategy. Parallel US immigration strategy built (K-1 + B-2 medical for mother). Detailed CR-1 vs K-1 cost comparison with Singapore-specific documentation guidance.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">SAE EIA-649C</span><span class="tpill new-pill">K-1 Visa</span><span class="tpill new-pill">CR-1/IR-1</span><span class="tpill new-pill">IP Protection</span></div>
+        <div class="new-entry-label">✦ NEW — v5</div>
+        <div class="timeline-date new-date">Apr 2026</div>
+        <div class="timeline-title">CAICMP Textbook Chapter 1 + CreditForge CROA Compliance + Launch Plan</div>
+        <div class="timeline-body">CAICMP Textbook Chapter 1 produced as print-ready Word doc (~6,000 words): learning objectives, 4 sections, 16-term glossary, 15 CAICMP exam questions, IV&amp;V sidebar, Chapter 1 plain-English visual one-pager. CreditForge CROA/FTC/FCRA full compliance analysis: Florida CSO registration + $10K surety bond, no advance fee rule, 3-day cancellation rights, required disclosures. 90-day launch plan + 7 Gmail accountability draft emails scheduled Days 1–30. Vorgyn AI rated 8.4/10 viability.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">CAICMP Ch. 1</span><span class="tpill new-pill">CROA/FTC Compliance</span><span class="tpill new-pill">Florida CSO</span><span class="tpill new-pill">90-Day Plan</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.10s">
+      <div class="timeline-entry" style="animation-delay:.09s">
         <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">⬆ UPGRADED — v3</div>
-        <div class="timeline-date new-date">Mar 28, 2026</div>
-        <div class="timeline-title">System Viability Monitor — Real Data (228K rows, 16 systems)</div>
-        <div class="timeline-body">SVM upgraded with real production CR data: 228,970 rows, 5,373 unique CRs across 16 government systems. Full deduplication logic rebuilt, KPI drill-downs fixed, Word user guide + Playwright screenshot cover page delivered.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">228K Rows Real Data</span><span class="tpill new-pill">16 Gov Systems</span><span class="tpill new-pill">Word Guide</span></div>
+        <div class="new-entry-label">✦ NEW — v5</div>
+        <div class="timeline-date new-date">Apr 2026</div>
+        <div class="timeline-title">FinTrack Pro 30-Day Marketing Plan + Full Three-Platform Workflow</div>
+        <div class="timeline-body">Complete 30-day marketing plan built as Word doc: Reddit/Twitter/Facebook/Product Hunt copy (Phase 1), YouTube SEO + ConvertKit 3-email welcome sequence (Phase 2), Reddit/Google/YouTube paid ad templates + 30% affiliate program (Phase 3). Full GitHub + Gumroad + Netlify three-platform deployment workflow documented end-to-end including test purchase guide. 22-item execution checklist delivered.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">30-Day Marketing Plan</span><span class="tpill new-pill">Netlify Workflow</span><span class="tpill new-pill">ConvertKit</span><span class="tpill new-pill">Affiliate Program</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.13s">
+      <div class="timeline-entry" style="animation-delay:.12s">
+        <div class="timeline-dot new-dot"></div>
+        <div class="new-entry-label">⬆ UPGRADED — v5</div>
+        <div class="timeline-date new-date">Apr 2026</div>
+        <div class="timeline-title">Singapore Marriage Plan — Refined + 47-Task Word Doc + Flight/Hotel Research</div>
+        <div class="timeline-body">Immigration plan refined: K-1 track removed, now CR-1/IR-1 only via Singapore ROM ceremony. 47-task action plan Word doc built (6 phases, page-break format). Flight research completed: MCO→SIN Jul 2–23, &lt;24hr travel window. Budget hotel shortlist with city views, central location. Master task table document (standalone Word, 47 chronological items). ROM appointment booking identified as next step.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">CR-1/IR-1 Final</span><span class="tpill new-pill">47-Task Plan</span><span class="tpill new-pill">MCO→SIN Flights</span><span class="tpill new-pill">Hotel Research</span></div>
+      </div>
+
+      <div class="timeline-entry" style="animation-delay:.15s">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Mar 29, 2026</div>
+        <div class="timeline-title">SAE EIA-649C CM Guide · Immigration Cost Strategy · Revenue Tracker Dashboard</div>
+        <div class="timeline-body">SAE EIA-649C guide expanded to full CAICMP program. CR-1 vs K-1 cost comparison built. Revenue Tracker tab added to dashboard — honest KPIs only, no unverified claims. Progress bars animated. localStorage persistence.</div>
+        <div class="timeline-pills"><span class="tpill">CAICMP Program</span><span class="tpill">CR-1 Strategy</span><span class="tpill">Revenue Tracker</span></div>
+      </div>
+
+      <div class="timeline-entry" style="animation-delay:.18s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Mar 27, 2026</div>
-        <div class="timeline-title">Options Platform + Freelance Strategy + DGX SPARK + SVM v1</div>
-        <div class="timeline-body">Full Black-Scholes options platform (5 Greeks, 12 strategies, broker modals). Freelance service strategy validated. NVIDIA DGX SPARK report delivered. SVM v1 built.</div>
-        <div class="timeline-pills"><span class="tpill">Options Platform</span><span class="tpill">Freelance Strategy</span><span class="tpill">DGX SPARK</span><span class="tpill">SVM v1</span></div>
+        <div class="timeline-title">Options Platform + SVM + DGX SPARK + Freelance Strategy</div>
+        <div class="timeline-body">Black-Scholes options platform (5 Greeks, 12 strategies). SVM upgraded to real 228K-row data. NVIDIA DGX SPARK report. Freelance strategy with 3-tier pricing.</div>
+        <div class="timeline-pills"><span class="tpill">Options Platform</span><span class="tpill">SVM Real Data</span><span class="tpill">DGX SPARK</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.16s">
+      <div class="timeline-entry" style="animation-delay:.21s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Mar 26, 2026</div>
-        <div class="timeline-title">Vorgyn AI Brand Consolidated + CreditForge Bot Prototype</div>
-        <div class="timeline-body">Brand fully consolidated as Vorgyn AI. vorgyn.com purchased. CreditForge AI Bot prototype with Netlify serverless functions. Full product universe audit across 3 pillars.</div>
+        <div class="timeline-title">Vorgyn AI Brand Consolidated + CreditForge Prototype</div>
+        <div class="timeline-body">vorgyn.com purchased. Vorgyn AI brand fully consolidated. CreditForge prototype with Netlify serverless. Product universe audit across 3 pillars.</div>
         <div class="timeline-pills"><span class="tpill">Vorgyn AI</span><span class="tpill">vorgyn.com</span><span class="tpill">CreditForge Prototype</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.19s">
+      <div class="timeline-entry" style="animation-delay:.24s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Mar 2026 (early)</div>
         <div class="timeline-title">Trading Platform · Slippage Tracker · AI News Dashboard · Business Plan</div>
-        <div class="timeline-body">AI Stock Trading Platform — 80% simulated win rate. Slippage Tracker completed. AI News Dashboard caching fixed. Investor business plan + 90-day playbook delivered as Word docs.</div>
-        <div class="timeline-pills"><span class="tpill">Trading Platform</span><span class="tpill">Slippage Tracker</span><span class="tpill">AI News Dashboard</span></div>
+        <div class="timeline-body">AI Stock Trading Platform — 80% simulated win rate. Slippage Tracker. AI News caching fixed. Investor business plan + 90-day playbook.</div>
+        <div class="timeline-pills"><span class="tpill">Trading Platform</span><span class="tpill">Slippage Tracker</span><span class="tpill">Business Plan</span></div>
       </div>
 
-      <div class="timeline-entry" style="animation-delay:.22s">
+      <div class="timeline-entry" style="animation-delay:.27s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Feb 2026</div>
-        <div class="timeline-title">FinTrack Pro · Gridiron & Hardwood · Notion Credit Tracker</div>
-        <div class="timeline-body">FinTrack Pro on Gumroad at $19. Personal variant with debt analyzer. Gridiron &amp; Hardwood trivia app with Claude API. Notion tracker published.</div>
+        <div class="timeline-title">FinTrack Pro · Gridiron & Hardwood · Notion Tracker — All Launched</div>
+        <div class="timeline-body">FinTrack Pro on Gumroad at $19. Gridiron &amp; Hardwood trivia with Claude API. Notion Credit Repair Tracker published.</div>
         <div class="timeline-pills"><span class="tpill">FinTrack Pro</span><span class="tpill">Gridiron & Hardwood</span><span class="tpill">Notion Tracker</span></div>
       </div>
 
@@ -1077,9 +908,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </div><!-- end tab-timeline -->
 
 
-<!-- ════════════════════════════════════
-     TAB 4 — HOW TO UPDATE
-════════════════════════════════════ -->
+<!-- ══ TAB: HOW TO UPDATE ══ -->
 <div class="tab-panel" id="tab-howto">
   <div class="update-section">
     <div class="section-header">
@@ -1090,60 +919,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       <div class="update-panel">
         <div class="update-panel-title"><span class="ico">✏️</span> Manual Update via GitHub</div>
         <div class="update-steps">
-          <div class="update-step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <div class="step-title">Open your GitHub repo</div>
-              <div class="step-body">Go to <strong>github.com/marcT1/vorgyn-dashboard</strong>, find <code>index.html</code>, click pencil ✏️ to edit in-browser.</div>
-            </div>
-          </div>
-          <div class="update-step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <div class="step-title">Find the card to update</div>
-              <div class="step-body">Use <kbd>Ctrl+F</kbd> to find a project name. Change milestone classes (<code>done / active / pending</code>), icons, and progress %.</div>
-            </div>
-          </div>
-          <div class="update-step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <div class="step-title">Commit → live in ~60 seconds</div>
-              <div class="step-body">Write a commit message, click <strong>Commit changes</strong>. GitHub Pages auto-redeploys.</div>
-            </div>
-          </div>
-          <div class="update-step">
-            <div class="step-num">4</div>
-            <div class="step-content">
-              <div class="step-title">Revenue data stays in your browser</div>
-              <div class="step-body">Revenue Tracker data lives in <code>localStorage</code> — it persists between sessions on the same browser but won't transfer when you upload a new file. Export CSV before replacing the file to preserve your records.</div>
-            </div>
-          </div>
+          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open your GitHub repo</div><div class="step-body">Go to <strong>github.com/marcT1/vorgyn-dashboard</strong>, find <code>index.html</code>, click pencil ✏️ to edit in-browser.</div></div></div>
+          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Find the card to update</div><div class="step-body">Use <kbd>Ctrl+F</kbd> to search by project name. Change milestone classes (<code>done / active / pending</code>), icons (✓ ◐ ○), and progress %.</div></div></div>
+          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Commit → live in ~60 seconds</div><div class="step-body">Write a commit message and click <strong>Commit changes</strong>. GitHub Pages auto-redeploys.</div></div></div>
+          <div class="update-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Export revenue data before replacing the file</div><div class="step-body">Revenue Tracker data lives in <code>localStorage</code>. Click <strong>Export CSV</strong> before uploading a new file to preserve your records.</div></div></div>
         </div>
       </div>
       <div class="update-panel">
         <div class="update-panel-title"><span class="ico">🤖</span> AI-Assisted Update via Claude</div>
         <div class="update-steps">
-          <div class="update-step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <div class="step-title">Paste the master prompt below</div>
-              <div class="step-body">Claude scans all sessions, identifies new work since the last version, and outputs a complete updated index.html.</div>
-            </div>
-          </div>
-          <div class="update-step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <div class="step-title">Export your revenue data first</div>
-              <div class="step-body">Before uploading a new file, click <strong>Export CSV</strong> in the Revenue Tracker tab to save your sales history. Re-enter it after uploading the new file.</div>
-            </div>
-          </div>
-          <div class="update-step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <div class="step-title">Upload as index.html → done</div>
-              <div class="step-body">Replace the existing file in your GitHub repo. Pages rebuilds in ~60 seconds.</div>
-            </div>
-          </div>
+          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Paste the master prompt below</div><div class="step-body">Claude scans all sessions, identifies new work, and outputs a complete updated index.html file ready to upload.</div></div></div>
+          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Export revenue data first</div><div class="step-body">Click <strong>Export CSV</strong> in the Revenue Tracker tab before uploading a new file.</div></div></div>
+          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Upload as index.html → done</div><div class="step-body">Replace the existing file. GitHub Pages rebuilds in ~60 seconds.</div></div></div>
         </div>
         <div class="prompt-box">
           <div class="prompt-label">📋 Master Update Prompt</div>
@@ -1151,7 +938,6 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
         </div>
       </div>
     </div>
-
     <div style="margin-top:1px;background:var(--navy-mid);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:1.75rem;">
       <div class="update-panel-title" style="margin-bottom:1rem;"><span class="ico">🚀</span> GitHub Pages — One-Time Setup</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
@@ -1169,253 +955,148 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <div class="footer-logo"><em>Vorgyn</em> AI · Project Command Center · v4</div>
+      <div class="footer-logo"><em>Vorgyn</em> AI · Project Command Center · v5</div>
       <div class="footer-right">
         Marc T · <a href="https://github.com/marcT1" target="_blank">github.com/marcT1</a> · <a href="https://vorgyn.com" target="_blank">vorgyn.com</a><br>
-        Revenue figures shown are verified logged data only · Updated Mar 29, 2026
+        Revenue figures: verified logged data only · Updated Apr 10, 2026
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-// ── TIMESTAMPS ──
-function setTimestamps() {
-  const now = new Date();
-  const opts = { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' };
-  const f = now.toLocaleDateString('en-US', opts);
-  document.getElementById('last-updated').textContent = 'Updated: ' + f;
-  const st = document.getElementById('sync-time');
-  if (st) st.textContent = f;
-}
+// TIMESTAMPS
+function setTimestamps(){const now=new Date();const opts={month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'};const f=now.toLocaleDateString('en-US',opts);document.getElementById('last-updated').textContent='Updated: '+f;const st=document.getElementById('sync-time');if(st)st.textContent=f;}
 setTimestamps();
 
-// ── PROGRESS BARS ──
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.progress-fill').forEach(f => {
-    const t = f.style.width; f.style.width = '0%';
-    setTimeout(() => { f.style.width = t; }, 400);
-  });
-  // Set today's date as default in date inputs
-  const today = new Date().toISOString().split('T')[0];
-  document.querySelectorAll('input[type=date]').forEach(el => el.value = today);
+// PROGRESS BARS
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('.progress-fill').forEach(f=>{const t=f.style.width;f.style.width='0%';setTimeout(()=>{f.style.width=t;},400);});
+  const today=new Date().toISOString().split('T')[0];
+  document.querySelectorAll('input[type=date]').forEach(el=>el.value=today);
   loadAndRender();
 });
 
-// ── TAB SWITCHING ──
-function switchTab(id) {
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  document.querySelectorAll('.tab-btn').forEach(b => {
-    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) b.classList.add('active');
-  });
+// TAB SWITCHING
+function switchTab(id){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>{if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+id+"'"))b.classList.add('active');});
 }
 
-// ── COST FORM TOGGLE ──
-function toggleCostForm() {
-  const wrap = document.getElementById('cost-form');
-  const icon = document.getElementById('cost-toggle-icon');
-  wrap.classList.toggle('open');
-  icon.textContent = wrap.classList.contains('open') ? '▼' : '▶';
-}
+// COST FORM TOGGLE
+function toggleCostForm(){const wrap=document.getElementById('cost-form');const icon=document.getElementById('cost-toggle-icon');wrap.classList.toggle('open');icon.textContent=wrap.classList.contains('open')?'▼':'▶';}
 
-// ── LOCAL STORAGE KEY ──
-const STORE_KEY = 'vorgyn_revenue_v1';
+// STORAGE
+const STORE_KEY='vorgyn_revenue_v1';
+function getEntries(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||[];}catch(e){return[];}}
+function saveEntries(e){localStorage.setItem(STORE_KEY,JSON.stringify(e));}
 
-function getEntries() {
-  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
-  catch(e) { return []; }
-}
-function saveEntries(entries) {
-  localStorage.setItem(STORE_KEY, JSON.stringify(entries));
-}
-
-// ── LOG ENTRY ──
-function logEntry(mode) {
-  if (mode === 'revenue') {
-    const product = document.getElementById('f-product').value;
-    const type    = document.getElementById('f-type').value;
-    const amount  = parseFloat(document.getElementById('f-amount').value);
-    const date    = document.getElementById('f-date').value;
-    if (!product || isNaN(amount) || amount <= 0 || !date) {
-      alert('Please fill in product, amount, and date.'); return;
-    }
-    const entries = getEntries();
-    entries.unshift({ id: Date.now(), date, product, type, amount, category: 'revenue' });
-    saveEntries(entries);
-    document.getElementById('f-product').value = '';
-    document.getElementById('f-amount').value  = '';
-  } else {
-    const desc   = document.getElementById('f-cost-desc').value.trim();
-    const amount = parseFloat(document.getElementById('f-cost-amount').value);
-    const date   = document.getElementById('f-cost-date').value;
-    if (!desc || isNaN(amount) || amount <= 0 || !date) {
-      alert('Please fill in description, amount, and date.'); return;
-    }
-    const entries = getEntries();
-    entries.unshift({ id: Date.now(), date, product: desc, type: 'cost', amount, category: 'cost' });
-    saveEntries(entries);
-    document.getElementById('f-cost-desc').value   = '';
-    document.getElementById('f-cost-amount').value = '';
+// LOG ENTRY
+function logEntry(mode){
+  if(mode==='revenue'){
+    const product=document.getElementById('f-product').value;
+    const type=document.getElementById('f-type').value;
+    const amount=parseFloat(document.getElementById('f-amount').value);
+    const date=document.getElementById('f-date').value;
+    if(!product||isNaN(amount)||amount<=0||!date){alert('Please fill in product, amount, and date.');return;}
+    const entries=getEntries();entries.unshift({id:Date.now(),date,product,type,amount,category:'revenue'});
+    saveEntries(entries);document.getElementById('f-product').value='';document.getElementById('f-amount').value='';
+  }else{
+    const desc=document.getElementById('f-cost-desc').value.trim();
+    const amount=parseFloat(document.getElementById('f-cost-amount').value);
+    const date=document.getElementById('f-cost-date').value;
+    if(!desc||isNaN(amount)||amount<=0||!date){alert('Please fill in description, amount, and date.');return;}
+    const entries=getEntries();entries.unshift({id:Date.now(),date,product:desc,type:'cost',amount,category:'cost'});
+    saveEntries(entries);document.getElementById('f-cost-desc').value='';document.getElementById('f-cost-amount').value='';
   }
   loadAndRender();
 }
 
-// ── DELETE ENTRY ──
-function deleteEntry(id) {
-  if (!confirm('Delete this entry?')) return;
-  saveEntries(getEntries().filter(e => e.id !== id));
-  loadAndRender();
-}
+// DELETE + CLEAR
+function deleteEntry(id){if(!confirm('Delete this entry?'))return;saveEntries(getEntries().filter(e=>e.id!==id));loadAndRender();}
+function clearAll(){if(!confirm('Clear ALL entries? Cannot be undone.'))return;localStorage.removeItem(STORE_KEY);loadAndRender();}
 
-// ── CLEAR ALL ──
-function clearAll() {
-  if (!confirm('Clear ALL revenue and cost entries? This cannot be undone.')) return;
-  localStorage.removeItem(STORE_KEY);
-  loadAndRender();
-}
+// FORMAT
+function fmt(n){return'$'+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
 
-// ── FORMAT CURRENCY ──
-function fmt(n) {
-  return '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits:2, maximumFractionDigits:2 });
-}
-
-// ── LOAD AND RENDER ──
-function loadAndRender() {
-  const entries = getEntries();
-
-  // ── COMPUTE TOTALS ──
-  let totalRevenue = 0, totalCosts = 0;
-  const byProduct = {};
-
-  entries.forEach(e => {
-    if (e.category === 'revenue') {
-      const sign = (e.type === 'refund') ? -1 : 1;
-      totalRevenue += sign * e.amount;
-      if (!byProduct[e.product]) byProduct[e.product] = { revenue: 0, costs: 0 };
-      byProduct[e.product].revenue += sign * e.amount;
-    } else {
-      totalCosts += e.amount;
-      if (!byProduct[e.product]) byProduct[e.product] = { revenue: 0, costs: 0 };
-      byProduct[e.product].costs += e.amount;
-    }
+// LOAD AND RENDER
+function loadAndRender(){
+  const entries=getEntries();
+  let totalRevenue=0,totalCosts=0;
+  const byProduct={};
+  entries.forEach(e=>{
+    if(e.category==='revenue'){const sign=(e.type==='refund')?-1:1;totalRevenue+=sign*e.amount;if(!byProduct[e.product])byProduct[e.product]={revenue:0,costs:0};byProduct[e.product].revenue+=sign*e.amount;}
+    else{totalCosts+=e.amount;if(!byProduct[e.product])byProduct[e.product]={revenue:0,costs:0};byProduct[e.product].costs+=e.amount;}
   });
-
-  const netProfit = totalRevenue - totalCosts;
-
-  // ── BEST PRODUCT ──
-  let bestProduct = '—', bestRev = 0;
-  Object.entries(byProduct).forEach(([k, v]) => {
-    if (v.revenue > bestRev) { bestRev = v.revenue; bestProduct = k; }
-  });
-  // Truncate long names
-  const bestShort = bestProduct.length > 18 ? bestProduct.substring(0, 16) + '…' : bestProduct;
-
-  // ── UPDATE REVENUE TAB STATS ──
-  document.getElementById('rs-revenue').textContent = fmt(totalRevenue);
-  document.getElementById('rs-costs').textContent   = fmt(totalCosts);
-  document.getElementById('rs-entries').textContent = entries.length;
-  document.getElementById('rs-best').textContent    = bestShort;
-
-  const profitEl = document.getElementById('rs-profit');
-  profitEl.textContent = (netProfit >= 0 ? '' : '-') + fmt(netProfit);
-  profitEl.style.color = netProfit > 0 ? 'var(--green)' : netProfit < 0 ? 'var(--red)' : 'var(--text-dim)';
-
-  // ── UPDATE PROJECTS TAB KPIs ──
-  document.getElementById('kpi-revenue').textContent = fmt(totalRevenue);
-  document.getElementById('kpi-costs').textContent   = fmt(totalCosts);
-
-  const kpiProfit = document.getElementById('kpi-profit');
-  kpiProfit.textContent = (netProfit >= 0 ? '' : '-') + fmt(netProfit);
-  kpiProfit.style.color = netProfit > 0 ? 'var(--green)' : netProfit < 0 ? 'var(--red)' : 'var(--text-dim)';
-
-  const kpiNote = document.getElementById('kpi-profit-note');
-  if (entries.length > 0) {
-    document.getElementById('kpi-revenue-note').textContent = entries.filter(e=>e.category==='revenue').length + ' sale(s) logged';
-    document.getElementById('kpi-costs-note').textContent   = entries.filter(e=>e.category==='cost').length + ' expense(s) logged';
-    kpiNote.textContent = 'Revenue − Costs';
-    kpiNote.style.color = netProfit >= 0 ? 'var(--green)' : 'var(--red)';
-    kpiNote.style.fontStyle = 'normal';
-  } else {
-    document.getElementById('kpi-revenue-note').textContent = 'Log sales in Revenue tab →';
-    document.getElementById('kpi-costs-note').textContent   = 'Log expenses in Revenue tab →';
-    kpiNote.textContent = 'Based on logged data only';
-    kpiNote.style.color = 'var(--text-dim)';
-    kpiNote.style.fontStyle = 'italic';
+  const netProfit=totalRevenue-totalCosts;
+  let bestProduct='—',bestRev=0;
+  Object.entries(byProduct).forEach(([k,v])=>{if(v.revenue>bestRev){bestRev=v.revenue;bestProduct=k;}});
+  const bestShort=bestProduct.length>18?bestProduct.substring(0,16)+'…':bestProduct;
+  document.getElementById('rs-revenue').textContent=fmt(totalRevenue);
+  document.getElementById('rs-costs').textContent=fmt(totalCosts);
+  document.getElementById('rs-entries').textContent=entries.length;
+  document.getElementById('rs-best').textContent=bestShort;
+  const profitEl=document.getElementById('rs-profit');
+  profitEl.textContent=(netProfit>=0?'':'-')+fmt(netProfit);
+  profitEl.style.color=netProfit>0?'var(--green)':netProfit<0?'var(--red)':'var(--text-dim)';
+  document.getElementById('kpi-revenue').textContent=fmt(totalRevenue);
+  document.getElementById('kpi-costs').textContent=fmt(totalCosts);
+  const kpiProfit=document.getElementById('kpi-profit');
+  kpiProfit.textContent=(netProfit>=0?'':'-')+fmt(netProfit);
+  kpiProfit.style.color=netProfit>0?'var(--green)':netProfit<0?'var(--red)':'var(--text-dim)';
+  const kpiNote=document.getElementById('kpi-profit-note');
+  if(entries.length>0){
+    document.getElementById('kpi-revenue-note').textContent=entries.filter(e=>e.category==='revenue').length+' sale(s) logged';
+    document.getElementById('kpi-costs-note').textContent=entries.filter(e=>e.category==='cost').length+' expense(s) logged';
+    kpiNote.textContent='Revenue − Costs';kpiNote.style.color=netProfit>=0?'var(--green)':'var(--red)';kpiNote.style.fontStyle='normal';
+  }else{
+    document.getElementById('kpi-revenue-note').textContent='Log sales in Revenue tab →';
+    document.getElementById('kpi-costs-note').textContent='Log expenses in Revenue tab →';
+    kpiNote.textContent='Based on logged data only';kpiNote.style.color='var(--text-dim)';kpiNote.style.fontStyle='italic';
   }
-
-  // ── PER-PROJECT TABLE ──
-  const ptBody = document.getElementById('profit-table-body');
-  const products = Object.entries(byProduct).sort((a,b) => b[1].revenue - a[1].revenue);
-
-  if (products.length === 0) {
-    ptBody.innerHTML = '<tr class="no-data-row"><td colspan="5">No data yet — log your first sale to see per-project profitability.</td></tr>';
-  } else {
-    const maxRev = Math.max(...products.map(([,v]) => Math.abs(v.revenue - v.costs)), 1);
-    ptBody.innerHTML = products.map(([name, v]) => {
-      const profit = v.revenue - v.costs;
-      const margin = v.revenue > 0 ? ((profit / v.revenue) * 100).toFixed(0) + '%' : '—';
-      const barPct = Math.min(Math.abs(profit) / maxRev * 100, 100).toFixed(0);
-      const barClass = profit >= 0 ? 'pos' : 'neg';
-      return `<tr>
-        <td>${name}</td>
-        <td class="td-revenue">${fmt(v.revenue)}</td>
-        <td class="td-cost">${v.costs > 0 ? fmt(v.costs) : '—'}</td>
-        <td class="td-profit ${profit >= 0 ? 'pos' : 'neg'}">${(profit>=0?'':'-') + fmt(profit)}</td>
-        <td>${margin}<span class="pbar-wrap"><span class="pbar-fill ${barClass}" style="width:${barPct}%"></span></span></td>
-      </tr>`;
+  // Per-project table
+  const ptBody=document.getElementById('profit-table-body');
+  const products=Object.entries(byProduct).sort((a,b)=>b[1].revenue-a[1].revenue);
+  if(products.length===0){ptBody.innerHTML='<tr class="no-data-row"><td colspan="5">No data yet — log your first sale to see per-project profitability.</td></tr>';}
+  else{
+    const maxRev=Math.max(...products.map(([,v])=>Math.abs(v.revenue-v.costs)),1);
+    ptBody.innerHTML=products.map(([name,v])=>{
+      const profit=v.revenue-v.costs;
+      const margin=v.revenue>0?((profit/v.revenue)*100).toFixed(0)+'%':'—';
+      const barPct=Math.min(Math.abs(profit)/maxRev*100,100).toFixed(0);
+      const barClass=profit>=0?'pos':'neg';
+      return`<tr><td>${name}</td><td class="td-revenue">${fmt(v.revenue)}</td><td class="td-cost">${v.costs>0?fmt(v.costs):'—'}</td><td class="td-profit ${barClass}">${(profit>=0?'':'-')+fmt(profit)}</td><td>${margin}<span class="pbar-wrap"><span class="pbar-fill ${barClass}" style="width:${barPct}%"></span></span></td></tr>`;
     }).join('');
   }
-
-  // ── ALL ENTRIES TABLE ──
-  const tbody = document.getElementById('entries-tbody');
-  if (entries.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>No entries yet. Log your first sale or cost above.</td></tr>';
-    return;
-  }
-
-  let running = 0;
-  const sorted = [...entries].sort((a,b) => new Date(a.date) - new Date(b.date));
-  const runningMap = {};
-  sorted.forEach(e => {
-    running += (e.category === 'revenue' && e.type !== 'refund') ? e.amount
-             : (e.type === 'refund') ? -e.amount
-             : -e.amount;
-    runningMap[e.id] = running;
-  });
-
-  tbody.innerHTML = entries.map(e => {
-    const rt = runningMap[e.id];
-    const rtColor = rt >= 0 ? 'var(--green)' : 'var(--red)';
-    const amtColor = e.category === 'cost' || e.type === 'refund' ? 'var(--red)' : 'var(--green)';
-    const amtSign  = e.category === 'cost' || e.type === 'refund' ? '-' : '+';
-    const typeLabel = { sale:'Sale', refund:'Refund', subscription:'Subscription', freelance:'Freelance', cost:'Cost', expense:'Expense' }[e.type] || e.type;
-    const typeClass = e.category === 'cost' ? 'cost' : e.type;
-    return `<tr>
-      <td>${e.date}</td>
-      <td>${e.product}</td>
-      <td><span class="td-type ${typeClass}">${typeLabel}</span></td>
-      <td style="color:${amtColor}">${amtSign}${fmt(e.amount)}</td>
-      <td style="color:${rtColor}">${rt >= 0 ? '' : '-'}${fmt(rt)}</td>
-      <td><button class="td-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button></td>
-    </tr>`;
+  // Entries table
+  const tbody=document.getElementById('entries-tbody');
+  if(entries.length===0){tbody.innerHTML='<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>No entries yet.</td></tr>';return;}
+  let running=0;
+  const sorted=[...entries].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const runningMap={};
+  sorted.forEach(e=>{running+=(e.category==='revenue'&&e.type!=='refund')?e.amount:(e.type==='refund')?-e.amount:-e.amount;runningMap[e.id]=running;});
+  tbody.innerHTML=entries.map(e=>{
+    const rt=runningMap[e.id];
+    const rtColor=rt>=0?'var(--green)':'var(--red)';
+    const amtColor=e.category==='cost'||e.type==='refund'?'var(--red)':'var(--green)';
+    const amtSign=e.category==='cost'||e.type==='refund'?'-':'+';
+    const typeLabel={sale:'Sale',refund:'Refund',subscription:'Subscription',freelance:'Freelance',cost:'Cost',expense:'Expense'}[e.type]||e.type;
+    const typeClass=e.category==='cost'?'cost':e.type;
+    return`<tr><td>${e.date}</td><td>${e.product}</td><td><span class="td-type ${typeClass}">${typeLabel}</span></td><td style="color:${amtColor}">${amtSign}${fmt(e.amount)}</td><td style="color:${rtColor}">${rt>=0?'':'-'}${fmt(rt)}</td><td><button class="td-del" onclick="deleteEntry(${e.id})" title="Delete">✕</button></td></tr>`;
   }).join('');
 }
 
-// ── EXPORT CSV ──
-function exportCSV() {
-  const entries = getEntries();
-  if (entries.length === 0) { alert('No entries to export.'); return; }
-  const header = 'Date,Product,Type,Category,Amount\n';
-  const rows = entries.map(e =>
-    `${e.date},"${e.product}",${e.type},${e.category},${e.amount}`
-  ).join('\n');
-  const blob = new Blob([header + rows], { type:'text/csv' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'vorgyn-revenue-' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click();
+// EXPORT CSV
+function exportCSV(){
+  const entries=getEntries();
+  if(entries.length===0){alert('No entries to export.');return;}
+  const header='Date,Product,Type,Category,Amount\n';
+  const rows=entries.map(e=>`${e.date},"${e.product}",${e.type},${e.category},${e.amount}`).join('\n');
+  const blob=new Blob([header+rows],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='vorgyn-revenue-'+new Date().toISOString().split('T')[0]+'.csv';a.click();
 }
 </script>
 </body>
