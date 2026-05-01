@@ -3,13 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vorgyn AI — Project Command Center v7</title>
+<title>Vorgyn AI — Project Command Center v8</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0B1E32;--navy-card:#0F2740;--navy-mid:#152D47;--navy-light:#1A3A5C;--orange:#FF6B2B;--orange-dim:rgba(255,107,43,0.12);--gold:#C9A546;--gold-dim:rgba(201,165,70,0.15);--green:#22C55E;--green-dim:rgba(34,197,94,0.12);--yellow:#EAB308;--yellow-dim:rgba(234,179,8,0.12);--red:#EF4444;--red-dim:rgba(239,68,68,0.12);--blue:#3B82F6;--blue-dim:rgba(59,130,246,0.12);--purple:#A855F7;--purple-dim:rgba(168,85,247,0.12);--text:#D4E4F0;--text-dim:#7A9BB5;--border:rgba(255,255,255,0.07);--border-glow:rgba(255,107,43,0.25);}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
 body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,107,43,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,43,0.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
@@ -33,15 +32,14 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .last-updated{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--text-dim);}
 .version-banner{background:linear-gradient(90deg,rgba(168,85,247,.12),rgba(168,85,247,.06),rgba(168,85,247,.12));border-bottom:1px solid rgba(168,85,247,.2);padding:.6rem 0;text-align:center;font-family:'DM Mono',monospace;font-size:.68rem;color:var(--purple);letter-spacing:.08em;}
 .version-banner strong{color:#C084FC;}
-.tab-nav{background:rgba(11,30,50,.98);border-bottom:1px solid var(--border);padding:0;position:sticky;top:69px;z-index:99;}
-.tab-nav-inner{display:flex;gap:0;overflow-x:auto;}
+.tab-nav{background:rgba(11,30,50,.98);border-bottom:1px solid var(--border);position:sticky;top:69px;z-index:99;}
+.tab-nav-inner{display:flex;overflow-x:auto;}
 .tab-btn{font-family:'DM Mono',monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);background:none;border:none;border-bottom:2px solid transparent;padding:.85rem 1.5rem;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.tab-btn:hover{color:var(--text);}
-.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
+.tab-btn:hover{color:var(--text);}.tab-btn.active{color:var(--orange);border-bottom-color:var(--orange);}
 .tab-btn.revenue-tab.active{color:var(--green);border-bottom-color:var(--green);}
 .tab-panel{display:none;}.tab-panel.active{display:block;}
 .ticker-wrap{background:rgba(255,107,43,.06);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap;padding:.5rem 0;}
-.ticker-track{display:inline-flex;gap:0;animation:ticker 70s linear infinite;}
+.ticker-track{display:inline-flex;animation:ticker 70s linear infinite;}
 .ticker-item{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--text-dim);padding:0 2.5rem;display:flex;align-items:center;gap:.6rem;}
 .ticker-item .t-label{color:var(--orange);}
 .t-status-live{color:var(--green);}.t-status-build{color:var(--yellow);}.t-status-new{color:var(--purple);font-weight:600;}
@@ -94,7 +92,7 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .tag{font-family:'DM Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.15rem .45rem;border-radius:3px;}
 .tag.new-tag{color:var(--purple);border-color:rgba(168,85,247,.3);background:var(--purple-dim);}
 .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:.75rem;border-top:1px solid var(--border);margin-top:auto;}
-.card-link{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--orange);text-decoration:none;display:flex;align-items:center;gap:.3rem;transition:opacity .2s;}
+.card-link{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--orange);text-decoration:none;transition:opacity .2s;}
 .card-link:hover{opacity:.7;}
 .card-price{font-family:'DM Mono',monospace;font-size:.62rem;color:var(--text-dim);}
 .card-price em{color:var(--gold);font-style:normal;}
@@ -130,8 +128,7 @@ header{border-bottom:1px solid var(--border);padding:1.25rem 0;position:sticky;t
 .form-row-2{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:.75rem;align-items:end;margin-top:.75rem;}
 .cost-toggle{font-family:'DM Mono',monospace;font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;gap:.4rem;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);}
 .cost-toggle:hover{color:var(--orange);}
-.cost-form-wrap{margin-top:.85rem;display:none;}
-.cost-form-wrap.open{display:block;}
+.cost-form-wrap{margin-top:.85rem;display:none;}.cost-form-wrap.open{display:block;}
 .entries-wrap{background:var(--navy-card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:2rem;}
 .entries-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid var(--border);}
 .entries-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;}
@@ -202,7 +199,6 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </head>
 <body>
 <div class="scanline"></div>
-
 <header>
   <div class="container">
     <div class="header-inner">
@@ -216,7 +212,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </header>
 
 <div class="version-banner">
-  ✦ <strong>Dashboard v7 — Apr 24, 2026</strong> &nbsp;|&nbsp; 5 new projects · 4 milestone upgrades &nbsp;|&nbsp; Portfolio now <strong>33 total projects</strong>
+  ✦ <strong>Dashboard v8 — Apr 30, 2026</strong> &nbsp;|&nbsp; 8 new projects · 3 milestone upgrades &nbsp;|&nbsp; Portfolio now <strong>41 total projects</strong>
 </div>
 
 <div class="tab-nav">
@@ -232,27 +228,29 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 
 <div class="ticker-wrap">
   <div class="ticker-track">
-    <span class="ticker-item"><span class="t-label">CreditForge AI Bot App + Guide</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Vorgyn AI Company Description</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Chapter 13 Bankruptcy Analysis</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Kiva Microloan Application</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Credit Dispute DFY Service</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot v1 Production</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Thai Digital Product Line</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">SVM PowerPoint (Gov Edition)</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AdForge — Ad Pipeline System</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Facebook Promotion Video (Remotion)</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Vorgyn Research Dashboard + Daily Brief</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">$50K Startup Funding Playbook</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Make.com Learning Plan</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ 95% — DEPLOY TODAY</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ 90% — NEAR LAUNCH</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">CAICMP Textbook</span><span class="t-status-build">◐ IN PROGRESS</span><span class="ticker-sep">|</span></span>
-    <!-- duplicate for loop -->
-    <span class="ticker-item"><span class="t-label">CreditForge AI Bot App + Guide</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Vorgyn AI Company Description</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Chapter 13 Bankruptcy Analysis</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Kiva Microloan Application</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Credit Dispute DFY Service</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <!-- duplicate -->
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot v1 Production</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Thai Digital Product Line</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">SVM PowerPoint (Gov Edition)</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">AdForge — Ad Pipeline System</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Facebook Promotion Video (Remotion)</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Vorgyn Research Dashboard + Daily Brief</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">$50K Startup Funding Playbook</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">Make.com Learning Plan</span><span class="t-status-new">✦ NEW</span><span class="ticker-sep">|</span></span>
+    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ 95% — DEPLOY TODAY</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">AI News Dashboard</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
     <span class="ticker-item"><span class="t-label">FinTrack Pro</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">CreditForge AI Bot</span><span class="t-status-build">◐ 90% — NEAR LAUNCH</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">Vorgyn AI Website</span><span class="t-status-live">● LIVE</span><span class="ticker-sep">|</span></span>
-    <span class="ticker-item"><span class="t-label">CAICMP Textbook</span><span class="t-status-build">◐ IN PROGRESS</span><span class="ticker-sep">|</span></span>
   </div>
 </div>
 
@@ -262,9 +260,9 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 <div class="tab-panel active" id="tab-projects">
   <div class="stats-bar">
     <div class="stats-grid">
-      <div class="stat-cell"><div class="stat-label">Total Projects</div><div class="stat-value orange">33</div><div class="stat-sub">↑ from 28 in v6</div></div>
+      <div class="stat-cell"><div class="stat-label">Total Projects</div><div class="stat-value orange">41</div><div class="stat-sub">↑ from 33 in v7</div></div>
       <div class="stat-cell"><div class="stat-label">Published & Available</div><div class="stat-value green">6</div><div class="stat-sub">Live &amp; accessible</div></div>
-      <div class="stat-cell"><div class="stat-label">In Active Build</div><div class="stat-value" style="color:var(--yellow)">7</div><div class="stat-sub">Dev in progress</div></div>
+      <div class="stat-cell"><div class="stat-label">In Active Build</div><div class="stat-value" style="color:var(--yellow)">6</div><div class="stat-sub">Dev in progress</div></div>
       <div class="stat-cell"><div class="stat-label">Confirmed Revenue</div><div class="stat-value green" id="kpi-revenue">$0</div><div class="stat-sub unverified" id="kpi-revenue-note">Log sales in Revenue tab →</div></div>
       <div class="stat-cell"><div class="stat-label">Confirmed Costs</div><div class="stat-value red" id="kpi-costs">$0</div><div class="stat-sub unverified" id="kpi-costs-note">Log expenses in Revenue tab →</div></div>
       <div class="stat-cell"><div class="stat-label">Net Profit</div><div class="stat-value" id="kpi-profit" style="color:var(--text-dim)">$0</div><div class="stat-sub" id="kpi-profit-note">Based on logged data only</div></div>
@@ -274,22 +272,25 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
   <div class="new-projects-banner">
     <div class="npb-icon">✦</div>
     <div>
-      <div class="npb-title">5 New Projects — v7 Update (Apr 24, 2026)</div>
-      <div class="npb-body">Full review of all sessions since v6. New items have purple borders and ✦ NEW badges. CreditForge AI Bot progressed to 90% — nearest to launch of any in-build product.</div>
+      <div class="npb-title">8 New Projects — v8 Update (Apr 30, 2026)</div>
+      <div class="npb-body">Full review of all sessions since v7. Purple borders and ✦ NEW badges mark everything new.</div>
       <div class="npb-list">
-        <span class="npb-item">✦ CreditForge AI Bot — Full App + 7-Section Implementation Guide</span>
-        <span class="npb-item">✦ Vorgyn AI Company Description (Funding-Ready Word Doc)</span>
-        <span class="npb-item">✦ Chapter 13 Bankruptcy Analysis (Bank Statement + 33-Item Checklist)</span>
-        <span class="npb-item">✦ Kiva Microloan Application Package</span>
-        <span class="npb-item">✦ Credit Dispute Done-For-You Service ($75–$150/client)</span>
+        <span class="npb-item">✦ CreditForge AI Bot v1 — Production App (Full Rebuild)</span>
+        <span class="npb-item">✦ Thai Digital Product Line Strategy</span>
+        <span class="npb-item">✦ SVM PowerPoint Presentation (Gov Edition)</span>
+        <span class="npb-item">✦ AdForge — AI Ad Creation & Delivery Pipeline</span>
+        <span class="npb-item">✦ Facebook Promotion Video (Remotion React)</span>
+        <span class="npb-item">✦ Vorgyn Research Dashboard + Daily Email Brief</span>
+        <span class="npb-item">✦ $50K Startup Funding Playbook (SBIR + Cloud Credits)</span>
+        <span class="npb-item">✦ Make.com Learning Plan (22-Step Interactive HTML)</span>
       </div>
     </div>
   </div>
 
   <div class="upgrade-banner">
     <div>
-      <div class="ub-title">⬆ Milestone Upgrades in v7</div>
-      <div class="ub-body">CreditForge AI Bot: full chatbot HTML + 7-section Word guide complete → progress 65% → <strong>90%</strong>. Gmail Automation: moveToSpam() OAuth scope bug fixed, native Gmail filter delivered — now fully operational. Fresh Start Credit Mastery: full book revision/upgrade plan built with economic anxiety market positioning. Gmail inbox: active real estate loan (4465 Kingsville Drive, Cocoa FL) surfaced — SimpleNexus tasks and Vanessa Adele/HHEQ contact identified as urgent.</div>
+      <div class="ub-title">⬆ Milestone Upgrades in v8</div>
+      <div class="ub-body">CreditForge AI Bot: 90% → <strong>95%</strong> — full production rebuild with letter detection engine, Node.js proxy (BYOK → managed key path), Railway.app deployment guide. SVM: new PPTX training presentation built in Government Edition (DoD/EIA-649C language, CDRL/PMR/Section 508). Thai Digital Product Line: entirely new revenue vertical identified — personal moat (marrying Thai citizen July 2026) + $100K–$175K Year 1 projection.</div>
     </div>
   </div>
 
@@ -297,25 +298,24 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
     <div class="section-header">
       <span class="section-tag">Portfolio</span>
       <span class="section-title">Vorgyn AI — All Projects</span>
-      <span class="section-count">33 total · <span style="color:var(--purple)">5 new ✦</span> · Synced <span id="sync-time">—</span></span>
+      <span class="section-count">41 total · <span style="color:var(--purple)">8 new ✦</span> · Synced <span id="sync-time">—</span></span>
     </div>
     <div class="projects-grid">
 
+      <!-- ══ EXISTING PROJECTS (condensed) ══ -->
+
       <!-- 1. AI NEWS DASHBOARD -->
-      <div class="project-card" style="animation-delay:.02s">
+      <div class="project-card" style="animation-delay:.01s">
         <div class="card-top"><div><div class="card-name">AI News Intelligence Dashboard</div><div class="card-type">Automated Pipeline · GitHub Pages</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--green-dim)">📡</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
-        <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Pipeline + GitHub Actions · daily 7AM digest confirmed</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Caching bug fixed · monetization paths mapped</div>
-        </div>
-        <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">Claude API</span><span class="tag">Email Digest</span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> Pipeline + GitHub Actions · daily 7AM digest · CDN fix</div></div>
+        <div class="card-tags"><span class="tag">GitHub Actions</span><span class="tag">Claude API</span></div>
         <div class="card-footer"><a href="https://github.com/marcT1/ai-news-dashboard" class="card-link" target="_blank">↗ github.com/marcT1</a><span class="card-price">Price: <em>$39</em></span></div>
       </div>
 
       <!-- 2. FINTRACK PRO -->
-      <div class="project-card" style="animation-delay:.03s">
+      <div class="project-card" style="animation-delay:.02s">
         <div class="card-top"><div><div class="card-name">FinTrack Pro</div><div class="card-type">Digital Product · Gumroad / Netlify</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">💹</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
@@ -328,7 +328,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 3. VORGYN AI WEBSITE -->
-      <div class="project-card" style="animation-delay:.04s">
+      <div class="project-card" style="animation-delay:.03s">
         <div class="card-top"><div><div class="card-name">Vorgyn AI Website</div><div class="card-type">Company Site · Netlify · vorgyn.com</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--orange-dim)">🏗️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">98%</span></div><div class="progress-bar"><div class="progress-fill pf-orange" style="width:98%"></div></div></div>
@@ -340,71 +340,71 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
         <div class="card-footer"><a href="https://vorgyn.com" class="card-link" target="_blank">↗ vorgyn.com</a><span class="card-price">Brand asset</span></div>
       </div>
 
-      <!-- 4. CREDITFORGE AI BOT — UPGRADED to 90% -->
-      <div class="project-card" style="animation-delay:.05s">
-        <div class="card-top"><div><div class="card-name">CreditForge AI Bot</div><div class="card-type">SaaS · Claude API · Near Launch</div></div><div class="status-pill s-build"><div class="dot"></div>Near Launch</div></div>
+      <!-- 4. CREDITFORGE AI BOT — 95% -->
+      <div class="project-card" style="animation-delay:.04s">
+        <div class="card-top"><div><div class="card-name">CreditForge AI Bot</div><div class="card-type">SaaS · Claude API · 95% — Deploy Today</div></div><div class="status-pill s-build"><div class="dot"></div>Deploy Today</div></div>
         <div class="card-icon" style="background:var(--gold-dim)">🤖</div>
-        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">90%</span></div><div class="progress-bar"><div class="progress-fill pf-yellow" style="width:90%"></div></div></div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">95%</span></div><div class="progress-bar"><div class="progress-fill pf-yellow" style="width:95%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Prototype + Netlify serverless + CROA compliance</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Full chatbot HTML app: 3 tiers, demo mode, score tracker</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> 7-section Word implementation guide complete</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Day 1 Netlify drop launch plan · 92% gross margin math</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Email template to existing book buyers drafted</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> Netlify deployment + first subscriber</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> CROA/FTC/FCRA compliance + FL CSO</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Full production app rebuilt (letter engine, demo mode)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Node.js proxy server (BYOK → managed key path)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Railway.app deploy guide · 7-section Word guide</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 92% gross margin math at 100 subscribers</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Netlify drop deployment + first subscriber</div>
         </div>
-        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">CROA Compliant</span><span class="tag">3-Tier</span><span class="tag">Netlify</span><span class="tag">$19–49/mo</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Near launch — deploy today</span><span class="card-price">Target: <em>$19–49/mo</em></span></div>
+        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">BYOK→Managed</span><span class="tag">Railway</span><span class="tag">$19–49/mo</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Deploy — one Netlify drop</span><span class="card-price">Target: <em>$19–49/mo</em></span></div>
       </div>
 
       <!-- 5. GRIDIRON & HARDWOOD -->
-      <div class="project-card" style="animation-delay:.06s">
+      <div class="project-card" style="animation-delay:.05s">
         <div class="card-top"><div><div class="card-name">Gridiron &amp; Hardwood</div><div class="card-type">Sports Trivia App · YouTube</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">🏈</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">70%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:70%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> App: NBA/NFL/MLB · 3 tiers · Claude API explanations</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> NBA/NFL/MLB · 3 tiers · Claude API explanations</div>
           <div class="milestone active"><span class="ms-icon">◐</span> YouTube channel &amp; affiliate setup</div>
         </div>
-        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">YouTube</span><span class="tag">Affiliate</span></div>
+        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">YouTube</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Testing phase</span><span class="card-price">Affiliate + ad model</span></div>
       </div>
 
       <!-- 6. OPTIONS TRADING PLATFORM -->
-      <div class="project-card" style="animation-delay:.07s">
+      <div class="project-card" style="animation-delay:.06s">
         <div class="card-top"><div><div class="card-name">Options Trading Platform</div><div class="card-type">Black-Scholes · 5 Greeks · 12 Strategies</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">⚡</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">75%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:75%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Black-Scholes engine: all 5 Greeks · 12 strategies</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Black-Scholes engine · all 5 Greeks · 12 strategies</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Live broker API integration</div>
         </div>
-        <div class="card-tags"><span class="tag">Black-Scholes</span><span class="tag">Greeks</span><span class="tag">Tastytrade</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In build</span><span class="card-price">Extension of Trading Platform</span></div>
+        <div class="card-tags"><span class="tag">Black-Scholes</span><span class="tag">Greeks</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In build</span><span class="card-price">Trading tool</span></div>
       </div>
 
       <!-- 7. SYSTEM VIABILITY MONITOR -->
-      <div class="project-card" style="animation-delay:.08s">
-        <div class="card-top"><div><div class="card-name">System Viability Monitor</div><div class="card-type">Enterprise Dashboard · 16 Systems</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.07s">
+        <div class="card-top"><div><div class="card-name">System Viability Monitor</div><div class="card-type">Enterprise Dashboard · PPTX Training Added</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🛡️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> 6-tab dashboard · 228K rows · 16 gov systems</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Word guide + Playwright cover + Gemini rebuild prompt</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Word guide + Playwright cover + Gemini prompt</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 8-slide PPTX training (Government Edition) built</div>
         </div>
-        <div class="card-tags"><span class="tag">228K Rows</span><span class="tag">16 Systems</span><span class="tag">Gemini Prompt</span></div>
+        <div class="card-tags"><span class="tag">228K Rows</span><span class="tag">16 Systems</span><span class="tag">PPTX Gov Ed.</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Enterprise / IT market</span></div>
       </div>
 
       <!-- 8. FRESH START CREDIT MASTERY -->
-      <div class="project-card" style="animation-delay:.09s">
+      <div class="project-card" style="animation-delay:.08s">
         <div class="card-top"><div><div class="card-name">Fresh Start Credit Mastery</div><div class="card-type">Book · Gumroad + Amazon KDP · Revision Planned</div></div><div class="status-pill s-live"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--gold-dim)">💳</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-gold" style="width:100%"></div></div></div>
         <div class="milestones">
           <div class="milestone done"><span class="ms-icon">✓</span> ~49,000-word guide live on Gumroad</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Full upgrade plan: friendlier tone + graphics strategy + economic anxiety positioning</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Video ad storyboard built</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Upgrade plan: friendlier tone + graphics + economic anxiety positioning</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Amazon KDP upload + v2 revision</div>
         </div>
         <div class="card-tags"><span class="tag">Gumroad</span><span class="tag">Amazon KDP</span><span class="tag">Revision Planned</span></div>
@@ -412,19 +412,17 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 9. NOTION CREDIT TRACKER -->
-      <div class="project-card" style="animation-delay:.10s">
+      <div class="project-card" style="animation-delay:.09s">
         <div class="card-top"><div><div class="card-name">Credit Repair Notion Tracker</div><div class="card-type">Notion Template · Gumroad</div></div><div class="status-pill s-done"><div class="dot"></div>Live</div></div>
         <div class="card-icon" style="background:var(--orange-dim)">📋</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-orange" style="width:100%"></div></div></div>
-        <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> 4-database Notion system + Life Reset Bundle ($67)</div>
-        </div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 4-database Notion system + Life Reset Bundle ($67)</div></div>
         <div class="card-tags"><span class="tag">Notion</span><span class="tag">Bundle $67</span></div>
         <div class="card-footer"><a href="https://gumroad.com" class="card-link" target="_blank">↗ Gumroad</a><span class="card-price">Price: <em>$17</em> / Bundle <em>$67</em></span></div>
       </div>
 
       <!-- 10. SLIPPAGE TRACKER -->
-      <div class="project-card" style="animation-delay:.11s">
+      <div class="project-card" style="animation-delay:.10s">
         <div class="card-top"><div><div class="card-name">AI Slippage Tracker</div><div class="card-type">Trading Tool · Internal</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">📉</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div></div>
@@ -434,7 +432,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 11. NVIDIA DGX SPARK REPORT -->
-      <div class="project-card" style="animation-delay:.12s">
+      <div class="project-card" style="animation-delay:.11s">
         <div class="card-top"><div><div class="card-name">NVIDIA DGX SPARK Report</div><div class="card-type">Technical Evaluation · HTML + Word</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📝</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
@@ -444,7 +442,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 12. AI DASHBOARD FREELANCE -->
-      <div class="project-card" style="animation-delay:.13s">
+      <div class="project-card" style="animation-delay:.12s">
         <div class="card-top"><div><div class="card-name">AI Dashboard Freelance Service</div><div class="card-type">Custom Dev · 3-Tier Pricing</div></div><div class="status-pill s-build"><div class="dot"></div>Launching</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🚀</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">60%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:60%"></div></div></div>
@@ -452,40 +450,39 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
           <div class="milestone done"><span class="ms-icon">✓</span> 3-tier pricing: $500 / $1.5K / $3K–$8K</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Portfolio page on vorgyn.com</div>
         </div>
-        <div class="card-tags"><span class="tag">Freelance</span><span class="tag">Upwork</span><span class="tag">$500–$8K</span></div>
+        <div class="card-tags"><span class="tag">Freelance</span><span class="tag">$500–$8K</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Launching</span><span class="card-price">Rate: <em>$500–$8K/project</em></span></div>
       </div>
 
       <!-- 13. CAICMP CERTIFICATION PROGRAM -->
-      <div class="project-card" style="animation-delay:.14s">
+      <div class="project-card" style="animation-delay:.13s">
         <div class="card-top"><div><div class="card-name">CAICMP Certification Program</div><div class="card-type">SAE EIA-649C · 12-Ch Textbook · Course</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📐</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">30%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:30%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> 12-chapter textbook structure · IP strategy · Gov market</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Year 1 proj: ~$170K → $750K–$1.2M Year 3</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 12-chapter structure · IP strategy · Gov market path</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Year 1: ~$170K → $750K–$1.2M Year 3</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Ch 2–12 · Copyright registration</div>
         </div>
         <div class="card-tags"><span class="tag">SAE EIA-649C</span><span class="tag">Gov Market</span><span class="tag">$170K Yr1</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In progress</span><span class="card-price">Ebook + Course + Cert</span></div>
       </div>
 
-      <!-- 14. SINGAPORE MARRIAGE + CR-1 PLAN -->
-      <div class="project-card" style="animation-delay:.15s">
-        <div class="card-top"><div><div class="card-name">Singapore Marriage + CR-1 Plan</div><div class="card-type">Personal · 47-Task Action Plan · July 2026</div></div><div class="status-pill s-build"><div class="dot"></div>In Progress</div></div>
+      <!-- 14. SINGAPORE MARRIAGE + CR-1 -->
+      <div class="project-card" style="animation-delay:.14s">
+        <div class="card-top"><div><div class="card-name">Singapore Marriage + CR-1 Plan</div><div class="card-type">Personal · 47-Task · July 2026</div></div><div class="status-pill s-build"><div class="dot"></div>In Progress</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">✈️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:85%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> CR-1/IR-1 strategy · 47-task Word doc</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Flight + hotel research (MCO→SIN Jul 2–23)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> CR-1/IR-1 strategy · 47-task doc · flights + hotel</div>
           <div class="milestone active"><span class="ms-icon">◐</span> ROM appointment + I-130 after return to FL</div>
         </div>
         <div class="card-tags"><span class="tag">CR-1/IR-1</span><span class="tag">Singapore ROM</span><span class="tag">July 2026</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">Personal planning</span><span class="card-price">Personal document</span></div>
       </div>
 
-      <!-- 15. MARRIAGE & VISA COST STRATEGY -->
-      <div class="project-card" style="animation-delay:.16s">
+      <!-- 15. MARRIAGE & VISA COST -->
+      <div class="project-card" style="animation-delay:.15s">
         <div class="card-top"><div><div class="card-name">Marriage &amp; Visa Cost Strategy</div><div class="card-type">Personal · CR-1 vs K-1 Analysis</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">💍</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
@@ -495,71 +492,71 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 16. TRADING PLATFORM v3 -->
-      <div class="project-card" style="animation-delay:.17s">
-        <div class="card-top"><div><div class="card-name">AI Stock Trading Platform v3</div><div class="card-type">Auto-Engine · Strategy Builder · Full-Screen</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
+      <div class="project-card" style="animation-delay:.16s">
+        <div class="card-top"><div><div class="card-name">AI Stock Trading Platform v3</div><div class="card-type">Auto-Engine · Strategy Builder</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📊</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:85%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Auto-engine: $500 kill switch, 6/hr max, 12s cooldown</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Auto-engine: $500 kill switch · 6/hr max · 12s cooldown</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Live Alpaca broker integration</div>
         </div>
         <div class="card-tags"><span class="tag">Auto-Engine</span><span class="tag">Kill Switch</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ In build</span><span class="card-price">Paper → live</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Paper → live</span><span class="card-price">Simulation phase</span></div>
       </div>
 
-      <!-- 17. FINTRACK PRO MARKETING PLAN -->
-      <div class="project-card" style="animation-delay:.18s">
+      <!-- 17. FINTRACK PRO MARKETING -->
+      <div class="project-card" style="animation-delay:.17s">
         <div class="card-top"><div><div class="card-name">FinTrack Pro Marketing Plan</div><div class="card-type">4-Phase Strategy · Word Doc</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📣</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> Reddit/Twitter/Facebook/Product Hunt copy · ConvertKit · 30% affiliate</div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> Reddit/Twitter/Facebook/PH copy · ConvertKit · 30% affiliate</div></div>
         <div class="card-tags"><span class="tag">Reddit Ads</span><span class="tag">ConvertKit</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Marketing asset</span></div>
       </div>
 
       <!-- 18. CR DATA ALIGNMENT TOOL -->
-      <div class="project-card" style="animation-delay:.19s">
-        <div class="card-top"><div><div class="card-name">CR Data Alignment Tool</div><div class="card-type">HTML App · 37-Field Schema · CSV → JSON</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.18s">
+        <div class="card-top"><div><div class="card-name">CR Data Alignment Tool</div><div class="card-type">HTML App · 37-Field Schema</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🗂️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 37-field ECR schema · chunked streaming parser · Gemini prompt</div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 37-field ECR schema · chunked parser · CSV + JSON export</div></div>
         <div class="card-tags"><span class="tag">37 Fields</span><span class="tag">CSV → JSON</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Enterprise / IT tool</span></div>
       </div>
 
       <!-- 19. VIDEO AD STORYBOARD -->
-      <div class="project-card" style="animation-delay:.20s">
-        <div class="card-top"><div><div class="card-name">Video Ad Storyboard — Fresh Start</div><div class="card-type">6-Scene HTML · Amazon/Meta/TikTok Guide</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.19s">
+        <div class="card-top"><div><div class="card-name">Video Ad Storyboard — Fresh Start</div><div class="card-type">6-Scene HTML · Multi-Platform</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🎬</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 6-scene ad preview + multi-platform implementation guide</div></div>
-        <div class="card-tags"><span class="tag">Amazon Ads</span><span class="tag">Meta Ads</span><span class="tag">TikTok</span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 6-scene ad preview + Amazon/Meta/TikTok guide</div></div>
+        <div class="card-tags"><span class="tag">Amazon Ads</span><span class="tag">Meta Ads</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Marketing asset</span></div>
       </div>
 
       <!-- 20. CAICMP TEXTBOOK CH 1 -->
-      <div class="project-card" style="animation-delay:.21s">
-        <div class="card-top"><div><div class="card-name">CAICMP Textbook — Chapter 1</div><div class="card-type">~6,000-Word Word Doc · 15 Exam Questions</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.20s">
+        <div class="card-top"><div><div class="card-name">CAICMP Textbook — Chapter 1</div><div class="card-type">~6,000-Word Word Doc</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📖</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> ~6,000 words · glossary · 15 exam Qs · visual one-pager</div></div>
-        <div class="card-tags"><span class="tag">CAICMP</span><span class="tag">Word Doc</span><span class="tag">Ch 1 of 12</span></div>
+        <div class="card-tags"><span class="tag">CAICMP</span><span class="tag">Ch 1 of 12</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Ch 1 complete</span><span class="card-price">Textbook chapter</span></div>
       </div>
 
       <!-- 21. CREDITFORGE CROA COMPLIANCE -->
-      <div class="project-card" style="animation-delay:.22s">
-        <div class="card-top"><div><div class="card-name">CreditForge — CROA/FTC Compliance</div><div class="card-type">Legal Analysis · 90-Day Plan · Gmail Drafts</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.21s">
+        <div class="card-top"><div><div class="card-name">CreditForge — CROA/FTC Compliance</div><div class="card-type">Legal Analysis · 90-Day Plan</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">⚖️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> CROA/FTC/FCRA + FL CSO + $10K bond · 7 Gmail drafts (Days 1–30)</div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> CROA/FTC/FCRA + FL CSO + $10K bond · 7 Gmail drafts</div></div>
         <div class="card-tags"><span class="tag">CROA</span><span class="tag">Florida CSO</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Compliance asset</span></div>
       </div>
 
       <!-- 22. US IMMIGRATION TWO-TRACK -->
-      <div class="project-card" style="animation-delay:.23s">
-        <div class="card-top"><div><div class="card-name">US Immigration — Two-Track</div><div class="card-type">Personal · K-1 + B-2 Medical (Mother)</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.22s">
+        <div class="card-top"><div><div class="card-name">US Immigration — Two-Track</div><div class="card-type">Personal · K-1 + B-2 Medical</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--blue-dim)">🏥</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-blue" style="width:100%"></div></div></div>
         <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> K-1 + B-2 medical tracks · Moffitt Cancer Center</div></div>
@@ -568,167 +565,273 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       </div>
 
       <!-- 23. CMP GENERATOR MVP -->
-      <div class="project-card" style="animation-delay:.24s">
-        <div class="card-top"><div><div class="card-name">CMP Generator MVP</div><div class="card-type">AI-Powered HTML App · 8 Program Modes</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
+      <div class="project-card" style="animation-delay:.23s">
+        <div class="card-top"><div><div class="card-name">CMP Generator MVP</div><div class="card-type">AI-Powered HTML App · 8 Program Modes</div></div><div class="status-pill s-build"><div class="dot"></div>Near Launch</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">⚙️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">90%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:90%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Standalone + API-powered versions built</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> 8 program modes · Gemini 5-phase prompt</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Standalone + API-powered · 8 program modes</div>
           <div class="milestone active"><span class="ms-icon">◐</span> Gumroad listing</div>
         </div>
-        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">CMP Docs</span><span class="tag">Gov Market</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Near launch</span><span class="card-price">Gumroad digital product</span></div>
+        <div class="card-tags"><span class="tag">Claude API</span><span class="tag">Gov Market</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Near launch</span><span class="card-price">Gumroad product</span></div>
       </div>
 
       <!-- 24. CCB MANAGEMENT APP -->
-      <div class="project-card" style="animation-delay:.25s">
-        <div class="card-top"><div><div class="card-name">CCB Management App</div><div class="card-type">6-Tab HTML · Voting Engine · AI Analysis</div></div><div class="status-pill s-build"><div class="dot"></div>In Build</div></div>
+      <div class="project-card" style="animation-delay:.24s">
+        <div class="card-top"><div><div class="card-name">CCB Management App</div><div class="card-type">6-Tab HTML · Voting Engine</div></div><div class="status-pill s-build"><div class="dot"></div>Near Launch</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🏛️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">85%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:85%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> 6-tab app · voting engine · Gemini API · 17-section replication prompt</div>
-          <div class="milestone active"><span class="ms-icon">◐</span> Live deployment + Gumroad listing</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> 6-tab app · voting engine · Gemini API · 17-section prompt</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Gumroad listing</div>
         </div>
-        <div class="card-tags"><span class="tag">6 Tabs</span><span class="tag">CCB</span><span class="tag">Gov Market</span></div>
+        <div class="card-tags"><span class="tag">6 Tabs</span><span class="tag">CCB</span><span class="tag">Gov</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--yellow)">⚙ Near launch</span><span class="card-price">Enterprise / Gov tool</span></div>
       </div>
 
-      <!-- 25. EIA-649C CM STRATEGY DOCUMENT -->
-      <div class="project-card" style="animation-delay:.26s">
-        <div class="card-top"><div><div class="card-name">EIA-649C CM Strategy Document</div><div class="card-type">12-Section Word · Interactive SVG Diagram</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <!-- 25. EIA-649C CM STRATEGY DOC -->
+      <div class="project-card" style="animation-delay:.25s">
+        <div class="card-top"><div><div class="card-name">EIA-649C CM Strategy Document</div><div class="card-type">12-Section Word · SVG Diagram</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📋</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 12 sections · RACI · 18-month roadmap · SVG diagram (clickable nodes)</div></div>
-        <div class="card-tags"><span class="tag">Vorgyn Institute</span><span class="tag">12 Sections</span><span class="tag">SVG Diagram</span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 12 sections · RACI · 18-month roadmap · clickable SVG diagram</div></div>
+        <div class="card-tags"><span class="tag">Vorgyn Institute</span><span class="tag">SVG Diagram</span></div>
         <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Enterprise deliverable</span></div>
       </div>
 
-      <!-- 26. SBA LOAN & GOV MARKET STRATEGY -->
-      <div class="project-card" style="animation-delay:.27s">
-        <div class="card-top"><div><div class="card-name">SBA Loan &amp; Gov Market Strategy</div><div class="card-type">HTML Guide + Word Doc · SBA · 8(a) · CDFI</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <!-- 26. SBA LOAN & GOV MARKET -->
+      <div class="project-card" style="animation-delay:.26s">
+        <div class="card-top"><div><div class="card-name">SBA Loan &amp; Gov Market Strategy</div><div class="card-type">HTML Guide + Word · SBA · 8(a) · CDFI</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🏛️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> SBA program matrix · loan proposal template · 3-phase gov contracting strategy</div></div>
-        <div class="card-tags"><span class="tag">SBA</span><span class="tag">8(a)</span><span class="tag">CDFI</span><span class="tag">Minority Biz</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Business strategy asset</span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> SBA matrix · loan proposal · 3-phase gov contracting strategy</div></div>
+        <div class="card-tags"><span class="tag">SBA</span><span class="tag">8(a)</span><span class="tag">CDFI</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Business strategy</span></div>
       </div>
 
-      <!-- 27. GMAIL AUTOMATION SYSTEM -->
-      <div class="project-card" style="animation-delay:.28s">
-        <div class="card-top"><div><div class="card-name">Gmail Automation System</div><div class="card-type">Google Apps Script · Claude API · Operational</div></div><div class="status-pill s-done"><div class="dot"></div>Operational</div></div>
+      <!-- 27. GMAIL AUTOMATION -->
+      <div class="project-card" style="animation-delay:.27s">
+        <div class="card-top"><div><div class="card-name">Gmail Automation System</div><div class="card-type">Google Apps Script · Claude API · Operational</div></div><div class="status-pill s-live"><div class="dot"></div>Operational</div></div>
         <div class="card-icon" style="background:var(--green-dim)">📧</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-green" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone done"><span class="ms-icon">✓</span> Apps Script auto-organizer + Claude API classification</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> moveToSpam() OAuth scope bug fixed · native Gmail filter deployed</div>
-          <div class="milestone done"><span class="ms-icon">✓</span> Real estate loan thread surfaced (4465 Kingsville Dr, Cocoa FL)</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Apps Script auto-organizer + OAuth bug fixed</div>
+          <div class="milestone done"><span class="ms-icon">✓</span> Real estate loan surfaced (4465 Kingsville Dr, Cocoa FL)</div>
         </div>
-        <div class="card-tags"><span class="tag">Apps Script</span><span class="tag">Claude API</span><span class="tag">Gmail</span><span class="tag">Bug Fixed</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--green)">● Fully operational</span><span class="card-price">Internal productivity</span></div>
+        <div class="card-tags"><span class="tag">Apps Script</span><span class="tag">Fully Operational</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--green)">● Operational</span><span class="card-price">Internal productivity</span></div>
       </div>
 
       <!-- 28. CLAUDE LEVERAGE FRAMEWORK -->
-      <div class="project-card" style="animation-delay:.29s">
-        <div class="card-top"><div><div class="card-name">Claude Leverage Framework</div><div class="card-type">Revenue Playbook · Word Doc · 7-Day Plan</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+      <div class="project-card" style="animation-delay:.28s">
+        <div class="card-top"><div><div class="card-name">Claude Leverage Framework</div><div class="card-type">Revenue Playbook · Word Doc</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">💡</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 7 sections · 5 revenue prompts · 7-day execution sequence · Word doc</div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 7 sections · 5 revenue prompts · 7-day execution sequence</div></div>
         <div class="card-tags"><span class="tag">Playbook</span><span class="tag">7-Day Plan</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Internal operating playbook</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Internal playbook</span></div>
       </div>
 
-      <!-- ══ NEW IN V7 ══ -->
-
-      <!-- 29. CREDITFORGE AI BOT APP + GUIDE ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.30s">
-        <div class="new-badge">✦ NEW</div>
-        <div class="card-top"><div><div class="card-name">CreditForge AI Bot — App + Implementation Guide</div><div class="card-type">Full HTML Chatbot · 7-Section Word Guide · Netlify</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+      <!-- 29. CREDITFORGE APP + GUIDE (v7) -->
+      <div class="project-card" style="animation-delay:.29s">
+        <div class="card-top"><div><div class="card-name">CreditForge — App + Implementation Guide</div><div class="card-type">Full HTML Chatbot · 7-Section Word</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🛠️</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Full HTML chatbot: Free / Pro ($19/mo) / Agency ($49/mo) tiers</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Demo mode (3 pre-loaded responses) — no key needed for prospects</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> FCRA/FDCPA/Metro 2 dispute system prompt encodes book expertise</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Score modal: log current score + running +/- change tracker</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 7-section Word guide: deployment, payment (Gumroad), Week 1 marketing</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 92% gross margin math at 100 subscribers · v2 Node.js proxy roadmap</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Day 1 = Netlify drop → email Fresh Start buyers → first subscribers</div>
-        </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">3 Tiers</span><span class="tag">Demo Mode</span><span class="tag">Netlify</span><span class="tag">92% Margin</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Deploy Today</span><span class="card-price">Price: <em>$19–49/mo</em></span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 3 tiers · demo mode · 7-section guide · 92% margin math</div></div>
+        <div class="card-tags"><span class="tag">3 Tiers</span><span class="tag">Netlify</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">$19–49/mo</span></div>
       </div>
 
-      <!-- 30. VORGYN AI COMPANY DESCRIPTION ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.31s">
-        <div class="new-badge">✦ NEW</div>
-        <div class="card-top"><div><div class="card-name">Vorgyn AI Company Description</div><div class="card-type">Funding-Ready Word Doc · Bank / SBA / Credit Union</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+      <!-- 30. VORGYN AI COMPANY DESCRIPTION -->
+      <div class="project-card" style="animation-delay:.30s">
+        <div class="card-top"><div><div class="card-name">Vorgyn AI Company Description</div><div class="card-type">Funding-Ready Word Doc · SBA</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">🏦</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
-        <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Branded cover page: LLC, NAICS code, contact, confidentiality notice</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Executive summary: underwriter-ready, compliance posture up front</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Products/services table: all 6 revenue streams, price points, distribution</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Market section: 68M Americans with sub-600 FICO — quantified demand</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 3-phase growth strategy, revenue projection table, use-of-funds breakdown</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Founder profile: credit repair + AI + systems/IT credentials documented</div>
-        </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">SBA-Ready</span><span class="tag">Word Doc</span><span class="tag">8 Sections</span><span class="tag">Funding</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Ready for lenders</span><span class="card-price">Loan support asset</span></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> 8 sections · NAICS · use-of-funds · revenue projections</div></div>
+        <div class="card-tags"><span class="tag">SBA-Ready</span><span class="tag">8 Sections</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Loan support</span></div>
       </div>
 
-      <!-- 31. CHAPTER 13 BANKRUPTCY ANALYSIS ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.32s">
+      <!-- 31. CHAPTER 13 ANALYSIS -->
+      <div class="project-card" style="animation-delay:.31s">
+        <div class="card-top"><div><div class="card-name">Chapter 13 Bankruptcy Analysis</div><div class="card-type">Bank Statement Analysis · 13-Section Word</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">📊</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> $63K income vs $101K outflows · 33-item checklist · Schedule I/J</div></div>
+        <div class="card-tags"><span class="tag">Ch. 13</span><span class="tag">33-Item Checklist</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Complete</span><span class="card-price">Personal financial</span></div>
+      </div>
+
+      <!-- 32. KIVA MICROLOAN APPLICATION -->
+      <div class="project-card" style="animation-delay:.32s">
+        <div class="card-top"><div><div class="card-name">Kiva Microloan Application</div><div class="card-type">Personal Story · $15K Target</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">💰</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> Personal story · loan purpose · 16-item checklist</div></div>
+        <div class="card-tags"><span class="tag">Kiva</span><span class="tag">$15K</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Ready to submit</span><span class="card-price">$15,000 loan target</span></div>
+      </div>
+
+      <!-- 33. CREDIT DISPUTE DFY SERVICE -->
+      <div class="project-card" style="animation-delay:.33s">
+        <div class="card-top"><div><div class="card-name">Credit Dispute DFY Service</div><div class="card-type">$75–$150/Client · Reddit Targeting</div></div><div class="status-pill s-done"><div class="dot"></div>Complete</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">✉️</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones"><div class="milestone done"><span class="ms-icon">✓</span> Master AI prompt · Reddit/FB targeting · $500 in 24hr validated</div></div>
+        <div class="card-tags"><span class="tag">$75–150/client</span><span class="tag">Reddit</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--gold)">✓ Ready to execute</span><span class="card-price">$75–150 / client</span></div>
+      </div>
+
+      <!-- ══ NEW IN V8 ══ -->
+
+      <!-- 34. CREDITFORGE AI BOT v1 PRODUCTION ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.34s">
         <div class="new-badge">✦ NEW</div>
-        <div class="card-top"><div><div class="card-name">Chapter 13 Bankruptcy Analysis</div><div class="card-type">Bank Statement Analysis · 13-Section Word Doc</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-top"><div><div class="card-name">CreditForge AI Bot v1 — Production</div><div class="card-type">Full Rebuild · Node.js Proxy · Railway Deploy</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🔬</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Complete production rebuild from all prior specs across chat history</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Letter detection engine: [LETTER_START]/[LETTER_END] markers → formatted box</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Left sidebar: score tracker, 6 quick-action buttons, conversation history</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Demo mode: 3 pre-loaded expert responses, zero API key required</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Node.js server.js proxy: BYOK v1 → managed subscription v2 migration path</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Railway.app deployment guide (free tier, live URL in 10 min)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> claude-sonnet-4-20250514 + full FCRA/FDCPA/Metro 2 system prompt</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Letter Engine</span><span class="tag">Node.js Proxy</span><span class="tag">Railway</span><span class="tag">BYOK→Managed</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Full production build</span><span class="card-price">$19–49/mo SaaS</span></div>
+      </div>
+
+      <!-- 35. THAI DIGITAL PRODUCT LINE ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.35s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">Thai Digital Product Line</div><div class="card-type">16-Product Catalog · Gumroad · ThaiMate AI</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🇹🇭</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">25%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:25%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Market: 17.9% CAGR language learning · $116B by 2033</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Babbel/Rosetta Stone don't offer Thai — major gap confirmed</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 16-product catalog: CR-1/IR-1 Guide ($47), Thai Survival Kit ($14)…</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Personal moat: marrying Thai citizen in Singapore July 2026</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> ThaiMate AI subscription: $19–49/mo (Month 6–8 launch)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Year 1 projection: $100K–$175K (conservative)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> PDPA compliance + immigration disclaimer requirements noted</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Priority 1: CR-1/IR-1 Spousal Visa Guide ($47) — write now</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Thai Market</span><span class="tag">16 Products</span><span class="tag">ThaiMate AI</span><span class="tag">$100K+ Yr1</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Strategy complete · Build starts</span><span class="card-price">$14–$497 · SaaS $19–49/mo</span></div>
+      </div>
+
+      <!-- 36. SVM POWERPOINT (GOV EDITION) ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.36s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">SVM Training Presentation — Gov Edition</div><div class="card-type">8-Slide PPTX · DoD/EIA-649C Language</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
         <div class="card-icon" style="background:var(--purple-dim)">📊</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Bank statement analyzed: Dec 2025–Apr 2026 (Excel)</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Income: ~$63,797 total (DFAS salary + retirement)</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Outflows: ~$101,847 — predatory loans $21K, crypto $8.7K, wires $10.2K</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 3 trustee red flags identified: crypto escalation, unexplained wires, debt settlement</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Schedule I/J budget worksheet + complete creditor table</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 33-item document checklist organized by category</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 8 slides: Problem → Solution → Requirements → Prompt → Demo → Next Steps</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Audience: Software Engineering Project Managers</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Government Edition: DoD language, GAO $15B stat, CDRL/PMR/AO/COR</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> EIA-649C standards, NIPR-compatible, Section 508 color contrast</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Vorgyn AI navy/orange/gold brand palette throughout</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> React-icons + Sharp PNG generation for slide icons</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Ch. 13</span><span class="tag">DFAS Income</span><span class="tag">33-Item Checklist</span><span class="tag">Personal</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Personal financial planning</span><span class="card-price">Personal document</span></div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">8 Slides</span><span class="tag">DoD Language</span><span class="tag">PPTX</span><span class="tag">Gov Edition</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Training deliverable</span></div>
       </div>
 
-      <!-- 32. KIVA MICROLOAN APPLICATION ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.33s">
+      <!-- 37. ADFORGE — AD PIPELINE ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.37s">
         <div class="new-badge">✦ NEW</div>
-        <div class="card-top"><div><div class="card-name">Kiva Microloan Application Package</div><div class="card-type">Personal Story · Business Description · $15K Target</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
-        <div class="card-icon" style="background:var(--purple-dim)">💰</div>
-        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="card-top"><div><div class="card-name">AdForge — AI Ad Pipeline System</div><div class="card-type">Ad Copy + Video + Social + Delivery Pipeline</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🎯</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">75%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:75%"></div></div></div>
         <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Personal story: community background, Titusville, published book as anchor</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Business description: CMP Creator, defense contractor market, CAICMP textbook</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Loan purpose: 6 itemized uses totaling $15K (infra, dev, gov outreach, legal, 8(a))</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Challenges section: minority solo founder capital access barrier documented</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> 16-item pre-submission checklist + photo requirements guide</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> PayPal account required before submission (Kiva disbursal method)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 3-layer pipeline: Product Intelligence → AI Asset Gen → Delivery</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Product registry: all 13 Vorgyn AI products with descriptions + benefits</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Ad copy + social post + video script generation per product</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> CapCut Script-to-Video integration guide + AI avatars workflow</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Facebook video ad prompt guide (interactive widget built)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Word strategy doc v2: bug fixes (CORS, max_tokens), ENV detection</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Make.com / Zapier delivery integration to social platforms</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Kiva</span><span class="tag">$15K</span><span class="tag">Minority Biz</span><span class="tag">No Collateral</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Ready to submit</span><span class="card-price">$15,000 loan target</span></div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Ad Copy</span><span class="tag">CapCut</span><span class="tag">Facebook Ads</span><span class="tag">Make.com</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Internal marketing tool</span></div>
       </div>
 
-      <!-- 33. CREDIT DISPUTE DFY SERVICE ✦ NEW -->
-      <div class="project-card is-new" style="animation-delay:.34s">
+      <!-- 38. FACEBOOK PROMOTION VIDEO (REMOTION) ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.38s">
         <div class="new-badge">✦ NEW</div>
-        <div class="card-top"><div><div class="card-name">Credit Dispute Done-For-You Service</div><div class="card-type">$75–$150/Client · Reddit/FB Targeting · CreditForge Funnel</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
-        <div class="card-icon" style="background:var(--purple-dim)">✉️</div>
+        <div class="card-top"><div><div class="card-name">Facebook Promotion Video</div><div class="card-type">Remotion React · 5-Scene · 30s · 1080×1920</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🎥</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">90%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:90%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 5-scene script: Opportunity → Page Setup → Content → Ads → Scale</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Remotion React project: spring() animations, SVG diagrams, particle effects</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Safe zones: 150px top, 170px bottom, 60px sides · min font 28px</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> TransitionSeries with 12-frame fades · count-up numbers · draw-on SVGs</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Exported as ZIP with npm install + run studio + render to MP4 instructions</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Local render to MP4 + Facebook upload</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Remotion</span><span class="tag">React</span><span class="tag">1080×1920</span><span class="tag">Facebook</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ ZIP ready to render</span><span class="card-price">Marketing asset</span></div>
+      </div>
+
+      <!-- 39. VORGYN RESEARCH DASHBOARD + DAILY BRIEF ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.39s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">Vorgyn Research Dashboard + Daily Brief</div><div class="card-type">Top 25 App Ideas · Google Apps Script · Daily Email</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">📬</div>
         <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
         <div class="milestones">
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Strategy: $75–$150/client · 3–5 customized dispute letters · 2–4 hr delivery</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Master AI prompt: FCRA 609/611, FDCPA, pay-for-delete, goodwill, CFPB escalation</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Target channels: r/CRedit, r/personalfinance, Facebook credit repair groups</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> $500 in 24hr = 4–7 clients · $1K in 48hr = 10–14 clients</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> CreditForge AI Bot upsell at delivery ($19–49/mo funnel)</div>
-          <div class="milestone new-ms"><span class="ms-icon">✦</span> Risk tile: CROA positioning as AI software, not credit repair service</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Top 25 pain-point app ideas ranked by revenue potential + build speed</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Research sourced: Reddit, Gumroad, r/personalfinance, r/credit</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Interactive Vorgyn-branded dashboard with filters + sort</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Google Apps Script daily email brief (sendDailyBrief)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 7 rotating quotes, pipeline snapshot, day-specific action focus (7 day types)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Triggers at 7AM · setup guide: 6-step paste-and-run</div>
         </div>
-        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">$75–150/client</span><span class="tag">Reddit</span><span class="tag">DFY Service</span><span class="tag">CreditForge Funnel</span></div>
-        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Ready to execute</span><span class="card-price">$75–150 / client</span></div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">25 App Ideas</span><span class="tag">Apps Script</span><span class="tag">Daily Email</span><span class="tag">7AM Trigger</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Internal intelligence tool</span></div>
+      </div>
+
+      <!-- 40. $50K STARTUP FUNDING PLAYBOOK ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.40s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">$50K Startup Funding Playbook</div><div class="card-type">SBIR + Cloud Credits + Competitions · No Equity</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">💸</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> SBIR Phase I reauthorized Apr 13, 2026 — S.3971 signed into law</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Cloud credit stack: NVIDIA Inception + MS Founders Hub + AWS + Google</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Combined cloud credits: $250K–$600K (eliminates infra cost for 12–24 mo)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> MassChallenge ($10K–$100K cash, no equity) + RAISE the STAKES</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 8-item priority action table (Step 1: NVIDIA Inception — 60 min)</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Government employment conflict analysis (ethics clearance guidance)</div>
+          <div class="milestone active"><span class="ms-icon">◐</span> Apply to NVIDIA Inception (first step, fastest)</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">SBIR</span><span class="tag">NVIDIA Inception</span><span class="tag">$250K–600K Credits</span><span class="tag">No Equity</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Apply NVIDIA Inception now</span><span class="card-price">$50K cash + $250–600K credits</span></div>
+      </div>
+
+      <!-- 41. MAKE.COM LEARNING PLAN ✦ NEW -->
+      <div class="project-card is-new" style="animation-delay:.41s">
+        <div class="new-badge">✦ NEW</div>
+        <div class="card-top"><div><div class="card-name">Make.com Learning Plan</div><div class="card-type">22-Step Interactive HTML · 5 Sessions · Certificate</div></div><div class="status-pill s-new"><div class="dot"></div>New</div></div>
+        <div class="card-icon" style="background:var(--purple-dim)">🔄</div>
+        <div class="progress-wrap"><div class="progress-labels"><span class="progress-title">Completion</span><span class="progress-pct">100%</span></div><div class="progress-bar"><div class="progress-fill pf-purple" style="width:100%"></div></div></div>
+        <div class="milestones">
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 5 sessions: First Scenario → Filters → Multi-step → AI → Vorgyn Integration</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> 22 checkable steps with progress bar per session</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Quiz at end of each session with instant correct/wrong feedback</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Cheat Sheet tab: 12 Make terms in plain language</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Certificate of Completion unlocks when all 22 steps done</div>
+          <div class="milestone new-ms"><span class="ms-icon">✦</span> Context: supports AdForge Make.com delivery integration</div>
+        </div>
+        <div class="card-tags"><span class="tag new-tag">✦ New</span><span class="tag">Make.com</span><span class="tag">22 Steps</span><span class="tag">Certificate</span><span class="tag">AdForge Support</span></div>
+        <div class="card-footer"><span class="card-link" style="cursor:default;color:var(--purple)">✦ Recently built</span><span class="card-price">Training asset</span></div>
       </div>
 
     </div>
@@ -736,7 +839,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </div><!-- end tab-projects -->
 
 
-<!-- ══ REVENUE TRACKER ══ -->
+<!-- ══ REVENUE TRACKER TAB ══ -->
 <div class="tab-panel" id="tab-revenue">
   <div style="padding:2rem 0">
     <div class="section-header">
@@ -744,7 +847,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       <span class="section-title">Revenue &amp; Cost Tracker</span>
       <span class="section-count">Persisted in browser · Export anytime</span>
     </div>
-    <div class="data-note"><span class="dn-icon">⚠</span><span>All figures are <strong>verified only</strong> — driven by what you manually log below. Nothing assumed or estimated. KPI cards update live as you add entries here.</span></div>
+    <div class="data-note"><span class="dn-icon">⚠</span><span>All figures are <strong>verified only</strong> — driven by what you manually log below. Nothing assumed or estimated. KPI cards on the Projects tab update live.</span></div>
     <div class="rev-stats">
       <div class="rev-stat"><div class="rev-stat-label">Total Revenue</div><div class="rev-stat-value green" id="rs-revenue">$0.00</div><div class="rev-stat-note">Confirmed sales logged</div></div>
       <div class="rev-stat"><div class="rev-stat-label">Total Costs</div><div class="rev-stat-value red" id="rs-costs">$0.00</div><div class="rev-stat-note">Confirmed expenses logged</div></div>
@@ -770,9 +873,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
             <option>CMP Generator MVP</option>
             <option>CCB Management App</option>
             <option>CAICMP Certification Program</option>
-            <option>CAICMP Textbook</option>
+            <option>Thai Digital Product Line</option>
             <option>CR Data Alignment Tool</option>
             <option>Life Reset Bundle</option>
+            <option>ThaiMate AI Subscription</option>
             <option>Other / Consulting</option>
           </select>
         </div>
@@ -784,7 +888,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       <div class="cost-toggle" onclick="toggleCostForm()"><span id="cost-toggle-icon">▶</span> Log a Cost / Expense instead</div>
       <div class="cost-form-wrap" id="cost-form">
         <div class="form-row-2">
-          <div class="form-field"><label class="form-label">Cost Description</label><input class="form-input" type="text" id="f-cost-desc" placeholder="e.g. Netlify, Gumroad fee, FL CSO bond, Kiva fees, API usage..."></div>
+          <div class="form-field"><label class="form-label">Cost Description</label><input class="form-input" type="text" id="f-cost-desc" placeholder="e.g. Netlify, Gumroad fee, Railway.app, FL CSO bond, API usage..."></div>
           <div class="form-field"><label class="form-label">Amount ($)</label><input class="form-input" type="number" id="f-cost-amount" placeholder="0.00" min="0" step="0.01"></div>
           <div class="form-field"><label class="form-label">Date</label><input class="form-input" type="date" id="f-cost-date"></div>
           <div class="form-field" style="justify-content:flex-end"><button class="btn-log" style="background:linear-gradient(135deg,#b91c1c,var(--red));color:#fff" onclick="logEntry('cost')">+ Log Cost</button></div>
@@ -806,76 +910,67 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </div>
 
 
-<!-- ══ TIMELINE ══ -->
+<!-- ══ TIMELINE TAB ══ -->
 <div class="tab-panel" id="tab-timeline">
   <div class="timeline-section">
-    <div class="section-header"><span class="section-tag purple-tag">✦ v7 Updated</span><span class="section-title">Full Build Timeline</span></div>
+    <div class="section-header"><span class="section-tag purple-tag">✦ v8 Updated</span><span class="section-title">Full Build Timeline</span></div>
     <div class="timeline">
 
       <div class="timeline-entry" style="animation-delay:.02s">
         <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">✦ NEW — v7</div>
-        <div class="timeline-date new-date">Apr 2026</div>
-        <div class="timeline-title">CreditForge AI Bot Full App + Implementation Guide + Company Description + Kiva Application</div>
-        <div class="timeline-body">Complete CreditForge AI Bot HTML chatbot built: 3 subscription tiers, demo mode (3 pre-loaded responses no key needed), FCRA/FDCPA/Metro 2 system prompt, score tracker, letter output boxes, mobile responsive. 7-section Word implementation guide delivered covering Netlify deployment, Gumroad payment, Week 1 marketing email to book buyers, 92% margin math, v2 proxy roadmap. Vorgyn AI company description built as funding-ready Word doc (8 sections, NAICS code, use-of-funds table) for bank/SBA/credit union. Kiva Microloan application package ($15,000 target) built with personal story, business description, loan purpose, and 16-item checklist.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">CreditForge App</span><span class="tpill new-pill">Word Guide</span><span class="tpill new-pill">Company Description</span><span class="tpill new-pill">Kiva Application</span></div>
+        <div class="new-entry-label">✦ NEW — v8</div>
+        <div class="timeline-date new-date">Apr 28–30, 2026</div>
+        <div class="timeline-title">CreditForge AI Bot v1 Production + Thai Product Line + SVM PPTX + $50K Funding Playbook</div>
+        <div class="timeline-body">CreditForge AI Bot rebuilt from scratch in two dedicated sessions pulling all prior specs from chat history: letter detection engine ([LETTER_START]/[LETTER_END] markers), left sidebar with score tracker and 6 quick-action buttons, demo mode with 3 pre-loaded responses, Node.js server.js proxy for BYOK→managed migration, Railway.app deployment guide (free tier, live URL in 10 min). Thai Digital Product Line strategy built: 16-product catalog, 17.9% CAGR market, Babbel/Rosetta don't offer Thai (gap confirmed), personal moat via July 2026 Singapore wedding, ThaiMate AI subscription concept, $100K–$175K Year 1 projection, PDPA compliance flagged. SVM 8-slide PPTX Government Edition built (DoD language, EIA-649C, GAO $15B stat, NIPR/Section 508). $50K Funding Playbook built: SBIR Phase I reauthorized Apr 13, NVIDIA Inception, Microsoft Founders Hub, AWS Activate, Google for Startups — $250K–$600K cloud credits identified as primary target.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">CreditForge v1 Production</span><span class="tpill new-pill">Thai Product Line</span><span class="tpill new-pill">SVM PPTX Gov Ed.</span><span class="tpill new-pill">$50K Funding Playbook</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.05s">
         <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">✦ NEW — v7</div>
-        <div class="timeline-date new-date">Apr 2026</div>
-        <div class="timeline-title">Chapter 13 Bankruptcy Analysis + Credit Dispute DFY Service Strategy</div>
-        <div class="timeline-body">Bank statement analyzed (Dec 2025–Apr 2026 Excel): $63,797 income vs $101,847 outflows confirmed bankruptcy eligibility. Three trustee red flags identified: crypto escalation ($4.1K in Feb alone), $10.2K unexplained wire transfers, two debt settlement programs. Schedule I/J worksheet + 33-item document checklist produced. Credit Dispute Done-For-You service strategy built: $75–$150/client, master AI prompt encoding FCRA 609/611/623, FDCPA, pay-for-delete tactics, goodwill letters, SOL analysis. $500 in 24hr / $1K in 48hr projections validated. CreditForge AI Bot upsell funnel integrated.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">Ch. 13 Analysis</span><span class="tpill new-pill">33-Item Checklist</span><span class="tpill new-pill">Credit Dispute DFY</span><span class="tpill new-pill">$75–150/client</span></div>
+        <div class="new-entry-label">✦ NEW — v8</div>
+        <div class="timeline-date new-date">Apr 25–26, 2026</div>
+        <div class="timeline-title">AdForge Pipeline + Facebook Remotion Video + Vorgyn Research Dashboard + Make.com Plan</div>
+        <div class="timeline-body">AdForge AI ad creation and delivery pipeline: 3-layer architecture (Product Intelligence → Asset Gen → Delivery), product registry for all 13 Vorgyn products, ad copy/social/video script generation, CapCut Script-to-Video guide + AI avatars workflow, Facebook video ad prompt guide (interactive widget). Facebook Promotion Video built with Remotion React: 5-scene 30s vertical 1080×1920, spring animations, SVG self-drawing diagrams, particle effects, exported as ZIP with npm install/render instructions. Vorgyn Research Dashboard: Top 25 pain-point app ideas + Google Apps Script daily email brief at 7AM with rotating quotes and day-specific action focus. Make.com Learning Plan: 22-step interactive HTML, 5 sessions, quiz per session, certificate of completion.</div>
+        <div class="timeline-pills"><span class="tpill new-pill">AdForge Pipeline</span><span class="tpill new-pill">Facebook Video (Remotion)</span><span class="tpill new-pill">Research Dashboard</span><span class="tpill new-pill">Make.com Plan</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.08s">
-        <div class="timeline-dot new-dot"></div>
-        <div class="new-entry-label">⬆ UPGRADED — v7</div>
-        <div class="timeline-date new-date">Apr 2026</div>
-        <div class="timeline-title">Gmail Automation — moveToSpam() Bug Fixed · Real Estate Loan Surfaced</div>
-        <div class="timeline-body">Gmail Apps Script moveToSpam() OAuth scope bug identified and fixed with native filter patch + forceSpamScope() function. Gmail inbox further analyzed using multi-query approach: active real estate transaction surfaced (4465 Kingsville Drive, Cocoa FL via Top Flite Financial). SimpleNexus has 3 consecutive daily task reminders unaddressed. Contact: Vanessa Adele (vadele@hheq.com, HHEQ) — loan processor. Interactive HTML avoidance dashboard built with checkboxes, progress bar, and reset button.</div>
-        <div class="timeline-pills"><span class="tpill new-pill">moveToSpam() Fixed</span><span class="tpill new-pill">Real Estate Loan Surfaced</span><span class="tpill new-pill">SimpleNexus Urgent</span></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Apr 24, 2026</div>
+        <div class="timeline-title">CreditForge App + Guide · Company Description · Ch. 13 Analysis · Kiva Application · Credit Dispute DFY</div>
+        <div class="timeline-body">Full CreditForge chatbot + 7-section Word guide. Vorgyn AI funding-ready company description (8 sections). Chapter 13 analysis ($63K income vs $101K outflows). Kiva Microloan application ($15K). Credit Dispute DFY Service ($75–$150/client).</div>
+        <div class="timeline-pills"><span class="tpill">CreditForge Guide</span><span class="tpill">Company Description</span><span class="tpill">Ch. 13 Analysis</span><span class="tpill">Kiva Application</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.11s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Apr 19, 2026</div>
         <div class="timeline-title">CMP Generator + CCB App + EIA-649C Strategy + SBA Strategy + Gmail System + LLM Module</div>
-        <div class="timeline-body">CMP Generator, CCB Management App, EIA-649C CM Strategy Document, SBA funding strategy, Gmail automation system, and Claude Leverage Framework all built. Stanford CS229 LLM training module (7 interactive modules).</div>
-        <div class="timeline-pills"><span class="tpill">CMP Generator</span><span class="tpill">CCB App</span><span class="tpill">Gmail System</span><span class="tpill">LLM Training</span></div>
+        <div class="timeline-body">CMP Generator, CCB App, EIA-649C CM Strategy, SBA funding strategy, Gmail automation, Claude Leverage Framework. Stanford CS229 LLM training module (7 interactive modules).</div>
+        <div class="timeline-pills"><span class="tpill">CMP Generator</span><span class="tpill">CCB App</span><span class="tpill">EIA-649C Strategy</span><span class="tpill">Gmail Automation</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.14s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Apr 10, 2026</div>
-        <div class="timeline-title">Trading Platform v3 + CR Data Tool + Marketing Plan + CAICMP Ch. 1 + CROA Plan</div>
-        <div class="timeline-body">Trading Platform v3 auto-engine, CR Data Alignment Tool (37 fields), FinTrack Pro 30-day marketing plan, Fresh Start video ad storyboard, CAICMP Chapter 1 (~6,000 words), CreditForge CROA/FTC compliance + 90-day launch plan.</div>
-        <div class="timeline-pills"><span class="tpill">Trading v3</span><span class="tpill">CR Data Tool</span><span class="tpill">CAICMP Ch.1</span></div>
+        <div class="timeline-title">Trading Platform v3 · CR Data Tool · Marketing Plan · CAICMP Ch. 1 · CROA Compliance</div>
+        <div class="timeline-body">Auto-engine trading platform, 37-field CR alignment tool, FinTrack Pro marketing plan, Fresh Start video ad, CAICMP Chapter 1, CreditForge compliance plan.</div>
+        <div class="timeline-pills"><span class="tpill">Trading v3</span><span class="tpill">CAICMP Ch.1</span><span class="tpill">Marketing Plan</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.17s">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Mar 29, 2026</div>
-        <div class="timeline-title">SAE EIA-649C · Immigration Cost Strategy · Revenue Tracker Dashboard</div>
-        <div class="timeline-body">CAICMP program expanded. CR-1 cost comparison built. Revenue Tracker tab added — honest KPIs only, no unverified claims.</div>
-        <div class="timeline-pills"><span class="tpill">CAICMP Program</span><span class="tpill">Revenue Tracker</span></div>
+        <div class="timeline-title">SAE EIA-649C Program · Revenue Tracker Dashboard · CR-1 Strategy</div>
+        <div class="timeline-body">CAICMP program expanded. Revenue Tracker added — honest KPIs, verified data only. CR-1 cost comparison built.</div>
+        <div class="timeline-pills"><span class="tpill">CAICMP Program</span><span class="tpill">Revenue Tracker v4</span><span class="tpill">CR-1 Strategy</span></div>
       </div>
 
       <div class="timeline-entry" style="animation-delay:.20s">
         <div class="timeline-dot"></div>
-        <div class="timeline-date">Mar 27, 2026</div>
-        <div class="timeline-title">Options Platform + SVM + DGX SPARK + Freelance Strategy</div>
-        <div class="timeline-body">Black-Scholes options platform, SVM with 228K rows, NVIDIA DGX SPARK report, freelance service strategy.</div>
-        <div class="timeline-pills"><span class="tpill">Options Platform</span><span class="tpill">SVM Real Data</span></div>
-      </div>
-
-      <div class="timeline-entry" style="animation-delay:.23s">
-        <div class="timeline-dot"></div>
         <div class="timeline-date">Feb–Mar 2026</div>
-        <div class="timeline-title">Foundation — FinTrack Pro · AI News Dashboard · Trading Platform · Business Plan</div>
-        <div class="timeline-body">Core Vorgyn AI product stack launched: FinTrack Pro, AI News Dashboard, Trading Platform, investor business plan, Gridiron &amp; Hardwood, Notion tracker.</div>
+        <div class="timeline-title">Foundation — FinTrack Pro · AI News Dashboard · Trading Platform · vorgyn.com</div>
+        <div class="timeline-body">Core Vorgyn AI product stack launched. vorgyn.com purchased. Investor business plan, Gridiron &amp; Hardwood, Notion tracker.</div>
         <div class="timeline-pills"><span class="tpill">FinTrack Pro</span><span class="tpill">AI News Dashboard</span><span class="tpill">vorgyn.com</span></div>
       </div>
 
@@ -884,7 +979,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 </div>
 
 
-<!-- ══ HOW TO UPDATE ══ -->
+<!-- ══ HOW TO UPDATE TAB ══ -->
 <div class="tab-panel" id="tab-howto">
   <div class="update-section">
     <div class="section-header"><span class="section-tag">Maintenance</span><span class="section-title">How to Update This Dashboard</span></div>
@@ -892,18 +987,18 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
       <div class="update-panel">
         <div class="update-panel-title"><span class="ico">✏️</span> Manual Update via GitHub</div>
         <div class="update-steps">
-          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open your GitHub repo</div><div class="step-body">Go to <strong>github.com/marcT1/vorgyn-dashboard</strong>, find <code>index.html</code>, click pencil ✏️ to edit in-browser.</div></div></div>
-          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Find the card to update</div><div class="step-body">Use <kbd>Ctrl+F</kbd> to search by project name. Change milestone classes (<code>done / active / pending</code>), icons (✓ ◐ ○), and progress %.</div></div></div>
-          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Commit → live in ~60s</div><div class="step-body">Write a commit message and click <strong>Commit changes</strong>. GitHub Pages auto-redeploys.</div></div></div>
+          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open your GitHub repo</div><div class="step-body">Go to <strong>github.com/marcT1/vorgyn-dashboard</strong>, find <code>index.html</code>, click pencil ✏️ to edit.</div></div></div>
+          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Find + update the card</div><div class="step-body">Use <kbd>Ctrl+F</kbd> to search by project name. Change milestone classes (<code>done / active / pending</code>), icons (✓ ◐ ○), and progress %.</div></div></div>
+          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Commit → live in ~60s</div><div class="step-body">Write a commit message and click <strong>Commit changes</strong>.</div></div></div>
           <div class="update-step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Export revenue data first</div><div class="step-body">Revenue data lives in <code>localStorage</code>. Click <strong>Export CSV</strong> in Revenue tab before uploading any new file.</div></div></div>
         </div>
       </div>
       <div class="update-panel">
         <div class="update-panel-title"><span class="ico">🤖</span> AI-Assisted Update via Claude</div>
         <div class="update-steps">
-          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Export CSV first</div><div class="step-body">Click <strong>Export CSV</strong> in the Revenue Tracker tab to save your sales history.</div></div></div>
-          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Paste the master prompt</div><div class="step-body">Claude scans all sessions since the last version and outputs the complete updated index.html.</div></div></div>
-          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Upload as index.html → done</div><div class="step-body">Replace the file in your GitHub repo. Pages rebuilds in ~60 seconds.</div></div></div>
+          <div class="update-step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Export CSV first</div><div class="step-body">Save your revenue data before uploading a new file.</div></div></div>
+          <div class="update-step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Paste the master prompt</div><div class="step-body">Claude scans all sessions and outputs the complete updated index.html.</div></div></div>
+          <div class="update-step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Upload as index.html → done</div><div class="step-body">Replace file in GitHub. Pages rebuilds in ~60 seconds.</div></div></div>
         </div>
         <div class="prompt-box">
           <div class="prompt-label">📋 Master Update Prompt</div>
@@ -914,10 +1009,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
     <div style="margin-top:1px;background:var(--navy-mid);border:1px solid var(--border);border-radius:0 0 8px 8px;padding:1.75rem;">
       <div class="update-panel-title" style="margin-bottom:1rem;"><span class="ico">🚀</span> GitHub Pages — One-Time Setup</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
-        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">① Create Repo</div><div class="step-body" style="font-size:.72rem;">New repo: <code>vorgyn-dashboard</code>. Set Public.</div></div>
-        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">② Upload File</div><div class="step-body" style="font-size:.72rem;">Upload as <strong>index.html</strong> exactly.</div></div>
-        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">③ Enable Pages</div><div class="step-body" style="font-size:.72rem;">Settings → Pages → Branch: main → / (root) → Save.</div></div>
-        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">④ Live URL</div><div class="step-body" style="font-size:.72rem;"><code>https://marct1.github.io/vorgyn-dashboard/</code></div></div>
+        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">① Create Repo</div><div class="step-body" style="font-size:.72rem;"><code>vorgyn-dashboard</code> · Public</div></div>
+        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">② Upload File</div><div class="step-body" style="font-size:.72rem;">Upload as <strong>index.html</strong></div></div>
+        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">③ Enable Pages</div><div class="step-body" style="font-size:.72rem;">Settings → Pages → main → / (root)</div></div>
+        <div><div class="step-title" style="font-size:.8rem;margin-bottom:.35rem;">④ Live URL</div><div class="step-body" style="font-size:.72rem;"><code>marct1.github.io/vorgyn-dashboard/</code></div></div>
       </div>
     </div>
   </div>
@@ -928,10 +1023,10 @@ footer{border-top:1px solid var(--border);padding:1.5rem 0;margin-top:2rem;}
 <footer>
   <div class="container">
     <div class="footer-inner">
-      <div class="footer-logo"><em>Vorgyn</em> AI · Project Command Center · v7</div>
+      <div class="footer-logo"><em>Vorgyn</em> AI · Project Command Center · v8</div>
       <div class="footer-right">
         Marc T · <a href="https://github.com/marcT1" target="_blank">github.com/marcT1</a> · <a href="https://vorgyn.com" target="_blank">vorgyn.com</a><br>
-        Revenue figures: verified logged data only · Updated Apr 24, 2026
+        Revenue: verified logged data only · Updated Apr 30, 2026
       </div>
     </div>
   </div>
@@ -973,7 +1068,7 @@ function loadAndRender(){
   if(entries.length>0){document.getElementById('kpi-revenue-note').textContent=entries.filter(e=>e.category==='revenue').length+' sale(s) logged';document.getElementById('kpi-costs-note').textContent=entries.filter(e=>e.category==='cost').length+' expense(s) logged';kpiNote.textContent='Revenue − Costs';kpiNote.style.color=netProfit>=0?'var(--green)':'var(--red)';kpiNote.style.fontStyle='normal';}
   else{document.getElementById('kpi-revenue-note').textContent='Log sales in Revenue tab →';document.getElementById('kpi-costs-note').textContent='Log expenses in Revenue tab →';kpiNote.textContent='Based on logged data only';kpiNote.style.color='var(--text-dim)';kpiNote.style.fontStyle='italic';}
   const ptBody=document.getElementById('profit-table-body');const products=Object.entries(byProduct).sort((a,b)=>b[1].revenue-a[1].revenue);
-  if(products.length===0){ptBody.innerHTML='<tr class="no-data-row"><td colspan="5">No data yet — log your first sale to see per-project profitability.</td></tr>';}
+  if(products.length===0){ptBody.innerHTML='<tr class="no-data-row"><td colspan="5">No data yet — log your first sale.</td></tr>';}
   else{const maxRev=Math.max(...products.map(([,v])=>Math.abs(v.revenue-v.costs)),1);ptBody.innerHTML=products.map(([name,v])=>{const profit=v.revenue-v.costs;const margin=v.revenue>0?((profit/v.revenue)*100).toFixed(0)+'%':'—';const barPct=Math.min(Math.abs(profit)/maxRev*100,100).toFixed(0);const barClass=profit>=0?'pos':'neg';return`<tr><td>${name}</td><td class="td-revenue">${fmt(v.revenue)}</td><td class="td-cost">${v.costs>0?fmt(v.costs):'—'}</td><td class="td-profit ${barClass}">${(profit>=0?'':'-')+fmt(profit)}</td><td>${margin}<span class="pbar-wrap"><span class="pbar-fill ${barClass}" style="width:${barPct}%"></span></span></td></tr>`;}).join('');}
   const tbody=document.getElementById('entries-tbody');
   if(entries.length===0){tbody.innerHTML='<tr><td colspan="6" class="empty-state"><div class="empty-icon">📭</div>No entries yet.</td></tr>';return;}
